@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  activity:
+    build:
+      context: ./
+      dockerfile: spm.Dockerfile
+    image: spm:latest
+    restart: always
+    environment:
+      dbURL: mysql+mysqlconnector://is213@host.docker.internal:3306/spm
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5050:5050"
