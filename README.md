@@ -5,21 +5,14 @@
 cd backend 
 ```
 
-### 2. Set up Python Virtual Environment 
+### 2. Run sql script
 ```
-py -m venv venv
+Run spm.sql
 ```
 
-### 3. Activate Python Virtual Environment
+### 3. Run Docker container 
 ```
-venv\Scripts\activate
+docker-compose up 
 ```
-###### for Linux/MacOS
-```
-source venv/bin/activate
-```
-### 4.install necessary dependencies
-```
-pip install -r requirements.txt
-```
+
 
