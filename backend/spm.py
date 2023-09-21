@@ -14,6 +14,15 @@ db = SQLAlchemy(app)
 
 CORS(app)
 
+
+
+class SysRoles(enum.Enum):
+    staff = "staff"
+    manager = "manager"
+    hr = "hr"
+    inactive = "inactive"
+
+
 class StaffDetails(db.Model):
     __tablename__ = 'staff_details'
 
@@ -24,6 +33,7 @@ class StaffDetails(db.Model):
     email = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     biz_address = db.Column(db.String(255), nullable=False)
+    sys_role = db.Column(db.Enum(SysRoles))
     roles = db.relationship("RoleDetails", secondary="staff_roles", back_populates="staffs")
     skills = db.relationship("SkillDetails", secondary="staff_skills", back_populates="staffs")
 
@@ -41,6 +51,7 @@ class StaffDetails(db.Model):
     def json(self):
         return {"staff_id": self.staff_id, "fname": self.fname, "lname": self.lname, "dept": self.dept, "email": self.email, "phone": self.phone, "biz_address": self.biz_address}
 
+
 class StaffReportingOfficer(db.Model):
     __tablename__ = 'staff_reporting_officer'
 
@@ -57,6 +68,10 @@ class StaffReportingOfficer(db.Model):
         return {"staff_id": self.staff_id, "RO_id": self.RO_id}
     
 
+class SkillStatuses(enum.Enum):
+    active = "active"
+    inactive = "inactive"
+    unverified = "unverified"
 
 
 class RoleDetails(db.Model):
@@ -64,7 +79,8 @@ class RoleDetails(db.Model):
 
     role_id = db.Column(db.Integer, primary_key=True)
     role_name = db.Column(db.String(50), nullable=False)
-    role_description = db.Column(db.String(255), nullable=False)
+    role_description = db.Column(db.String(50000), nullable=False)
+    role_status = db.Column(db.Enum(SkillStatuses))
     staffs = db.relationship("StaffDetails", secondary="staff_roles", back_populates="roles")
     skills = db.relationship("SkillDetails", secondary="role_skills", back_populates="roles")
 
@@ -80,17 +96,13 @@ class RoleDetails(db.Model):
     
 
 
-class SkillStatuses(enum.Enum):
-    active = "active"
-    inactive = "inactive"
-    unverified = "unverified"
 
 class SkillDetails(db.Model):
     __tablename__ = 'skill_details'
 
     skill_id = db.Column(db.Integer, primary_key=True)
     skill_name = db.Column(db.String(50), nullable=False)
-    skill_status = db.Column(db.Enum(SkillStatuses), nullable=False)
+    skill_status = db.Column(db.Enum(SkillStatuses))
     staffs = db.relationship("StaffDetails", secondary="staff_skills", back_populates="skills")
     roles = db.relationship("RoleDetails", secondary="role_skills", back_populates="skills")
     
@@ -115,8 +127,8 @@ class StaffRoles(db.Model):
 
     staff_id = db.Column(db.Integer, db.ForeignKey('staff_details.staff_id'), primary_key=True)
     staff_role = db.Column(db.Integer, db.ForeignKey('role_details.role_id'), primary_key=True)
-    role_type = db.column(db.Enum(RoleTypes), nullable=False)
-    sr_status = db.Column(db.Enum(SkillStatuses), nullable=False)
+    role_type = db.column(db.Enum(RoleTypes))
+    sr_status = db.Column(db.Enum(SkillStatuses))
 
     def __init__(self, staff_id, staff_role, role_type, sr_status):
         self.staff_id = staff_id
@@ -134,7 +146,7 @@ class StaffSkills(db.Model):
 
     staff_id = db.Column(db.Integer, db.ForeignKey('staff_details.staff_id'), primary_key=True)
     skill_id = db.Column(db.Integer, db.ForeignKey('skill_details.skill_id'), primary_key=True)
-    ss_status = db.Column(db.Enum(SkillStatuses), nullable=False)
+    ss_status = db.Column(db.Enum(SkillStatuses))
 
     def __init__(self, staff_id, skill_id, ss_status):
         self.staff_id = staff_id
@@ -172,7 +184,7 @@ class RoleListings(db.Model):
     role_listing_source = db.Column(db.Integer, db.ForeignKey('staff_details.staff_id'))
     role_listing_open = db.Column(db.Date)
     role_listing_close = db.Column(db.Date, default=(role_listing_open + timedelta(days=14)))
-    
+
 
 
 
@@ -210,6 +222,30 @@ def get_all():
             "message": "There are no staff details."
         }
     ), 404
+
+
+@app.route("/staff_details/<int:staff_id>")
+def find_staff_roles(staff_id):
+    staff = StaffDetails.query.filter_by(staff_id=staff_id).first()
+    staff_roles = staff.roles
+    if staff:
+        return jsonify(
+            {
+                "code": 200,
+                "data": {
+                    "staff_detail" : staff.json(),
+                    "staff_roles": [staff_role.json() for staff_role in staff_roles]
+                }
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "Staff roles not found."
+        }
+    ), 404
+
+
 
 
 if __name__ == '__main__':
