@@ -2,17 +2,14 @@ CREATE DATABASE IF NOT EXISTS spm DEFAULT CHARACTER SET utf8 COLLATE utf8_genera
 USE spm;
 
 create table staff_details (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(50) NOT NULL,
-	description VARCHAR(255),
-	price DECIMAL(5,2) NOT NULL,
-	address VARCHAR(50) NOT NULL
+	staff_id INT NOT NULL PRIMARY KEY,
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	dept VARCHAR(50) NOT NULL,
+	email VARCHAR(50) NOT NULL.
+	phone VARCHAR(20) NOT NULL,
+	biz_address VARCHAR(255) NOT NULL
 );
-
-
-
-
-
 
 
 
