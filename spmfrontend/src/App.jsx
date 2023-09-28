@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./pages/HomePage";
 import SkillsPage from "./pages/SkillsPage";
 import LoginPage from "./pages/LoginPage";
+import NavBar from "./components/NavBar";
 // import { useAuth } from "./components/useAuth";
 
 function App() {
@@ -14,13 +15,15 @@ function App() {
         <Fragment>
           <Routes>
             <Route path="/" element={<ProtectedRoute />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/skills" exact element={<SkillsPage />} />
-              {/* Add protected routes here... */}
-              {/* Add protected routes here... */}
-              {/* Add protected routes here... */}
-              {/* Add protected routes here... */}
-              {/* Add protected routes here... */}
+              <Route path="/" element={<NavBar/>}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/skills" exact element={<SkillsPage />} />
+                {/* Add protected routes here... */}
+                {/* Add protected routes here... */}
+                {/* Add protected routes here... */}
+                {/* Add protected routes here... */}
+                {/* Add protected routes here... */}
+              </Route>
             </Route>
             <Route path="/login" exact element={<LoginPage />} />
             {/* Add unprotected routes here... */}
