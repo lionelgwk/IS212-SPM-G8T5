@@ -32,6 +32,12 @@ create table staff_roles (
 	FOREIGN KEY (staff_role) REFERENCES role_details(role_id)
 );
 
+create table skills_details (
+	skill_id INT NOT NULL PRIMARY KEY,
+	skill_name VARCHAR(50) NOT NULL,
+	skill_status ENUM('active', 'inactive', 'unverified') NOT NULL
+);
+
 
 INSERT INTO staff_details (staff_id, fname, lname, dept, email, phone, biz_address, sys_role)
 VALUES
@@ -57,3 +63,18 @@ VALUES
 (123456789, 234567891, 'primary', 'active'),
 (123456789, 234567893, 'secondary', 'active'),
 (123456789, 234511581, 'secondary', 'inactive');
+
+
+
+
+-- Inserting Sample Data Record 1
+INSERT INTO skills_details (skill_id, skill_name, skill_status)
+VALUES (1, 'Programming', 'active');
+
+-- Inserting Sample Data Record 2
+INSERT INTO skills_details (skill_id, skill_name, skill_status)
+VALUES (2, 'Database Management', 'active');
+
+-- Inserting Sample Data Record 3
+INSERT INTO skills_details (skill_id, skill_name, skill_status)
+VALUES (3, 'Project Management', 'active');
