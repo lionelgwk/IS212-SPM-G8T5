@@ -6,7 +6,8 @@ import enum
 from datetime import date, timedelta
 
 # import blueprints
-from roles import routes
+# from roles import routes
+import roles
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/spm'
@@ -17,7 +18,7 @@ db = SQLAlchemy(app)
 
 CORS(app)
 
-app.register_blueprint(routes.role_bp)
+app.register_blueprint(roles.role_bp)
 
 # class SysRoles(enum.Enum):
 #     staff = "staff"
@@ -205,46 +206,46 @@ app.register_blueprint(routes.role_bp)
 #             }
 
 
-@app.route("/staff_details")
-def get_all():
-    staff_details = StaffDetails.query.all()
-    if len(staff_details):
-        return jsonify(
-            {
-                "code": 200,
-                "data": {
-                    "staff_details": [staff_detail.json() for staff_detail in staff_details]
-                }
-            }
-        )
-    return jsonify(
-        {
-            "code": 404,
-            "message": "There are no staff details."
-        }
-    ), 404
+# @app.route("/staff_details")
+# def get_all():
+#     staff_details = StaffDetails.query.all()
+#     if len(staff_details):
+#         return jsonify(
+#             {
+#                 "code": 200,
+#                 "data": {
+#                     "staff_details": [staff_detail.json() for staff_detail in staff_details]
+#                 }
+#             }
+#         )
+#     return jsonify(
+#         {
+#             "code": 404,
+#             "message": "There are no staff details."
+#         }
+#     ), 404
 
 
-@app.route("/staff_details/<int:staff_id>")
-def find_staff_roles(staff_id):
-    staff = StaffDetails.query.filter_by(staff_id=staff_id).first()
-    staff_roles = staff.roles
-    if staff:
-        return jsonify(
-            {
-                "code": 200,
-                "data": {
-                    "staff_detail" : staff.json(),
-                    "staff_roles": [staff_role.json() for staff_role in staff_roles]
-                }
-            }
-        )
-    return jsonify(
-        {
-            "code": 404,
-            "message": "Staff roles not found."
-        }
-    ), 404
+# @app.route("/staff_details/<int:staff_id>")
+# def find_staff_roles(staff_id):
+#     staff = StaffDetails.query.filter_by(staff_id=staff_id).first()
+#     staff_roles = staff.roles
+#     if staff:
+#         return jsonify(
+#             {
+#                 "code": 200,
+#                 "data": {
+#                     "staff_detail" : staff.json(),
+#                     "staff_roles": [staff_role.json() for staff_role in staff_roles]
+#                 }
+#             }
+#         )
+#     return jsonify(
+#         {
+#             "code": 404,
+#             "message": "Staff roles not found."
+#         }
+#     ), 404
 
 
 
