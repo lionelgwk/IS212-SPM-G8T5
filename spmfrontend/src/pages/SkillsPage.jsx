@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 const SkillsPage = () => {
     return(
-        <div>
+        <div className="bg-white">
             This is the skills page!
         </div>
     );
