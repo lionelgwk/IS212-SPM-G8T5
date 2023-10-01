@@ -43,7 +43,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./pages/HomePage";
-import SkillsPage from "./pages/SkillsPage";
 import ProfilePage from "./pages/ProfilePage";
 import AppliedPage from "./pages/AppliedPage"
 import ApplicantsPage from "./pages/ApplicantsPage";
@@ -59,8 +58,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ProtectedRoute />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/skills" exact element={<SkillsPage />} />
-                <Route path="/create" exact element={<CreateRolePage />} />
+            <Route path="/create" exact element={<CreateRolePage />} />
             <Route path="/applied" exact element={<AppliedPage />} />
             <Route path="/profile" exact element={<ProfilePage />} />
             <Route path="/applicants" exact element={<ApplicantsPage />} />

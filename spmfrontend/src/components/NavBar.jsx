@@ -49,6 +49,17 @@ const NavBar = () => {
           </NavLink>
 
           <NavLink
+            to="/create"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#1b4965] p-2 rounded-md text-white"
+                : "hover:bg-[#4dc494] hover:text-white p-2 rounded-md"
+            }
+          >
+            Create
+          </NavLink>
+
+          <NavLink
             to="/profile"
             className={({ isActive }) =>
               isActive
@@ -61,7 +72,7 @@ const NavBar = () => {
         </div>
       </div>
       <div className="flex justify-end items-center ml-auto px-8">
-          <button className="hover:bg-[#f5655b] hover:text-white p-2 rounded-md gap-5" onClick={handleSignOut}>Sign Out</button>
+          <button className="hover:text-[#f5655b] p-1 gap-5" onClick={handleSignOut}>Sign Out</button>
       </div>
 
       <main>
