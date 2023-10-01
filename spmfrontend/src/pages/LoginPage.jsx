@@ -7,7 +7,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className="bg-white">
       <h2>Login Page</h2>
       <button onClick={handleLogin}>Login</button>
     </div>

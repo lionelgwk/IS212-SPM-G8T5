@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
-
+import RoleSearch from "../components/roleSearch";
+import RoleCard from "../components/roleCard";
 
 const HomePage = () => {
-
-    const handleSignOut = () => {
-        localStorage.removeItem('userToken');
-        window.location.href = '/login'; // Redirect to homepage
-    }
-
     return(
-        <div>
-            
-            This is the homepage!
-            <button onClick={handleSignOut}>Sign Out</button>
+        <div className="bg-[#bee9e8]">
+            <div className="font-bold text-xl pt-5 mb-1 text-center">Welcome %name% </div>
+            <RoleSearch></RoleSearch>
+            <div className="p-2"></div>
+            <RoleCard></RoleCard>
+            <RoleCard></RoleCard>
+            <RoleCard></RoleCard>
+            <RoleCard></RoleCard>
         </div>
     );
 };
