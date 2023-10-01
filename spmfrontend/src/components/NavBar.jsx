@@ -2,37 +2,78 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
 const NavBar = () => {
+  // Sign out function
+  const handleSignOut = () => {
+    localStorage.removeItem('userToken');
+    window.location.href = '/login'; // Redirect to homepage
+  }
+
   return (
-    <header className="border-b-[1px] bg-white sticky top-0 z-10">
-      <div className="container m-auto text-navbar-primary top-0 h-[64px] items-center flex justify-between">
+    <header className="border-b-[1px] bg-[#e7f2f8] sticky top-0 z-10 shadow-md">
+      <div className="container ml-4 text-navbar-primary top-0 h-[64px] items-center flex justify-between">
         <div className="flex gap-5 items-center justify-center">
-          <Link to="/" className="mr-8 font-bold">
-            <img src="/src/assets/logo.png" alt="logo" className="h-[40px]" />
+          <Link to="/" className="mr-2">
+            <img src="/src/assets/logo.png" alt="logo" className="h-[30px]" />
           </Link>
           <NavLink
             to="/"
             className={({ isActive }) =>
               isActive
-                ? "bg-[#1c8042] p-2 rounded-md text-white"
-                : "hover:bg-[#4fc97e] hover:text-white p-2 rounded-md"
+                ? "bg-[#1b4965] p-2 rounded-md text-white"
+                : "hover:bg-[#bee9e8] hover:text-white p-2 rounded-md"
             }
           >
             Home
           </NavLink>
+
           <NavLink
             to="/skills"
             className={({ isActive }) =>
               isActive
-                ? "bg-[#1c8042] p-2 rounded-md text-white"
-                : "hover:bg-[#4fc97e] hover:text-white p-2 rounded-md"
+                ? "bg-[#1b4965] p-2 rounded-md text-white"
+                : "hover:bg-[#bee9e8] hover:text-white p-2 rounded-md"
             }
           >
             Skills
+          </NavLink>
+          
+          <NavLink
+            to="/applied"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#1b4965] p-2 rounded-md text-white"
+                : "hover:bg-[#bee9e8] hover:text-white p-2 rounded-md"
+            }
+          >
+            Applied
+          </NavLink>
+
+          <NavLink
+            to="/applicants"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#1b4965] p-2 rounded-md text-white"
+                : "hover:bg-[#bee9e8] hover:text-white p-2 rounded-md"
+            }
+          >
+            Applicants
+          </NavLink>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#1b4965] p-2 rounded-md text-white"
+                : "hover:bg-[#bee9e8] hover:text-white p-2 rounded-md"
+            }
+          >
+            Profile
           </NavLink>
         </div>
         <div className="flex gap-5 items-center">
           {/* <UserAddressIcon /> */}
         </div>
+        <button onClick={handleSignOut}>Sign Out</button>
       </div>
       <main>
         <Outlet />
