@@ -10,6 +10,7 @@ const HomePage = () => {
 
     return(
         <div>
+            
             This is the homepage!
             <button onClick={handleSignOut}>Sign Out</button>
         </div>

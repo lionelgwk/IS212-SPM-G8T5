@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import SkillsPage from "./pages/SkillsPage";
 import LoginPage from "./pages/LoginPage";
 import NavBar from "./components/NavBar";
+import CreateRolePage from "./pages/CreateRolePage";
 // import { useAuth } from "./components/useAuth";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
               <Route path="/" element={<NavBar/>}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/skills" exact element={<SkillsPage />} />
+                <Route path="/create" exact element={<CreateRolePage />} />
                 {/* Add protected routes here... */}
                 {/* Add protected routes here... */}
                 {/* Add protected routes here... */}
