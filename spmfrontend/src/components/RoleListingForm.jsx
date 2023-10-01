@@ -154,7 +154,7 @@ const RoleListingForm = () => {
               <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2">
                 <button
                 type="submit"
-                className="inline-block px-6 py-3 text-white bg-blue-500 rounded-full shadow-lg"
+                className="inline-block px-6 py-3 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-lg"
                 onClick={e=>{
                   e.preventDefault();
                 }}
