@@ -49,6 +49,7 @@ import AppliedPage from "./pages/AppliedPage"
 import ApplicantsPage from "./pages/ApplicantsPage";
 import LoginPage from "./pages/LoginPage";
 import NavBar from "./components/NavBar";
+import CreateRolePage from "./pages/CreateRolePage";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           <Route path="/" element={<ProtectedRoute />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/skills" exact element={<SkillsPage />} />
+                <Route path="/create" exact element={<CreateRolePage />} />
             <Route path="/applied" exact element={<AppliedPage />} />
             <Route path="/profile" exact element={<ProfilePage />} />
             <Route path="/applicants" exact element={<ApplicantsPage />} />
