@@ -76,7 +76,6 @@ class RoleDetails(db.Model):
     staffs = db.relationship("StaffDetails", secondary="staff_roles", back_populates="roles")
     skills = db.relationship("SkillDetails", secondary="role_skills", back_populates="roles")
 
-
     def __init__(self, role_id, role_name, role_description, role_status, staffs=[]):
         self.role_id = role_id
         self.role_name = role_name
@@ -187,7 +186,6 @@ class RoleListings(db.Model):
         else:
             self.role_listing_close = role_listing_open + timedelta(weeks=2)
 
-
     def json(self):
         return {
             "role_listing_id" : self.role_listing_id,
@@ -197,5 +195,3 @@ class RoleListings(db.Model):
             "role_listing_open" :self.role_listing_open,
             "role_listing_close" : self.role_listing_close
             }
-
-
