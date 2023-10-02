@@ -77,14 +77,15 @@ class RoleDetails(db.Model):
     skills = db.relationship("SkillDetails", secondary="role_skills", back_populates="roles")
 
 
-    def __init__(self, role_id, role_name, role_description, staffs=None):
+    def __init__(self, role_id, role_name, role_description, role_status, staffs=[]):
         self.role_id = role_id
         self.role_name = role_name
         self.role_description = role_description
+        self.role_status = role_status
         self.staffs = staffs
 
     def json(self):
-        return {"role_id": self.role_id, "role_name": self.role_name}
+        return {"role_id": self.role_id, "role_name": self.role_name, "role_description" : self.role_description, "role_status" : self.role_status}
     
 
 
@@ -120,7 +121,7 @@ class StaffRoles(db.Model):
 
     staff_id = db.Column(db.Integer, db.ForeignKey('staff_details.staff_id'), primary_key=True)
     staff_role = db.Column(db.Integer, db.ForeignKey('role_details.role_id'), primary_key=True)
-    role_type = db.column(db.Enum(RoleTypes))
+    role_type = db.Column(db.Enum(RoleTypes))
     sr_status = db.Column(db.Enum(SkillStatuses))
 
     def __init__(self, staff_id, staff_role, role_type, sr_status):
@@ -168,16 +169,24 @@ class RoleSkills(db.Model):
 class RoleListings(db.Model):
     __tablename__ = 'role_listings'
 
-    role_listing_id = db.Column(db.Integer, primary_key=True)
+    role_listing_id = db.Column(db.BigInteger, primary_key=True, autoincrement=False)
     role_id = db.Column(db.Integer, db.ForeignKey('role_details.role_id'))
     role_listing_desc = db.Column(db.String)
     role_listing_source = db.Column(db.Integer, db.ForeignKey('staff_details.staff_id'))
     role_listing_open = db.Column(db.Date)
     role_listing_close = db.Column(db.Date)
 
-    def __init__(self, role_id, role_listing):
+    def __init__(self, role_listing_id, role_id, role_listing_desc, role_listing_source, role_listing_open, role_listing_close=None):
+        self.role_listing_id = role_listing_id
         self.role_id = role_id
-        self.role_listing = role_listing
+        self.role_listing_desc = role_listing_desc
+        self.role_listing_source = int(role_listing_source)
+        self.role_listing_open = role_listing_open
+        if role_listing_close is not None:
+            self.role_listing_close = role_listing_close
+        else:
+            self.role_listing_close = role_listing_open + timedelta(weeks=2)
+
 
     def json(self):
         return {
