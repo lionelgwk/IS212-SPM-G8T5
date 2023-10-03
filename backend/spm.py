@@ -14,7 +14,7 @@ CORS(app)
 db.init_app(app)
 
 # import blueprints
-import roles
+from blueprints.roles import roles
 app.register_blueprint(roles.role_bp)
 
 
