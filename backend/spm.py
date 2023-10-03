@@ -8,14 +8,19 @@ from datetime import date, timedelta
 from configs.config import Config
 from configs.extensions import db
 
+# Import Flask Blueprints
+from blueprints import roles, staffs
+
+
+
 app = Flask(__name__)
 app.config.from_object(Config)
 CORS(app)
 db.init_app(app)
 
-# import blueprints
-from blueprints.roles import roles
+
 app.register_blueprint(roles.role_bp)
+app.register_blueprint(staffs.staff_bp)
 
 
 if __name__ == '__main__':
