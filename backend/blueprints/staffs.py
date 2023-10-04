@@ -15,9 +15,30 @@ CORS(app)
 
 staff_bp = Blueprint('staff_bp', __name__,)
 
+@staff_bp.route('/')
+def getStaffs():
+    """
+    Get all Staffs in the staff_details SQL table
+    """
+    staffs = StaffDetails.query.all()
+    if staffs is not None:
+        return jsonify(
+            {
+                "code" : 200,
+                "data" : {
+                    "staffs" : [staff.json() for staff in staffs]
+                }
+            }
+        ), 200
+    else:
+        return jsonify(
+            {
+                "code" : 404,
+                "data" : "No staffs found in staff_details table"
+            }
+        ), 404
 
-
-@staff_bp.route('/staff/<string:id>')
+@staff_bp.route('/<string:id>')
 def getStaffDetails(id):
     """
     Get details of a Staff in the staff_details SQL table, based on staff_id

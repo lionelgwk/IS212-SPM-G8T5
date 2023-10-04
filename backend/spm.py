@@ -19,8 +19,8 @@ CORS(app)
 db.init_app(app)
 
 
-app.register_blueprint(roles.role_bp)
-app.register_blueprint(staffs.staff_bp)
+app.register_blueprint(roles.role_bp, url_prefix='/role')
+app.register_blueprint(staffs.staff_bp, url_prefix='/staff')
 
 
 if __name__ == '__main__':
