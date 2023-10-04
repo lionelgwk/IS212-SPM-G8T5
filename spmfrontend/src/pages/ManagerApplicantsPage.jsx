@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import ApplicantSearch from '../components/applicantSearch';
 import ApplicantCard from '../components/applicantCard';
 
-const ApplicantsPage = () => {
+const ManagerApplicantsPage = () => {
 
     const { id } = useParams();
 
@@ -60,4 +60,4 @@ const ApplicantsPage = () => {
     );
 }
 
-export default ApplicantsPage;
+export default ManagerApplicantsPage;

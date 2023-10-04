@@ -19,3 +19,8 @@ export function useAuthManager(){
     }
     return false;
 }
+
+export function useAuthHr(){
+    const userPosition = localStorage.getItem('position');
+    return userPosition === "hr";
+}

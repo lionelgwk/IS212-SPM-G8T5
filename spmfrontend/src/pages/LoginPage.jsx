@@ -16,6 +16,13 @@ const LoginPage = () => {
     window.location.href = "/manager";
   };
 
+  const handleLoginHr = () => {
+    localStorage.setItem("userToken", true);
+
+    localStorage.setItem("position", "hr"); // for manager
+    window.location.href = "/hr";
+  };
+
   return (
     <div className="bg-white">
       <h2>Login Page</h2>
@@ -31,6 +38,13 @@ const LoginPage = () => {
         class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
       >
         Login As Manager
+      </button>
+
+      <button
+        onClick={handleLoginHr}
+        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+      >
+        Login As HR
       </button>
     </div>
   );

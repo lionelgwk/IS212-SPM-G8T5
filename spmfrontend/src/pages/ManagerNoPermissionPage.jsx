@@ -1,11 +1,11 @@
 import React from "react";
 
-const NoPermissionPage = () => {
+const ManagerNoPermissionPage = () => {
     return(
         <div>
             <h1>Oops, you might not have permissions to the view that page.</h1>
-            <h2>Click <a href="/">here</a> to return to home</h2>
+            <h2>Click <a href="/manager">here</a> to return to home</h2>
         </div>
     );
 };
-export default NoPermissionPage;
+export default ManagerNoPermissionPage;

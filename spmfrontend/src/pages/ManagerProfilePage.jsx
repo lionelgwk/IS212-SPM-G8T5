@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import ProfileCard from "../components/profileCard";
 import SkillCard from "../components/skillCard";
 
-const ProfilePage = () => {
+const ManagerProfilePage = () => {
 
 
 
@@ -13,4 +13,4 @@ const ProfilePage = () => {
         </div>
     );
 };
-export default ProfilePage;
+export default ManagerProfilePage;

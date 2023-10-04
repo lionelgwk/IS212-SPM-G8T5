@@ -2,23 +2,23 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import StaffNavBar from "./StaffNavBar";
 import StaffHomePage from "../pages/StaffHomePage";
-import CreateRolePage from "../pages/CreateRolePage";
 import AppliedPage from "../pages/AppliedPage";
-import ProfilePage from "../pages/ProfilePage";
-import ApplicantsPage from "../pages/ApplicantsPage";
-import NoPermissionPage from "../pages/NoPermissionPage";
+import NoPermissionPage from "../pages/ManagerNoPermissionPage";
+import StaffProfilePage from "../pages/StaffProfilePage";
+import StaffListingDetailsPage from "../pages/StaffListingDetailsPage";
+import StaffApplicantsPage from "../pages/StaffApplicantsPage";
 
 function StaffRoutes() {
   return (
     <Routes>
       {/* Nested under '/staff' */}
-      <Route path="/" element={<StaffNavBar />}>
-        <Route path="/" element={<StaffHomePage />} />
-        <Route path="/create" element={<CreateRolePage />} />
+      <Route path="/" exact element={<StaffNavBar />}>
+        <Route path="/" exact element={<StaffHomePage />} />
         <Route path="/applied" element={<AppliedPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/applicants" element={<ApplicantsPage />} />
-        <Route path="*" element={<NoPermissionPage/>} />
+        <Route path="/profile" element={<StaffProfilePage />} />
+        <Route path="/details/:id" element={<StaffListingDetailsPage />} />
+        <Route path="/details/:id/applicants" element={<StaffApplicantsPage />} />
+        <Route path="*" element={<NoPermissionPage />} />
         {/* Add more staff-specific routes here */}
       </Route>
     </Routes>

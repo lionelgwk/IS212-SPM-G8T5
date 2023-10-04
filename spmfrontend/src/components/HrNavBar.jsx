@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
-const StaffNavBar = () => {
+const HrNavBar = () => {
   // Sign out function
   const handleSignOut = () => {
     localStorage.removeItem('position');
@@ -13,11 +13,11 @@ const StaffNavBar = () => {
       <header className="border-b-[1px] bg-[#e7f2f8] sticky top-0 z-100 shadow-md">
         <div className="container ml-4 text-navbar-primary top-0 h-[64px] items-center flex justify-between">
           <div className="flex gap-5 items-center justify-center">
-            <Link to="/" className="mr-2">
+            <Link to="/hr" className="mr-2">
               <img src="/src/assets/logo.png" alt="logo" className="h-[30px]" />
             </Link>
             <NavLink
-              to="/staff" end
+              to="/hr" end
               className={({ isActive }) =>
                 isActive
                   ? "bg-[#1b4965] p-2 rounded-md text-white"
@@ -28,7 +28,7 @@ const StaffNavBar = () => {
             </NavLink>
             
             <NavLink
-              to="/staff/applied"
+              to="/hr/applied"
               className={({ isActive }) =>
                 isActive
                   ? "bg-[#1b4965] p-2 rounded-md text-white"
@@ -38,8 +38,19 @@ const StaffNavBar = () => {
               Applied
             </NavLink>
 
+            {/* <NavLink
+              to="/hr/applicants"
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-[#1b4965] p-2 rounded-md text-white"
+                  : "hover:bg-[#4dc494] hover:text-white p-2 rounded-md"
+              }
+            >
+              Applicants
+            </NavLink> */}
+
             <NavLink
-              to="/staff/profile"
+              to="/hr/profile"
               className={({ isActive }) =>
                 isActive
                   ? "bg-[#1b4965] p-2 rounded-md text-white"
@@ -49,6 +60,16 @@ const StaffNavBar = () => {
               Profile
             </NavLink>
 
+            <NavLink
+              to="/hr/create"
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-[#1b4965] p-2 rounded-md text-white"
+                  : "hover:bg-[#4dc494] hover:text-white p-2 rounded-md"
+              }
+            >
+              Create a Listing
+            </NavLink>
           </div>
           <div className="flex justify-end ml-auto">
             <button className="hover:bg-[#f5655b] hover:text-white p-2 rounded-md gap-5" onClick={handleSignOut}>Sign Out</button>
@@ -62,4 +83,4 @@ const StaffNavBar = () => {
   );
 };
 
-export default StaffNavBar;
+export default HrNavBar;

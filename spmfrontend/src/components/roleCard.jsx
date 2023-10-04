@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const RoleCard = () => {
   return (
@@ -16,7 +17,8 @@ const RoleCard = () => {
         <div className="w-3/12 pl-4 text-center">
           <div className="mt-3 mb-3 font-semibold">Date of Listing: 2023-09-15</div>
           <div className="mb-3 font-semibold">Deadline: 2023-09-29</div>
-          <button className="px-4 py-2 rounded bg-[#62b6cb] text-white hover:bg-[#1b4965]">Apply</button>
+          <button className="mx-2 px-4 py-2 rounded bg-[#62b6cb] text-white hover:bg-[#1b4965]">Apply</button>
+          <NavLink to="/" ><button className="mx-2 px-4 py-2 rounded bg-[#62b6cb] text-white hover:bg-[#1b4965]">View Details</button></NavLink>
         </div>
       </div>
     </div>
