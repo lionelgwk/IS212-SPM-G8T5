@@ -38,17 +38,6 @@ const HrNavBar = () => {
               Applied
             </NavLink>
 
-            {/* <NavLink
-              to="/hr/applicants"
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-[#1b4965] p-2 rounded-md text-white"
-                  : "hover:bg-[#4dc494] hover:text-white p-2 rounded-md"
-              }
-            >
-              Applicants
-            </NavLink> */}
-
             <NavLink
               to="/hr/profile"
               className={({ isActive }) =>
