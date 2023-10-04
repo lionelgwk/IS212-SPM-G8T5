@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
-const NavBar = () => {
+const StaffNavBar = () => {
   // Sign out function
   const handleSignOut = () => {
     localStorage.removeItem('position');
@@ -17,7 +17,7 @@ const NavBar = () => {
               <img src="/src/assets/logo.png" alt="logo" className="h-[30px]" />
             </Link>
             <NavLink
-              to="/"
+              to="/" end
               className={({ isActive }) =>
                 isActive
                   ? "bg-[#1b4965] p-2 rounded-md text-white"
@@ -39,17 +39,6 @@ const NavBar = () => {
             </NavLink>
 
             <NavLink
-              to="/applicants"
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-[#1b4965] p-2 rounded-md text-white"
-                  : "hover:bg-[#4dc494] hover:text-white p-2 rounded-md"
-              }
-            >
-              Applicants
-            </NavLink>
-
-            <NavLink
               to="/profile"
               className={({ isActive }) =>
                 isActive
@@ -60,16 +49,6 @@ const NavBar = () => {
               Profile
             </NavLink>
 
-            <NavLink
-              to="/create"
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-[#1b4965] p-2 rounded-md text-white"
-                  : "hover:bg-[#4dc494] hover:text-white p-2 rounded-md"
-              }
-            >
-              Create a Listing
-            </NavLink>
           </div>
           <div className="flex justify-end ml-auto">
             <button className="hover:bg-[#f5655b] hover:text-white p-2 rounded-md gap-5" onClick={handleSignOut}>Sign Out</button>
@@ -83,4 +62,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default StaffNavBar;
