@@ -1,12 +1,11 @@
 from flask import Flask, request, jsonify, Blueprint
-from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_cors import CORS
 import enum
 from datetime import date, timedelta, datetime
 from random import randint
 
-from models import RoleListings, RoleDetails, StaffDetails
+from models import RoleListings, RoleDetails
 from configs.extensions import db
 
 
@@ -48,7 +47,7 @@ def getAllListedRoles():
                 'code' : 500,
                 "error" : e
             }
-        )
+        ), 200
 
 
 
@@ -84,7 +83,7 @@ def getAllOpenRoles():
                 "message" : "GET request successful",
                 "data" : role_details_json_list
             }
-        )
+        ), 200
     except Exception as e:
         return jsonify(
             {
@@ -124,14 +123,54 @@ def addRoleDetails():
                 "message" : "POST request successful",
                 "request": [data]
             }
-        )
+        ), 200
     except Exception as e:
         return jsonify(
             {
                 'code' : 500,
                 "error" : e
             }
-        )
+        ), 500
+
+
+
+@role_bp.route('/delete_role_listing', methods=["DELETE"])
+def deleteRoleDetails():
+    """
+    Delete role detail from the role_details SQL table.
+    Input parameters are in JSON format
+    {
+        "role_id" : 12391747
+    }
+    """
+    try:
+        data = request.json
+        role_listing_id = data["role_id"]
+        print("\n#############")
+        print(role_listing_id)
+        role_listing = RoleListings.query.filter_by(role_listing_id=role_listing_id).first()
+        if role_listing is not None:
+            db.session.delete(role_listing)
+            db.session.commit()
+            return jsonify(
+                {
+                    'message': 'Role Listing deleted successfully'
+                }
+            ), 200
+        else:
+            return jsonify(
+                {
+                    'error': 'Role Listing not found'
+                }
+            ), 404
+
+    except Exception as e:
+        return jsonify(
+            {
+                'code' : 500,
+                "error" : e
+            }
+        ), 500
 
 
 
@@ -195,12 +234,12 @@ def addRoleListing():
                     }
                 ]
             }
-        )
+        ), 200
     except Exception as e:
         return jsonify(
             {
                 'code' : 500,
                 "error" : e
             }
-        )
+        ), 500
     
