@@ -1,12 +1,13 @@
 # Backend API Documentation
 1. [ Roles Documentation ](#roles)
 2. [ Staff Documentation ](#staff)
+3. [ Skill Documentation ](#skill)
 
 
 <br>
 <a name="roles"></a>
 
-## Roles `/role`
+# Roles `/role`
 1. [ Get all listed roles ](#getAllListedRoles)
 2. [ Get all open roles ](#getAllOpenRoles)
 3. [ Create new role details ](#addRoleDetails)
@@ -20,7 +21,7 @@
 <br>
 <a name="getAllListedRoles"></a>
 
-### Get all listed roles `/role/listed_roles`
+## Get all listed roles `/role/listed_roles`
 Methods : <strong>GET</strong><br>
 Get all listed roles in the role_listings SQL table.
 
@@ -63,7 +64,7 @@ Sample Output:
 <br>
 <a name="getAllOpenRoles"></a>
 
-### Get all open roles `/role/open_roles`
+## Get all open roles `/role/open_roles`
 Methods : <strong>GET</strong><br>
 Get all open role listings in the role_listings SQL table and filtering for role_listings with close_date after today's date.
 
@@ -106,7 +107,7 @@ Sample Output:
 <br>
 <a name="addRoleDetails"></a>
 
-### Create new role detail `/role/add_role_detail`
+## Create new role detail `/role/add_role_detail`
 Methods : <strong>POST</strong><br>
 Create new role detail by updating the role_details SQL table.
 
@@ -139,7 +140,7 @@ Sample Output:
 <br>
 <a name="deleteRoleListing"></a>
 
-### Delete role listing `/role/delete_role_listing`
+## Delete role listing `/role/delete_role_listing`
 Methods : <strong>DELETE</strong><br>
 Delete role listing from the role_listing SQL table.
 
@@ -160,7 +161,7 @@ Sample Output:
 <br>
 <a name="addRoleListing"></a>
 
-### Create new role listing `/role/add_role_listing`
+## Create new role listing `/role/add_role_listing`
 Methods : <strong>POST</strong><br>
 Create new role listing by updating the role_listings SQL table. New role listing can only be created using an existing role in role_details.
 
@@ -197,7 +198,7 @@ Sample Output:
 <br>
 <a name="listedRoleDetails1"></a>
 
-### Get role listing details `/role/listed_roles/\<string:role_listing_id>`
+## Get role listing details `/role/listed_roles/\<string:role_listing_id>`
 Methods : <strong>GET</strong><br>
 Get details of the role listing by sending a GET request with the role_listing_id.
 
@@ -225,7 +226,7 @@ Sample Output:
 <br>
 <a name="listedRoleDetails2"></a>
 
-### Edit role listing details `/role/listed_roles/\<string:role_listing_id>`
+## Edit role listing details `/role/listed_roles/<string:role_listing_id>`
 Methods : <strong>POST</strong><br>
 Edit role listing with the specified role_listing_id by sending a POST request.<br>
 Current parameters that can be changed : [ role_listing_desc , role_listing_close, role_listing_open ]
@@ -259,4 +260,36 @@ Sample Output:
     },
     "message": "Role listing with the ID 1222213254844124688 , has been sucessfully updated."
 }
+```
+<br>
+<br>
+<a name="staff"></a>
+
+# Staff `/staff`
+1. [ Get a staff's details ](#getStaffDetails)
+
+## Get a staff's details `<string:staff_id>`
+Methods : GET
+Get staff details in the staff_details SQL table based on staff_id
+
+Sample GET input:
+```
+role_listing_id = 123456786
+```
+
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": {
+        "biz_address": "1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208",
+        "dept": "IT",
+        "email": "John_doe@all-in-one.com.sg",
+        "fname": "JOHN",
+        "lname": "DOE",
+        "phone": "65-5824-7888",
+        "staff_id": 123456786
+    }
+}
+
 ```
