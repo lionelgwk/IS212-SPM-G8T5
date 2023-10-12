@@ -3,7 +3,7 @@ from os import environ
 from flask_cors import CORS
 import enum
 from datetime import date, timedelta, datetime
-from random import randint
+import uuid
 
 from models import RoleListings, RoleDetails
 from configs.extensions import db
@@ -53,7 +53,7 @@ def getAllOpenRoles():
         data : []
         message : sucess
     }
-    """  
+    """
     current_date = datetime.now().date()
     all_role_listings = RoleListings.query.filter(RoleListings.role_listing_close >= current_date).all()
     role_details_json_list = [listing.json() for listing in all_role_listings]
@@ -61,9 +61,7 @@ def getAllOpenRoles():
     for role_details_json in role_details_json_list:
         role_id = role_details_json["role_id"]
         role = RoleDetails.query.get(role_id)
-        print("\n#######################")
         role_details_json["role_name"] = role.json()["role_name"]
-        print(role_details_json)
     
     return jsonify(
         {
@@ -97,11 +95,10 @@ def addRoleDetails():
             )
         db.session.add(new_role)
         db.session.commit()
-        print(new_role)
         return jsonify(
             {
                 "code" : 200,
-                "message" : "POST request successful",
+                "message" : "New role detail created successful.",
                 "request": [data]
             }
         ), 200
@@ -116,9 +113,9 @@ def addRoleDetails():
 
 
 @role_bp.route('/delete_role_listing', methods=["DELETE"])
-def deleteRoleDetails():
+def deleteRoleListing():
     """
-    Delete role detail from the role_details SQL table.
+    Delete role listing from the role_listing SQL table.
     Input parameters are in JSON format
     {
         "role_id" : 12391747
@@ -135,12 +132,14 @@ def deleteRoleDetails():
             db.session.commit()
             return jsonify(
                 {
+                    "code" : 200,
                     'message': 'Role Listing deleted successfully'
                 }
             ), 200
         else:
             return jsonify(
                 {
+                    "code" : 404,
                     'error': 'Role Listing not found'
                 }
             ), 404
@@ -161,55 +160,65 @@ def addRoleListing():
     Create new role listing by updating the role_listings SQL table. New role listing can only be created using an existing role in role_details.
     Input parameters are in JSON format
     {
-        "role_id" : 234567325,
-        "role_listing_source" : 123456786,
-        "role_listing_open" : "2023-09-28"
-    }
-    {
-        "role_id" : 234567321,
+        "role_id" : 234567323,
         "role_listing_source" : 123456787,
-        "role_listing_open" : "2023-09-29"
+        "role_listing_open" : "2023-09-29",
+        "role_listing_creator" : 123456792
     }
+
     """
     data = request.json
 
     role_id = data['role_id']
 
-    role = RoleDetails.query.filter_by(role_id=role_id).first().json()
+    roleObj = RoleDetails.query.filter_by(role_id=role_id).first()
+    if roleObj is None:
+        return jsonify(
+            {
+                "code" : 404,
+                "message" : f"Role with {role_id} not found."
+            }
+        )
+    role = roleObj.json()
     role_listing_desc = role["role_description"]
     role_name = role["role_name"]
 
     role_listing_source = data['role_listing_source']
     role_listing_open = datetime.strptime(data['role_listing_open'], '%Y-%m-%d')
-    role_listing_id = randint(10000000, 99999999)
+    role_listing_id = int(str(uuid.uuid4().int)[:19])
+    role_listing_creator = data['role_listing_creator']
 
     try:
         role_listing_close = data["role_listing_close"]
     except:
         role_listing_close = role_listing_open + timedelta(weeks=2)
-        new_role_listing = RoleListings(
-            role_listing_id=role_listing_id,
-            role_id=role_id,
-            role_listing_desc=role_listing_desc,
-            role_listing_source=role_listing_source,
-            role_listing_open=role_listing_open,
-            role_listing_close=role_listing_close
-            )
+
+    new_role_listing = RoleListings(
+        role_listing_id=role_listing_id,
+        role_id=role_id,
+        role_listing_desc=role_listing_desc,
+        role_listing_source=role_listing_source,
+        role_listing_open=role_listing_open,
+        role_listing_close=role_listing_close,
+        role_listing_creator=role_listing_creator
+        )
 
     db.session.add(new_role_listing)
     db.session.commit()
     return jsonify(
         {
             "code" : 200,
-            "message" : "POST request successful",
+            "message" : "New role listing successfully created.",
             "data" : [
                 {   
+                    "role_listing_id" : role_listing_id,
                     "role_id" : role_id,
                     "role_name" : role_name,
                     "role_listing_desc" : role_listing_desc,
                     "role_listing_source" : role_listing_source,
                     "role_listing_open" : role_listing_open,
-                    "role_listing_close" : role_listing_close
+                    "role_listing_close" : role_listing_close,
+                    "role_listing_creator" : role_listing_creator
                 }
             ]
         }
@@ -230,7 +239,7 @@ def listedRoleDetails(role_listing_id):
     Input Parameters in JSON format:
     role_listing_id = 102
     {
-        "role_listing_desc" : "testesttestsetste",
+        "role_listing_desc" : "Job listing for Learning Facilitator / Trainer role Edited",
         "role_listing_close" : "2023-10-21",
         "role_listing_open" : "2023-9-21"
     }
@@ -286,6 +295,11 @@ def listedRoleDetails(role_listing_id):
                 role.role_listing_open = datetime.strptime(data["role_listing_open"], '%Y-%m-%d')
                 print(role.role_listing_open)
                 print(type(role.role_listing_open))
+
+            if "role_listing_source" in data:
+                print(role.role_listing_source)
+                role.role_listing_source = data["role_listing_source"]
+                print(role.role_listing_source)
 
             db.session.commit()
             

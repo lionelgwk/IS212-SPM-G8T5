@@ -25,30 +25,38 @@ Methods : <strong>GET</strong><br>
 Get all listed roles in the role_listings SQL table.
 
 Sample Output:
-```
+```json
 {
     code : 200,
     data : [
         {
             "role_id": 234567891,
             "role_listing_close": "Fri, 29 Sep 2023 00:00:00 GMT",
+            "role_listing_creator": 123456788,
             "role_listing_desc": "Job listing for Head, Talent Attraction role",
             "role_listing_id": 101,
             "role_listing_open": "Fri, 15 Sep 2023 00:00:00 GMT",
             "role_listing_source": 123456789,
+            "role_listing_ts_create": "Fri, 13 Oct 2023 02:34:04 GMT",
+            "role_listing_ts_update": "Fri, 13 Oct 2023 02:34:04 GMT",
+            "role_listing_updater": 123456788,
             "role_name": "Head, Talent Attraction"
         },
         {
             "role_id": 234567892,
             "role_listing_close": "Wed, 04 Oct 2023 00:00:00 GMT",
+            "role_listing_creator": 123456788,
             "role_listing_desc": "Job listing for Learning Facilitator / Trainer role",
             "role_listing_id": 102,
-            "role_listing_open": "Thu, 21 Sep 2023 00:00:00 GMT",
+            "role_listing_open": "Wed, 20 Sep 2023 00:00:00 GMT",
             "role_listing_source": 123456789,
+            "role_listing_ts_create": "Fri, 13 Oct 2023 02:34:04 GMT",
+            "role_listing_ts_update": "Fri, 13 Oct 2023 02:34:04 GMT",
+            "role_listing_updater": 123456788,
             "role_name": "Learning Facilitator / Trainer"
         }
     ],
-    message : "sucess"
+    message : "GET request successful"
 }
 ```
 <br>
@@ -60,30 +68,38 @@ Methods : <strong>GET</strong><br>
 Get all open role listings in the role_listings SQL table and filtering for role_listings with close_date after today's date.
 
 Sample Output:
-```
+```json
 {
     code : 200,
     data : [
         {
-            "role_id": 234567891,
-            "role_listing_close": "Fri, 29 Sep 2023 00:00:00 GMT",
-            "role_listing_desc": "Job listing for Head, Talent Attraction role",
-            "role_listing_id": 101,
-            "role_listing_open": "Fri, 15 Sep 2023 00:00:00 GMT",
-            "role_listing_source": 123456789,
-            "role_name": "Head, Talent Attraction"
+            "role_id": 234511581,
+            "role_listing_close": "Sat, 14 Oct 2023 00:00:00 GMT",
+            "role_listing_creator": 123456787,
+            "role_listing_desc": "Job listing for Fire Warden role",
+            "role_listing_id": 104,
+            "role_listing_open": "Sat, 30 Sep 2023 00:00:00 GMT",
+            "role_listing_source": 123456788,
+            "role_listing_ts_create": "Fri, 13 Oct 2023 02:34:04 GMT",
+            "role_listing_ts_update": "Fri, 13 Oct 2023 02:34:04 GMT",
+            "role_listing_updater": 123456789,
+            "role_name": "Fire Warden"
         },
         {
-            "role_id": 234567892,
-            "role_listing_close": "Wed, 04 Oct 2023 00:00:00 GMT",
-            "role_listing_desc": "Job listing for Learning Facilitator / Trainer role",
-            "role_listing_id": 102,
-            "role_listing_open": "Thu, 21 Sep 2023 00:00:00 GMT",
-            "role_listing_source": 123456789,
-            "role_name": "Learning Facilitator / Trainer"
+            "role_id": 234567323,
+            "role_listing_close": "Fri, 13 Oct 2023 00:00:00 GMT",
+            "role_listing_creator": 123456792,
+            "role_listing_desc": "Help to build and test new API endpoints for existing systems",
+            "role_listing_id": 9223372036854775807,
+            "role_listing_open": "Fri, 29 Sep 2023 00:00:00 GMT",
+            "role_listing_source": 123456787,
+            "role_listing_ts_create": "Fri, 13 Oct 2023 02:51:33 GMT",
+            "role_listing_ts_update": "Fri, 13 Oct 2023 02:51:33 GMT",
+            "role_listing_updater": 123456792,
+            "role_name": "Software Engineer"
         }
     ],
-    message : "sucess"
+    message : "GET request successful"
 }
 ```
 <br>
@@ -95,7 +111,7 @@ Methods : <strong>POST</strong><br>
 Create new role detail by updating the role_details SQL table.
 
 Sample Input JSON Package:
-```
+```json
 {
     "role_id" : 234567324,
     "role_name" : "Software Engineer",
@@ -105,14 +121,14 @@ Sample Input JSON Package:
 ```
 
 Sample Output:
-```
+```json
 {
     "code": 200,
-    "message": "POST request successful",
+    "message": "New role detail created successful.",
     "request": [
         {
             "role_description": "Help to build and test new API endpoints for existing systems",
-            "role_id": 234567324,
+            "role_id": 234567323,
             "role_name": "Software Engineer",
             "role_status": "active"
         }
@@ -128,16 +144,16 @@ Methods : <strong>DELETE</strong><br>
 Delete role listing from the role_listing SQL table.
 
 Sample Input JSON Package:
-```
+```json
 {
     "role_id" : 12391747
 }
 ```
 
 Sample Output:
-```
+```json
 {
-    'message': 'Role Listing deleted successfully'
+    "message" : "Role Listing deleted successfully"
 }
 ```
 <br>
@@ -150,26 +166,28 @@ Create new role listing by updating the role_listings SQL table. New role listin
 
 
 Sample Input JSON Package:
-```
+```json
 {
-    "role_id" : 234567325,
-    "role_listing_source" : 123456786,
-    "role_listing_open" : "2023-09-28"
+        "role_id" : 234567323,
+        "role_listing_source" : 123456787,
+        "role_listing_open" : "2023-09-29",
+        "role_listing_creator" : 123456792
 }
 ```
 
 Sample Output:
-```
+```json
 {
     "code": 200,
     "data": [
         {
-            "role_id": 234567321,
+            "role_id": 234567323,
             "role_listing_close": "Fri, 13 Oct 2023 00:00:00 GMT",
-            "role_listing_desc": "The HR Coordinator supports human resources operations by assisting with recruitment, onboarding, and employee relations activities.",
+            "role_listing_desc": "Help to build and test new API endpoints for existing systems",
+            "role_listing_id": 9608029253891076348,
             "role_listing_open": "Fri, 29 Sep 2023 00:00:00 GMT",
             "role_listing_source": 123456787,
-            "role_name": "HR Coordinator"
+            "role_name": "Software Engineer"
         }
     ],
     "message": "POST request successful"
@@ -189,7 +207,7 @@ role_listing_id = 102
 ```
 
 Sample Output:
-```
+```json
 {
     "code": 200,
     "data": {
@@ -213,27 +231,32 @@ Edit role listing with the specified role_listing_id by sending a POST request.<
 Current parameters that can be changed : [ role_listing_desc , role_listing_close, role_listing_open ]
 
 Sample GET input and JSON package:
-```
-role_listing_id = 102
+```json
+role_listing_id = 1222213254844124688
 {
-    "role_listing_desc" : "testesttestsetste",
+    "role_listing_desc" : "Job listing for Learning Facilitator / Trainer role Edited",
     "role_listing_close" : "2023-10-21",
-    "role_listing_open" : "2023-9-21"
+    "role_listing_open" : "2023-9-21",
+    "role_listing_source" : 123456789
 }
 ```
 
 Sample Output:
-```
+```json
 {
     "code": 200,
     "data": {
-        "role_id": 234567892,
+        "role_id": 234567323,
         "role_listing_close": "Sat, 21 Oct 2023 00:00:00 GMT",
+        "role_listing_creator": 123456792,
         "role_listing_desc": "Job listing for Learning Facilitator / Trainer role Edited",
-        "role_listing_id": 102,
+        "role_listing_id": 1222213254844124688,
         "role_listing_open": "Thu, 21 Sep 2023 00:00:00 GMT",
-        "role_listing_source": 123456789
+        "role_listing_source": 123456789,
+        "role_listing_ts_create": "Fri, 13 Oct 2023 03:02:46 GMT",
+        "role_listing_ts_update": "Fri, 13 Oct 2023 03:05:45 GMT",
+        "role_listing_updater": 123456792
     },
-    "message": "Role listing with the ID 102 , has been sucessfully updated."
+    "message": "Role listing with the ID 1222213254844124688 , has been sucessfully updated."
 }
 ```
