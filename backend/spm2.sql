@@ -16,7 +16,8 @@ CREATE TABLE staff_details (
 CREATE TABLE staff_reporting_officer (
 	staff_id INT PRIMARY KEY,
 	RO_id INT,
-	FOREIGN KEY (RO_id) REFERENCES staff_details(staff_id)
+	FOREIGN KEY (RO_id) REFERENCES staff_details(staff_id),
+	FOREIGN KEY (staff_id) REFERENCES staff_details(staff_id)
 );
 
 CREATE TABLE role_details (
@@ -60,7 +61,7 @@ CREATE TABLE role_skills (
 );
 
 CREATE TABLE role_listings(
-    role_listing_id INT NOT NULL,
+    role_listing_id BIGINT NOT NULL,
     role_id INT NOT NULL,
     role_listing_desc VARCHAR(255) NOT NULL,
     role_listing_source INT,
@@ -79,7 +80,7 @@ CREATE TABLE role_listings(
 
 CREATE TABLE ROLE_APPLICATIONS (
     role_app_id INT AUTO_INCREMENT PRIMARY KEY,
-    role_listing_id INT NOT NULL,
+    role_listing_id BIGINT NOT NULL,
     staff_id INT NOT NULL,
     role_app_status ENUM('applied', 'withdrawn') NOT NULL,
     role_app_ts_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -101,11 +102,11 @@ VALUES
 
 INSERT INTO staff_reporting_officer (staff_id, RO_id)
 VALUES
-	(123456789, 123456788),
-	(123456790, 123456788),
-    (123456791, 123456788),
+	(123456789, 123456791),
+	(123456787, 123456788),
+    (123456786, 123456792),
     (123456792, 123456788),
-    (123456793, 123456788),
+    (123456791, 123456794),
     (123456794, 123456788);
 
 INSERT INTO role_details (role_id, role_name, role_description, role_status)
@@ -169,12 +170,12 @@ VALUES
     (234567893, 345678917);
 
 
-INSERT INTO role_listings(role_listing_id, role_id, role_listing_desc, role_listing_source, role_listing_open, role_listing_close)
+INSERT INTO role_listings(role_listing_id, role_id, role_listing_desc, role_listing_source, role_listing_creator, role_listing_updater, role_listing_open, role_listing_close)
 VALUES
-(101, 234567891, 'Job listing for Head, Talent Attraction role', 123456789, '2023-09-15', '2023-09-29'),
-(102, 234567892, 'Job listing for Learning Facilitator / Trainer role', 123456789, '2023-09-20', '2023-10-04'),
-(103, 234567893, 'Job listing for Agile Coach (SM) role', 123456787, '2023-09-25', '2023-10-09'),
-(104, 234511581, 'Job listing for Fire Warden role', 123456788, '2023-09-30', '2023-10-14');
+(101, 234567891, 'Job listing for Head, Talent Attraction role', 123456789, 123456788, 123456788, '2023-09-15', '2023-09-29'),
+(102, 234567892, 'Job listing for Learning Facilitator / Trainer role', 123456789, 123456788, 123456788, '2023-09-20', '2023-10-04'),
+(103, 234567893, 'Job listing for Agile Coach (SM) role', 123456787, 123456788, 123456788, '2023-09-25', '2023-10-09'),
+(104, 234511581, 'Job listing for Fire Warden role', 123456788, 123456787, 123456789, '2023-09-30', '2023-10-14');
 
 INSERT INTO ROLE_APPLICATIONS (role_listing_id, staff_id, role_app_status)
 VALUES
