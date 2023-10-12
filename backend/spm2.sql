@@ -19,6 +19,13 @@ CREATE TABLE staff_reporting_officer (
 	FOREIGN KEY (RO_id) REFERENCES staff_details(staff_id)
 );
 
+CREATE TABLE role_details (
+	role_id INT PRIMARY KEY,
+	role_name VARCHAR(50),
+	role_description VARCHAR(50000),
+	role_status ENUM('active', 'inactive')
+);
+
 CREATE TABLE staff_roles (
 	staff_id INT,
 	staff_role INT,
@@ -27,13 +34,6 @@ CREATE TABLE staff_roles (
     PRIMARY KEY (staff_id, staff_role),
 	FOREIGN KEY (staff_id) REFERENCES staff_details(staff_id),
 	FOREIGN KEY (staff_role) REFERENCES role_details(role_id)
-);
-
-CREATE TABLE role_details (
-	role_id INT PRIMARY KEY,
-	role_name VARCHAR(50),
-	role_description VARCHAR(50000),
-	role_status ENUM('active', 'inactive')
 );
 
 CREATE TABLE skill_details (
@@ -54,7 +54,7 @@ CREATE TABLE staff_skills (
 CREATE TABLE role_skills (
 	role_id INT,
 	skill_id INT,
-    PRIMARY KEY (role_id, skill_id).
+    PRIMARY KEY (role_id, skill_id),
 	FOREIGN KEY (role_id) REFERENCES role_details(role_id),
 	FOREIGN KEY (skill_id) REFERENCES skill_details(skill_id)
 );
@@ -98,38 +98,15 @@ VALUES
     (123456793, 'JASON', 'TAN', 'FINANCE', 'jason_tan@all-in-one.com.sg', '65-1234-5672', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'manager'),
     (123456794, 'JIMMY', 'NG', 'IT', 'jimmy_ng@all-in-one.com.sg', '65-1234-5673', '1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208', 'inactive');
 
-	
-
 
 INSERT INTO staff_reporting_officer (staff_id, RO_id)
 VALUES
-	(123456789, 123456123),
-	(123456123, 1),
-	(123456790, 123456123),
-    (123456791, 123456123),
-    (123456792, 123456123),
-    (123456793, 123456123),
-    (123456794, 123456123);
-
-INSERT INTO staff_roles (staff_id, staff_role, role_type, sr_status)
-VALUES
-	(123456789, 234570011, 'primary', 'active'),
-	(123456789, 234567893, 'secondary', 'active'),
-	(123456789, 234511581, 'secondary', 'inactive'),
-	(123456790, 234570011, 'primary', 'active'),
-    (123456790, 234567893, 'secondary', 'active'),
-    (123456790, 234511581, 'secondary', 'inactive'),
-    (123456791, 234570011, 'primary', 'active'),
-    (123456791, 234567893, 'secondary', 'active'),
-    (123456791, 234511581, 'secondary', 'inactive'),
-    (123456792, 234570011, 'primary', 'active'),
-    (123456792, 234567893, 'secondary', 'active'),
-    (123456792, 234511581, 'secondary', 'inactive'),
-    (123456793, 234570011, 'primary', 'active'),
-    (123456793, 234567893, 'secondary', 'active'),
-    (123456793, 234511581, 'secondary', 'inactive'),
-    (123456794, 234570011, 'primary', 'active'),
-    (123456794, 234567893, 'secondary', 'active'),
+	(123456789, 123456788),
+	(123456790, 123456788),
+    (123456791, 123456788),
+    (123456792, 123456788),
+    (123456793, 123456788),
+    (123456794, 123456788);
 
 INSERT INTO role_details (role_id, role_name, role_description, role_status)
 VALUES
@@ -142,26 +119,34 @@ VALUES
     (234567896, 'Agile Coach (PM)', 'The Agile Coach (PM) coaches teams in the conduct of Agile practices and the implementation of Agile methodologies and practices in the organisation and acts as an effective Project Manager in Agile Scrum teams.', 'active'),
     (234511582, 'Security Officer', 'The Security Officer is responsible for ensuring the safety and security of the organisation''s premises and personnel. He/She is responsible for the development and implementation of security policies and procedures. He/She is responsible for the development and implementation of security training programs. He/She is responsible for the development and implementation of security metrics and the implementation of the metrics across the organisation. He/She is responsible for the development and implementation of security technology and the implementation of the technology across the organisation. He/She is responsible for the development and implementation of security analytics and the implementation of the analytics across the organisation.', 'active');
 
+
+INSERT INTO staff_roles (staff_id, staff_role, role_type, sr_status)
+VALUES
+	(123456789, 234567892, 'primary', 'active'),
+	(123456788, 234567892, 'secondary', 'active'),
+	(123456787, 234567892, 'secondary', 'inactive'),
+	(123456786, 234567892, 'primary', 'active'),
+    (123456791, 234567892, 'secondary', 'active'),
+    (123456792, 234567892, 'secondary', 'inactive'),
+    (123456793, 234567894, 'primary', 'active');
+
 INSERT INTO skill_details (skill_id, skill_name, skill_status)
 VALUES
 	(345678912, 'Pascal Programming', 'inactive'),
 	(345678913, 'Python Programming', 'active'),
 	(345678914, 'Certified Scrum Master', 'active'),
-	 (345678916, 'Java Programming', 'active'),
+	(345678916, 'Java Programming', 'active'),
     (345678917, 'C# Programming', 'active'),
     (345678918, 'Project Management', 'active');
 
 INSERT INTO staff_skills (staff_id, skill_id, ss_status)
 VALUES
-	(123456789, 345678913, 'active'),
-	(123456789, 345678866, 'active'),
-	(123456789, 345678790, 'active'),
-	(123456789, 345678890, 'unverified'),
-	(123456789, 345678935, 'in-progress'),
-	(123456789, 345678927, 'in-progress'),
-	(123456790, 345678913, 'active'),
-    (123456790, 345678916, 'active'),
-    (123456790, 345678918, 'unverified'),
+    (123456789, 345678912, 'active'),
+    (123456789, 345678913, 'active'),
+    (123456789, 345678914, 'active'),
+    (123456789, 345678916, 'unverified'),
+    (123456789, 345678917, 'in-progress'),
+    (123456789, 345678918, 'in-progress'),
     (123456791, 345678913, 'active'),
     (123456791, 345678917, 'active'),
     (123456791, 345678918, 'in-progress'),
@@ -169,47 +154,31 @@ VALUES
     (123456792, 345678917, 'active'),
     (123456792, 345678918, 'active'),
     (123456793, 345678914, 'active'),
-    (123456793, 345678916, 'active'),
-    (123456793, 345678918, 'active'),
-    (123456794, 345678913, 'active'),
-    (123456794, 345678917, 'active'),
-    (123456794, 345678918, 'active');
+    (123456793, 345678916, 'active');
 
 INSERT INTO role_skills (role_id, skill_id)
 VALUES
-	(234567893, 345678914),
-	(234567899, 345678915),
-	(234567899, 345678916),
-	(234567894, 345678914),
-    (234567894, 345678915),
+    (234567893, 345678914),
+    (234567894, 345678914),
     (234567894, 345678916),
     (234567895, 345678914),
-    (234567895, 345678915),
     (234567895, 345678916),
     (234567896, 345678914),
-    (234567896, 345678915),
     (234567896, 345678916),
-    (234511582, 345678917),
-    (234511582, 345678918);
+    (234511581, 345678918),
+    (234567893, 345678917);
+
 
 INSERT INTO role_listings(role_listing_id, role_id, role_listing_desc, role_listing_source, role_listing_open, role_listing_close)
 VALUES
 (101, 234567891, 'Job listing for Head, Talent Attraction role', 123456789, '2023-09-15', '2023-09-29'),
 (102, 234567892, 'Job listing for Learning Facilitator / Trainer role', 123456789, '2023-09-20', '2023-10-04'),
 (103, 234567893, 'Job listing for Agile Coach (SM) role', 123456787, '2023-09-25', '2023-10-09'),
-(104, 234511581, 'Job listing for Fire Warden role', 123456788, '2023-09-30', '2023-10-14'),
-(105, 234567893, 'We are looking for a front-end developer to join our team!', 123456791, '2022-02-01', '2022-03-01'),
-(106, 234567894, 'We are looking for a back-end developer to join our team!', 123456792, '2022-03-01', '2022-04-01'),
-(107, 234567895, 'We are looking for a full-stack developer to join our team!', 123456793, '2022-04-01', '2022-05-01'),
-(108, 234567896, 'We are looking for a software engineer to join our team!', 123456794, '2022-05-01', '2022-06-01');
+(104, 234511581, 'Job listing for Fire Warden role', 123456788, '2023-09-30', '2023-10-14');
 
 INSERT INTO ROLE_APPLICATIONS (role_listing_id, staff_id, role_app_status)
 VALUES
-    (1, 123456789, 'applied'),
-    (2, 123456788, 'withdrawn'),
-    (3, 123456787, 'applied'),
-    (4, 123456786, 'withdrawn'),
-    (1, 123456791, 'applied'),
-    (2, 123456792, 'withdrawn'),
-    (3, 123456793, 'applied'),
-    (4, 123456794, 'withdrawn');
+    (101, 123456789, 'applied'),
+    (102, 123456788, 'withdrawn'),
+    (103, 123456787, 'applied'),
+    (104, 123456786, 'withdrawn');
