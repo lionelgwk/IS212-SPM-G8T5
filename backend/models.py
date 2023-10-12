@@ -195,3 +195,24 @@ class RoleListings(db.Model):
             "role_listing_open" :self.role_listing_open,
             "role_listing_close" : self.role_listing_close
             }
+
+class RoleApplications(db.Model):
+    __tablename__ = 'role_applications'
+
+    role_app_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    role_listing_id = db.Column(db.Integer, db.ForeignKey('role_listings.role_listing_id'))
+    staff_id = db.Column(db.Integer, db.ForeignKey('staff_details.staff_id'))
+    role_app_status = db.Column(db.Enum('applied', 'withdrawn'))
+
+    def __init__(self, role_listing_id, staff_id, role_app_status):
+        self.role_listing_id = role_listing_id
+        self.staff_id = staff_id
+        self.role_app_status = role_app_status
+
+    def json(self):
+        return {
+            "role_app_id": self.role_app_id,
+            "role_listing_id": self.role_listing_id,
+            "staff_id": self.staff_id,
+            "role_app_status": self.role_app_status
+        }
