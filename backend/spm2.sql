@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS spm DEFAULT CHARACTER SET utf8 COLLATE utf8_genera
 USE spm;
 
 CREATE TABLE staff_details (
-	staff_id INT,
+	staff_id INT PRIMARY KEY,
 	fname VARCHAR(50),
 	lname VARCHAR(50),
 	dept VARCHAR(50),
@@ -14,7 +14,7 @@ CREATE TABLE staff_details (
 );
 
 CREATE TABLE staff_reporting_officer (
-	staff_id INT,
+	staff_id INT PRIMARY KEY,
 	RO_id INT,
 	FOREIGN KEY (RO_id) REFERENCES staff_details(staff_id)
 );
@@ -24,19 +24,20 @@ CREATE TABLE staff_roles (
 	staff_role INT,
 	role_type ENUM('primary', 'secondary'),
 	sr_status ENUM('active', 'inactive'),
+    PRIMARY KEY (staff_id, staff_role),
 	FOREIGN KEY (staff_id) REFERENCES staff_details(staff_id),
 	FOREIGN KEY (staff_role) REFERENCES role_details(role_id)
 );
 
 CREATE TABLE role_details (
-	role_id INT,
+	role_id INT PRIMARY KEY,
 	role_name VARCHAR(50),
 	role_description VARCHAR(50000),
 	role_status ENUM('active', 'inactive')
 );
 
 CREATE TABLE skill_details (
-	skill_id INT,
+	skill_id INT PRIMARY KEY,
 	skill_name VARCHAR(50),
 	skill_status ENUM('active', 'inactive')
 );
@@ -45,6 +46,7 @@ CREATE TABLE staff_skills (
 	staff_id INT,
 	skill_id INT,
 	ss_status ENUM('active', 'unverified', 'in-progress'),
+    PRIMARY KEY (staff_id, skill_id),
 	FOREIGN KEY (staff_id) REFERENCES staff_details(staff_id),
 	FOREIGN KEY (skill_id) REFERENCES skill_details(skill_id)
 );
@@ -52,6 +54,7 @@ CREATE TABLE staff_skills (
 CREATE TABLE role_skills (
 	role_id INT,
 	skill_id INT,
+    PRIMARY KEY (role_id, skill_id).
 	FOREIGN KEY (role_id) REFERENCES role_details(role_id),
 	FOREIGN KEY (skill_id) REFERENCES skill_details(skill_id)
 );
