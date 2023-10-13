@@ -55,6 +55,13 @@ def getAllOpenRoles():
         list_skill_ids = data["skill_ids"]
         all_role_listings = RoleListings.query.filter(RoleListings.role_listing_close >= current_date).filter(RoleSkills.skill_id.in_(list_skill_ids)).all()
 
+    if all_role_listings is None:
+        return jsonify(
+            {
+                "code" : 200,
+                "message" : "No open role listing found."
+            }
+        ), 200
     role_details_json_list = [listing.json() for listing in all_role_listings]
 
     for role_details_json in role_details_json_list:
