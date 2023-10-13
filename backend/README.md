@@ -15,6 +15,7 @@
 5. [ Create new role listing ](#addRoleListing)
 5. [ Get singular role listing information ](#listedRoleDetails1)
 6. [ Edit singular role listing information ](#listedRoleDetails2)
+7. [ Filter for roles using skill id ](#filterBySkill)
 
 
 <br>
@@ -261,6 +262,57 @@ Sample Output:
     "message": "Role listing with the ID 1222213254844124688 , has been sucessfully updated."
 }
 ```
+<br>
+<br>
+<a name="filterBySkill"></a>
+
+## Filter for roles using skill id `/role/open_roles`
+Methods : <strong>POST</strong><br>
+Get all open role listings with that contain the listed skill ids based on the role_skills SQL table<br>
+
+Sample Input JSON Package:
+```json
+{
+    "skill_ids" : [345678914]
+}
+```
+
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": [
+        {
+            "role_id": 234567892,
+            "role_listing_close": "Sat, 21 Oct 2023 00:00:00 GMT",
+            "role_listing_creator": 123456788,
+            "role_listing_desc": "Job listing for Learning Facilitator / Trainer role Edited",
+            "role_listing_id": 102,
+            "role_listing_open": "Thu, 21 Sep 2023 00:00:00 GMT",
+            "role_listing_source": 123456789,
+            "role_listing_ts_create": "Fri, 13 Oct 2023 02:34:04 GMT",
+            "role_listing_ts_update": "Fri, 13 Oct 2023 03:05:06 GMT",
+            "role_listing_updater": 123456788,
+            "role_name": "Learning Facilitator / Trainer"
+        },
+        {
+            "role_id": 234511581,
+            "role_listing_close": "Sat, 14 Oct 2023 00:00:00 GMT",
+            "role_listing_creator": 123456787,
+            "role_listing_desc": "Job listing for Fire Warden role",
+            "role_listing_id": 104,
+            "role_listing_open": "Sat, 30 Sep 2023 00:00:00 GMT",
+            "role_listing_source": 123456788,
+            "role_listing_ts_create": "Fri, 13 Oct 2023 02:34:04 GMT",
+            "role_listing_ts_update": "Fri, 13 Oct 2023 02:34:04 GMT",
+            "role_listing_updater": 123456789,
+            "role_name": "Fire Warden"
+        }
+    ],
+    "message": "GET request successful"
+}
+```
+
 <br>
 <br>
 <a name="staff"></a>
