@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
 
 const ProfileCard = () => {
-  const [name, setName] = useState('John Doe');
+  const [name, setName] = useState({ firstName: 'John', lastName: 'Doe' });
   const [email, setEmail] = useState('john.doe@example.com');
   const [phone, setPhone] = useState('65-5824-7888');
   const [address, setAddress] = useState('1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208');
+  const[staff_id, setStaff_id] = useState('123456786');
+  const[dept, setDept] = useState('IT');
   const [description, setDescription] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  
+  const handleFirstNameChange = (e) => {
+    setName((prevName) => ({
+      ...prevName,
+      firstName: e.target.value,
+    }));
   };
+
+  const handleLastNameChange = (e) => {
+    setName((prevName) => ({
+      ...prevName,
+      lastName: e.target.value,
+    }));
+  };;
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -24,9 +37,9 @@ const ProfileCard = () => {
     setAddress(e.target.value);
   };
 
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
+  // const handleDescriptionChange = (e) => {
+  //   setDescription(e.target.value);
+  // };
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -42,17 +55,34 @@ const ProfileCard = () => {
     <div className="bg-white border rounded-lg overflow-hidden p-6 mb-6">
       <div className="flex justify-between mb-4">
         <div>
-          <div className="font-bold text-l mb-2">Name</div>
+          <div className="font-bold text-l mb-2">First Name</div>
           {isEditing ? (
             <input
               type="text"
               className="border rounded w-full py-2 px-3"
-              value={name}
-              onChange={handleNameChange}
+              value={name.firstName}
+              onChange={handleFirstNameChange}
             />
           ) : (
-            <div>{name}</div>
+            <div>{name.firstName}</div>
           )}
+        </div>
+        <div>
+          <div className="font-bold text-l mb-2">Last Name</div>
+          {isEditing ? (
+            <input
+              type="text"
+              className="border rounded w-full py-2 px-3"
+              value={name.lastName}
+              onChange={handleLastNameChange}
+            />
+          ) : (
+            <div>{name.lastName}</div>
+          )}
+        </div>
+        <div>
+        <div className="font-bold text-l mb-2">Staff ID</div>
+          <div>{staff_id}</div>    
         </div>
         <div>
           {isEditing ? (
@@ -107,18 +137,7 @@ const ProfileCard = () => {
           )}
         </div>
       </div>
-      <div className="mb-4">
-        <div className="font-bold text-l mb-2">Description</div>
-        {isEditing ? (
-          <textarea
-            className="border rounded w-full py-2 px-3"
-            value={description}
-            onChange={handleDescriptionChange}
-          />
-        ) : (
-          <div>{description}</div>
-        )}
-      </div>
+ 
     </div>
   );
 };
