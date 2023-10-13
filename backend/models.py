@@ -105,7 +105,7 @@ class SkillDetails(db.Model):
         self.roles = roles
 
     def json(self):
-        return {"skill_id": self.skill_id, "skill_name": self.skill_name, "skill_status": self.skill_status}
+        return {"skill_id": self.skill_id, "skill_name": self.skill_name, "skill_status": self.skill_status.value}
 
 
 

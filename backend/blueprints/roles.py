@@ -5,7 +5,7 @@ import enum
 from datetime import date, timedelta, datetime
 import uuid
 
-from models import RoleListings, RoleDetails
+from models import RoleListings, RoleDetails, RoleSkills
 from configs.extensions import db
 
 
@@ -18,12 +18,6 @@ role_bp = Blueprint('role_bp', __name__,)
 def getAllListedRoles():
     """
     Get all listed roles in the role_listings SQL table.
-    Output JSON format :
-    {
-        code : 200,
-        data : []
-        message : sucess
-    }
     """
     all_role_listings = RoleListings.query.all()
     role_details_json_list = [listing.json() for listing in all_role_listings]
@@ -43,19 +37,24 @@ def getAllListedRoles():
 
 
 
-@role_bp.route('/open_roles')
+@role_bp.route('/open_roles', methods=["GET", "POST"])
 def getAllOpenRoles():
     """
     Get all open role listings in the role_listings SQL table and filtering for role_listings with close_date after today's date.
-    Output JSON format :
-    {
-        code : 200,
-        data : []
-        message : sucess
-    }
+    
+    OR
+
+    POST request to filter for all open roles based on skill id
     """
     current_date = datetime.now().date()
-    all_role_listings = RoleListings.query.filter(RoleListings.role_listing_close >= current_date).all()
+    if request.method == "GET":
+        all_role_listings = RoleListings.query.filter(RoleListings.role_listing_close >= current_date).all()
+
+    elif request.method == "POST":
+        data = request.json
+        list_skill_ids = data["skill_ids"]
+        all_role_listings = RoleListings.query.filter(RoleListings.role_listing_close >= current_date).filter(RoleSkills.skill_id.in_(list_skill_ids)).all()
+
     role_details_json_list = [listing.json() for listing in all_role_listings]
 
     for role_details_json in role_details_json_list:
@@ -77,13 +76,6 @@ def getAllOpenRoles():
 def addRoleDetails():
     """
     Create new role detail by updating the role_details SQL table.
-    Input parameters are in JSON format
-    {
-        "role_id" : 234567321, ##### PRIMARY KEY #####
-        "role_name" : "Software Engineer",
-        "role_description" : "Help to build and test new API endpoints for existing systems",
-        "role_status" : "active"
-    }
     """
     try:
         data = request.json
@@ -117,9 +109,6 @@ def deleteRoleListing():
     """
     Delete role listing from the role_listing SQL table.
     Input parameters are in JSON format
-    {
-        "role_id" : 12391747
-    }
     """
     try:
         data = request.json
@@ -157,15 +146,7 @@ def deleteRoleListing():
 @role_bp.route('/add_role_listing', methods=["POST"])
 def addRoleListing():
     """
-    Create new role listing by updating the role_listings SQL table. New role listing can only be created using an existing role in role_details.
-    Input parameters are in JSON format
-    {
-        "role_id" : 234567323,
-        "role_listing_source" : 123456787,
-        "role_listing_open" : "2023-09-29",
-        "role_listing_creator" : 123456792
-    }
-
+    Create new role listing by inserting into the role_listings SQL table. New role listing can only be created using an existing role in role_details.
     """
     data = request.json
 
@@ -230,19 +211,11 @@ def addRoleListing():
 def listedRoleDetails(role_listing_id):
     """
     Get details of the role listing by sending a GET request with the role_listing_id.
-    role_listing_id = 102
 
     OR
 
     Edit role listing with the specified role_listing_id by sending a POST request.
     Current parameters that can be changed : [ role_listing_desc , role_listing_close, role_listing_open ]
-    Input Parameters in JSON format:
-    role_listing_id = 102
-    {
-        "role_listing_desc" : "Job listing for Learning Facilitator / Trainer role Edited",
-        "role_listing_close" : "2023-10-21",
-        "role_listing_open" : "2023-9-21"
-    }
     """
     role = RoleListings.query.filter_by(role_listing_id=role_listing_id).first()
     if role is None:
