@@ -306,7 +306,7 @@ def getAllRoleApplications():
         {
             "code" : 200,
             "data" : role_applications_json_list,
-            "message" : ""
+            "message" : "GET request successful"
         }
     ), 200
 
@@ -331,6 +331,6 @@ def getAllRoleApplicationsByRoleId(role_listing_id):
         {
             "code" : 200,
             "data" : role_applications_json_list,
-            "message" : ""
+            "message" : "GET request successful"
         }
     ), 200
