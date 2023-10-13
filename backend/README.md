@@ -201,7 +201,7 @@ Sample Output:
 <br>
 <a name="listedRoleDetails1"></a>
 
-## Get role listing details `/role/listed_roles/\<string:role_listing_id>`
+## Get role listing details `/role/listed_roles/<string:role_listing_id>`
 Methods : <strong>GET</strong><br>
 Get details of the role listing by sending a GET request with the role_listing_id.
 
@@ -379,7 +379,7 @@ Sample Output:
 # Staff `/staff`
 1. [ Get a staff's details ](#getStaffDetails)
 
-## Get a staff's details `<string:staff_id>`
+## Get a staff's details `/staff/<string:staff_id>`
 Methods : GET
 Get staff details in the staff_details SQL table based on staff_id
 
