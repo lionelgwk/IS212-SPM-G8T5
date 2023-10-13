@@ -174,17 +174,31 @@ class RoleListings(db.Model):
     role_listing_source = db.Column(db.Integer, db.ForeignKey('staff_details.staff_id'))
     role_listing_open = db.Column(db.Date)
     role_listing_close = db.Column(db.Date)
+    role_listing_creator = db.Column(db.Integer) #####
+    role_listing_ts_create = db.Column(db.DateTime) # autofill
+    role_listing_updater = db.Column(db.Integer)
+    role_listing_ts_update = db.Column(db.DateTime) # autofill
 
-    def __init__(self, role_listing_id, role_id, role_listing_desc, role_listing_source, role_listing_open, role_listing_close=None):
+    def __init__(self, role_listing_id, role_id, role_listing_desc, role_listing_source, role_listing_open, role_listing_creator, role_listing_updater=None, role_listing_close=None):
         self.role_listing_id = role_listing_id
         self.role_id = role_id
         self.role_listing_desc = role_listing_desc
         self.role_listing_source = int(role_listing_source)
         self.role_listing_open = role_listing_open
+
         if role_listing_close is not None:
             self.role_listing_close = role_listing_close
         else:
             self.role_listing_close = role_listing_open + timedelta(weeks=2)
+        self.role_listing_creator = role_listing_creator
+
+        if role_listing_updater is None:
+            self.role_listing_updater = role_listing_creator
+        else:
+            self.role_listing_updater = role_listing_updater
+        
+        self.role_listing_ts_create = datetime.now()
+        self.role_listing_ts_update = datetime.now()
 
     def json(self):
         return {
@@ -193,8 +207,13 @@ class RoleListings(db.Model):
             "role_listing_desc": self.role_listing_desc,
             "role_listing_source" : self.role_listing_source,
             "role_listing_open" :self.role_listing_open,
-            "role_listing_close" : self.role_listing_close
+            "role_listing_close" : self.role_listing_close,
+            "role_listing_creator" : self.role_listing_creator,
+            "role_listing_ts_create" : self.role_listing_ts_create,
+            "role_listing_updater" : self.role_listing_updater,
+            "role_listing_ts_update" : self.role_listing_ts_update
             }
+
 
 class RoleApplications(db.Model):
     __tablename__ = 'role_applications'
@@ -203,6 +222,7 @@ class RoleApplications(db.Model):
     role_listing_id = db.Column(db.Integer, db.ForeignKey('role_listings.role_listing_id'))
     staff_id = db.Column(db.Integer, db.ForeignKey('staff_details.staff_id'))
     role_app_status = db.Column(db.Enum('applied', 'withdrawn'))
+    role_app_ts_create = db.Column(db.DateTime)
 
     def __init__(self, role_listing_id, staff_id, role_app_status):
         self.role_listing_id = role_listing_id
@@ -214,5 +234,6 @@ class RoleApplications(db.Model):
             "role_app_id": self.role_app_id,
             "role_listing_id": self.role_listing_id,
             "staff_id": self.staff_id,
-            "role_app_status": self.role_app_status
+            "role_app_status": self.role_app_status,
+            "role_app_ts_create" : self.role_app_ts_create
         }
