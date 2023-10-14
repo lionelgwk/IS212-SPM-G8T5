@@ -5,6 +5,7 @@ const LoginPage = () => {
     localStorage.setItem("userToken", true);
 
     localStorage.setItem("position", "staff"); // for staff
+    localStorage.setItem("staffId", 123456789 ) // from sample data
 
     window.location.href = "/staff";
   };
@@ -13,6 +14,8 @@ const LoginPage = () => {
     localStorage.setItem("userToken", true);
 
     localStorage.setItem("position", "manager"); // for manager
+    localStorage.setItem("staffId", 123456787 ) // from sample data
+
     window.location.href = "/manager";
   };
 
@@ -20,6 +23,8 @@ const LoginPage = () => {
     localStorage.setItem("userToken", true);
 
     localStorage.setItem("position", "hr"); // for manager
+    localStorage.setItem("staffId", 123456788 ) // from sample data
+
     window.location.href = "/hr";
   };
 
