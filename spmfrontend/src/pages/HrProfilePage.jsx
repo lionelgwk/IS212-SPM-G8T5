@@ -6,8 +6,10 @@ const HrProfilePage = () => {
 
     return(
         <div className="bg-white">
-            <ProfileCard></ProfileCard>
-            <SkillCard></SkillCard>
+            <div className="container mx-auto p-2">          
+                <ProfileCard></ProfileCard>
+                <SkillCard></SkillCard>
+            </div>
         </div>
     );
 };

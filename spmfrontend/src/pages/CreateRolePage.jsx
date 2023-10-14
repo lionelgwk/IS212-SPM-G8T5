@@ -4,7 +4,9 @@ import RoleListingForm from "../components/RoleListingForm";
 const CreateRolePage = () => {
     return(
         <div>
-            <RoleListingForm />
+            <div className="container mx-auto p-2">
+                <RoleListingForm />
+            </div>
         </div>
     );
 };
