@@ -4,7 +4,7 @@ import enum
 from datetime import date, timedelta, datetime
 
 
-class SysRoles(enum.Enum):
+class SysRoles(str, enum.Enum):
     staff = "staff"
     manager = "manager"
     hr = "hr"
@@ -59,7 +59,7 @@ class StaffReportingOfficer(db.Model):
     
 
 
-class SkillStatuses(enum.Enum):
+class SkillStatuses(str, enum.Enum):
     active = "active"
     inactive = "inactive"
     unverified = "unverified"
@@ -109,7 +109,7 @@ class SkillDetails(db.Model):
 
 
 
-class RoleTypes(enum.Enum):
+class RoleTypes(str, enum.Enum):
     primary = "primary"
     secondary = "secondary"
 

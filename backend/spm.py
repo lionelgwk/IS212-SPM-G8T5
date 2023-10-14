@@ -9,7 +9,7 @@ from configs.config import Config
 from configs.extensions import db
 
 # Import Flask Blueprints
-from blueprints import roles, staffs
+from blueprints import roles, staffs, listings
 
 
 
@@ -21,6 +21,7 @@ db.init_app(app)
 
 app.register_blueprint(roles.role_bp, url_prefix='/role')
 app.register_blueprint(staffs.staff_bp, url_prefix='/staff')
+app.register_blueprint(listings.listing_bp, url_prefix='/listing')
 
 
 if __name__ == '__main__':
