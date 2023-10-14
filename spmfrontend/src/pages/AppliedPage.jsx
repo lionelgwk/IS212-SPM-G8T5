@@ -1,7 +1,10 @@
 import React from 'react'
 import AppliedCard from '../components/appliedCard'
+import FetchUser from '../hook/FetchUser'
 
 const Applied = () => {
+  const { user } = FetchUser();
+
   return (
     <div className="bg-[#bee9e8]">
       <div className="container mx-auto p-2">
