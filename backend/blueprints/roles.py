@@ -5,7 +5,7 @@ import enum
 from datetime import date, timedelta, datetime
 import uuid
 
-from models import RoleListings, RoleDetails, RoleSkills
+from models import RoleListings, RoleDetails, RoleSkills, RoleApplications
 from configs.extensions import db
 
 
@@ -83,5 +83,6 @@ def addRoleDetails():
                 "error" : e
             }
         ), 500
+
 
 

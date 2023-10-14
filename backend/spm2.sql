@@ -180,6 +180,6 @@ VALUES
 INSERT INTO ROLE_APPLICATIONS (role_listing_id, staff_id, role_app_status)
 VALUES
     (101, 123456789, 'applied'),
-    (102, 123456788, 'withdrawn'),
-    (103, 123456787, 'applied'),
-    (104, 123456786, 'withdrawn');
+    (101, 123456788, 'withdrawn'),
+    (101, 123456787, 'applied'),
+    (102, 123456786, 'withdrawn');
