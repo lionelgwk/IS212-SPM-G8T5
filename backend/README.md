@@ -16,6 +16,8 @@
 5. [ Get singular role listing information ](#listedRoleDetails1)
 6. [ Edit singular role listing information ](#listedRoleDetails2)
 7. [ Filter for roles using skill id ](#filterBySkill)
+7. [ Get all role applications ](#getAllRoleApplications)
+7. [ Get all role applications by role listing id ](#getAllRoleApplicationsByRoleId)
 
 
 <br>
@@ -199,7 +201,7 @@ Sample Output:
 <br>
 <a name="listedRoleDetails1"></a>
 
-## Get role listing details `/role/listed_roles/\<string:role_listing_id>`
+## Get role listing details `/role/listed_roles/<string:role_listing_id>`
 Methods : <strong>GET</strong><br>
 Get details of the role listing by sending a GET request with the role_listing_id.
 
@@ -312,6 +314,63 @@ Sample Output:
     "message": "GET request successful"
 }
 ```
+<br>
+<br>
+<a name="getAllRoleApplications"></a>
+
+## Get all role applications `/role/applications`
+Methods : <strong>GET</strong><br>
+Get all role applications from the role_application sql table
+<br>
+
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": [
+        {
+            "role_app_id": 1,
+            "role_app_status": "applied",
+            "role_app_ts_create": "Fri, 13 Oct 2023 21:48:07 GMT",
+            "role_listing_id": 101,
+            "staff_id": 123456789
+        },
+        {
+            "role_app_id": 2,
+            "role_app_status": "withdrawn",
+            "role_app_ts_create": "Fri, 13 Oct 2023 21:48:07 GMT",
+            "role_listing_id": 101,
+            "staff_id": 123456788
+        }
+    ],
+    "message": ""
+}
+```
+<br>
+<br>
+<a name="getAllRoleApplicationsByRoleId"></a>
+
+## Get all role applications by role listing id `/role/applications/<string:role_listing_id>`
+Methods : <strong>GET</strong><br>
+Get all role applications for a role listing from the role_application sql table, based on the role_listing_id
+<br>
+
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": [
+        {
+            "role_app_id": 4,
+            "role_app_status": "withdrawn",
+            "role_app_ts_create": "Fri, 13 Oct 2023 21:48:07 GMT",
+            "role_listing_id": 102,
+            "staff_id": 123456786
+        }
+    ],
+    "message": ""
+}
+```
 
 <br>
 <br>
@@ -320,7 +379,7 @@ Sample Output:
 # Staff `/staff`
 1. [ Get a staff's details ](#getStaffDetails)
 
-## Get a staff's details `<string:staff_id>`
+## Get a staff's details `/staff/<string:staff_id>`
 Methods : GET
 Get staff details in the staff_details SQL table based on staff_id
 

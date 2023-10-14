@@ -5,7 +5,7 @@ import enum
 from datetime import date, timedelta, datetime
 import uuid
 
-from models import RoleListings, RoleDetails, RoleSkills
+from models import RoleListings, RoleDetails, RoleSkills, RoleApplications
 from configs.extensions import db
 
 
@@ -287,7 +287,50 @@ def listedRoleDetails(role_listing_id):
         return jsonify(
         {
             "code" : 200,
-            "message" : f"Role listing with the ID {role_listing_id} , has been sucessfully updated.",
+            "message" : f"Role listing with the ID {role_listing_id}, has been sucessfully updated.",
             "data" : role.json()
         }
         ), 200
+
+
+
+@role_bp.route('/applications')
+def getAllRoleApplications():
+    """
+    Get all role applications from the role_application sql table
+    """
+    all_role_applications = RoleApplications.query.all()
+    role_applications_json_list = [listing.json() for listing in all_role_applications]
+
+    return jsonify(
+        {
+            "code" : 200,
+            "data" : role_applications_json_list,
+            "message" : "GET request successful"
+        }
+    ), 200
+
+
+
+@role_bp.route('/applications/<string:role_listing_id>')
+def getAllRoleApplicationsByRoleId(role_listing_id):
+    """
+    Get all role applications for a role listing from the role_application sql table, based on the role_listing_id
+    """
+    all_role_applications = RoleApplications.query.filter_by(role_listing_id=role_listing_id).all()
+    if all_role_applications is None or all_role_applications == []:
+        return jsonify(
+            {
+                "code" : 200,
+                "message" : f"No role applications found with the role_listing_id {role_listing_id}"
+            }
+        )
+    role_applications_json_list = [listing.json() for listing in all_role_applications]
+
+    return jsonify(
+        {
+            "code" : 200,
+            "data" : role_applications_json_list,
+            "message" : "GET request successful"
+        }
+    ), 200
