@@ -32,6 +32,12 @@ create table staff_roles (
 	FOREIGN KEY (staff_role) REFERENCES role_details(role_id)
 );
 
+create table skills_details (
+	skill_id INT NOT NULL PRIMARY KEY,
+	skill_name VARCHAR(50) NOT NULL,
+	skill_status ENUM('active', 'inactive', 'unverified') NOT NULL
+);
+
 
 CREATE TABLE role_listings(
     role_listing_id INT NOT NULL,
