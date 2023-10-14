@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import RoleSearch from "../components/roleSearch";
 import RoleCard from "../components/roleCard";
 import Pagination from "../components/Pagination";
-const { user } = FetchUser();
+import FetchUser from "../hook/fetchUser";
+
 
 const StaffHomePage = () => {
   const roles = [
@@ -84,6 +85,8 @@ const StaffHomePage = () => {
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentRoles = filteredRoles.slice(indexOfFirstJob, indexOfLastJob);
+  
+  const { user } = FetchUser();
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
