@@ -6,7 +6,7 @@ const StaffHomePage = () => {
     return(
         <div className="bg-[#bee9e8]">
             <div className="container mx-auto p-2">
-                <div className="font-bold text-xl pt-5 mb-1 text-center">Welcome %name% </div>
+                <div className="font-bold text-3xl pt-10 mb-1 text-center">Welcome %name% </div>
                 <RoleSearch></RoleSearch>
                 <div className="p-2"></div>
                 <RoleCard></RoleCard>

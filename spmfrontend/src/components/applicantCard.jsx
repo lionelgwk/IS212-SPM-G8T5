@@ -13,7 +13,7 @@ const ApplicantCard = ({ applicant }) => {
         <div className="col-span-1 text-center">{applicant.roleApplied}</div>
         <div className="col-span-1 text-center">{applicant.skillsMatch}%</div>
         <div className="col-span-1 text-center">
-          <button className="px-2 py-1 rounded bg-[#62b6cb] text-white hover:bg-[#1b4965]">
+          <button className="px-2 py-1 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm">
             View Details
           </button>
         </div>
