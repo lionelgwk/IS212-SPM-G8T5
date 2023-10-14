@@ -23,15 +23,15 @@ const RoleCard = (props) => {
           </span>
         </div>
         <div className="w-3/12 pl-4 text-center">
-          <div className="mt-3 mb-3 font-semibold">
+          <div className="mt-6 mb-3 font-semibold">
             Date of Listing: {props.date}
           </div>
-          <div className="mb-3 font-semibold">Deadline: {props.deadline}</div>
-          <button className="mx-2 px-4 py-2 rounded bg-[#62b6cb] text-white hover:bg-[#1b4965]">
+          <div className="mb-6 font-semibold">Deadline: {props.deadline}</div>
+          <button className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm">
             Apply
           </button>
           <NavLink to="/">
-            <button className="mx-2 px-4 py-2 rounded bg-[#62b6cb] text-white hover:bg-[#1b4965]">
+            <button className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm">
               View Details
             </button>
           </NavLink>

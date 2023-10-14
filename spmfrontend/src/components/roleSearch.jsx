@@ -35,7 +35,6 @@ const RoleSearch = ({
       }
     }
   };
-
   const removeSelectedSkill = (skillToRemove) => {
     setSelectedSkills((prevSkills) =>
       prevSkills.filter((skill) => skill !== skillToRemove)

@@ -20,6 +20,7 @@ function StaffRoutes() {
         <Route path="/details/:id/applicants" element={<StaffApplicantsPage />} />
         <Route path="*" element={<NoPermissionPage />} />
         {/* Add more staff-specific routes here */}
+        {/* <Route path="/viewdetails" element={<ViewDetailsPage />} /> */}
       </Route>
     </Routes>
   );

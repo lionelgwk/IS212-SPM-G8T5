@@ -27,7 +27,33 @@ const RoleListingForm = () => {
   }
 
   return (
-    <form className="px-4 py-6">
+    <form className="mt-4 px-4 py-8 border bg-white">
+      <div className="mb-4">
+        <label htmlFor="roleName" className="block mb-2 font-medium">
+          Role Listing ID:
+        </label>
+        <input
+          type="number"
+          id="roleListingId"
+          min="0"
+        //   value={roleName}
+          onChange={(e) => setRoleName(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="roleName" className="block mb-2 font-medium">
+          Role ID:
+        </label>
+        <input
+          type="number"
+          id="roleId"
+          min="0"
+        //   value={roleName}
+          onChange={(e) => setRoleName(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+        />
+      </div>
       <div className="mb-4">
         <label htmlFor="roleName" className="block mb-2 font-medium">
           Role Name:
@@ -51,7 +77,7 @@ const RoleListingForm = () => {
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
       </div>
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label htmlFor="department" className="block mb-2 font-medium">
           Department:
         </label>
@@ -62,10 +88,9 @@ const RoleListingForm = () => {
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         >
           <option value="">Select Department</option>
-          {/* Add department options here */}
         </select>
-      </div>
-      <div className="mb-4">
+      </div> */}
+      {/* <div className="mb-4">
         <label className="block mb-2 font-medium">Job Level:</label>
         <div className="grid grid-cols-4 gap-2">
           <label className="flex items-center">
@@ -113,8 +138,8 @@ const RoleListingForm = () => {
             Manager
           </label>
         </div>
-        </div>
-              <div className="mb-4">
+        </div> */}
+              {/* <div className="mb-4">
                 <label htmlFor="wage" className="block mb-2 font-medium">
                   Wage:
                 </label>
@@ -125,9 +150,8 @@ const RoleListingForm = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md"
                 >
                   <option value="">Select Wage</option>
-                  {/* Add wage options here */}
                 </select>
-              </div>
+              </div> */}
               <div className="mb-4">
                 <label htmlFor="skills" className="block mb-2 font-medium">
                   Skills:

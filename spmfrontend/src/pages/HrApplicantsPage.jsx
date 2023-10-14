@@ -12,7 +12,7 @@ const HrApplicantsPage = () => {
     return (
         <div className="bg-[#bee9e8]">
             <div className="container mx-auto p-2">
-                <div className="font-bold text-xl pt-5 mb-1 text-center">Applicants for Listing {id}</div>
+                <div className="font-bold text-xl pt-10 mb-4 text-center">Applicants for Listing {id}</div>
                 <ApplicantSearch />
                 <div className="p-2"></div>
 

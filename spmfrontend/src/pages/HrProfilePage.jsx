@@ -7,8 +7,9 @@ const HrProfilePage = () => {
 
     const { user } = FetchUser();
     return(
-        <div className="bg-white">
+        <div className="bg-[#f8fdff] h-screen">
             <div className="container mx-auto p-2">          
+                <div className="font-bold text-xl pt-10 mb-1 text-center">My Profile</div>
                 <ProfileCard></ProfileCard>
                 <SkillCard></SkillCard>
             </div>
