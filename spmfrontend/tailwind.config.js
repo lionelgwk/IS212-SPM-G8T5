@@ -27,6 +27,9 @@ export default {
       xl: "1700px",
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    darkTheme: 'light'
+  }
 }
 

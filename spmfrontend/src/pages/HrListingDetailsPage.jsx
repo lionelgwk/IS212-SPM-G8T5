@@ -1,10 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Viewdetails from "../components/viewDetails";
+import FetchUser from "../hook/FetchUser";
+
 
 const HrListingDetailsPage = () => {
 
     const { id } = useParams();
+    const { user } = FetchUser();
 
     return(
         <div className="bg-[#bee9e8]">

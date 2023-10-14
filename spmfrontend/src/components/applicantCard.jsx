@@ -1,6 +1,7 @@
 import React from "react";
 
 const ApplicantCard = ({ applicant }) => {
+
   return (
     <div className="bg-white rounded p-4 mb-4 shadow-md">
       <div className="grid grid-cols-6 gap-4">

@@ -2,10 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import ApplicantSearch from '../components/applicantSearch';
 import ApplicantCard from '../components/applicantCard';
+import FetchUser from '../hook/FetchUser';
 
 const HrApplicantsPage = () => {
 
     const { id } = useParams();
+    const { user } = FetchUser();
 
     return (
         <div className="bg-[#bee9e8]">
