@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import RoleSearch from "../components/roleSearch";
 import RoleCard from "../components/roleCard";
 import Pagination from "../components/Pagination";
+const { user } = FetchUser();
 
 const StaffHomePage = () => {
   const roles = [
@@ -122,16 +123,16 @@ const StaffHomePage = () => {
     // Filter jobs based on selected skills
     const filtered = allRoles.filter((role) =>
       skills.every((skill) => role.skills.includes(skill))
-    );
-    setFilteredRoles(filtered);
-  };
+
+
+
 
   return (
     <div className="bg-[#bee9e8]">
       <div className="container mx-auto p-2">
-        <div className="font-bold text-xl pt-5 mb-1 text-center">
-          Welcome %name%{" "}
-        </div>
+        
+          <div className="font-bold text-xl pt-5 mb-1 text-center">Welcome {user.lname} {user.fname} </div>
+        
         <RoleSearch
           handleSearching={handleSearching}
           handleSkillSearching={handleSkillSearching}

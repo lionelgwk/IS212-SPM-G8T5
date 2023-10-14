@@ -4,7 +4,7 @@ import enum
 from datetime import date, timedelta, datetime
 
 
-class SysRoles(enum.Enum):
+class SysRoles(str, enum.Enum):
     staff = "staff"
     manager = "manager"
     hr = "hr"
@@ -22,7 +22,7 @@ class StaffDetails(db.Model):
     email = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     biz_address = db.Column(db.String(255), nullable=False)
-    sys_role = db.Column(db.Enum(SysRoles))
+    sys_role = db.Column(db.Enum(SysRoles), nullable=False)
     roles = db.relationship("RoleDetails", secondary="staff_roles", back_populates="staffs")
     skills = db.relationship("SkillDetails", secondary="staff_skills", back_populates="staffs")
 
@@ -38,7 +38,7 @@ class StaffDetails(db.Model):
         self.skills = skills
 
     def json(self):
-        return {"staff_id": self.staff_id, "fname": self.fname, "lname": self.lname, "dept": self.dept, "email": self.email, "phone": self.phone, "biz_address": self.biz_address}
+        return {"staff_id": self.staff_id, "fname": self.fname, "lname": self.lname, "dept": self.dept, "email": self.email, "phone": self.phone, "biz_address": self.biz_address, "sys_role": self.sys_role.value, "roles": [role.json() for role in self.roles], "skills": [skill.json() for skill in self.skills]}
 
 
 
@@ -59,7 +59,7 @@ class StaffReportingOfficer(db.Model):
     
 
 
-class SkillStatuses(enum.Enum):
+class SkillStatuses(str, enum.Enum):
     active = "active"
     inactive = "inactive"
     unverified = "unverified"
@@ -109,7 +109,7 @@ class SkillDetails(db.Model):
 
 
 
-class RoleTypes(enum.Enum):
+class RoleTypes(str, enum.Enum):
     primary = "primary"
     secondary = "secondary"
 
