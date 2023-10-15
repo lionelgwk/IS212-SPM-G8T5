@@ -10,12 +10,13 @@ const Pagination = ({ jobsPerPage, totalJobs, currentPage, paginate }) => {
   return (
     <nav>
       <div className="flex join justify-end">
-        {pageNumbers.map((number) => (
+        {pageNumbers.map((number, index) => (
           <button
             className={`join-item btn ${
               number === currentPage ? "active" : ""
             }`}
             onClick={() => paginate(number)}
+            key={index}
           >
             {number}
           </button>
