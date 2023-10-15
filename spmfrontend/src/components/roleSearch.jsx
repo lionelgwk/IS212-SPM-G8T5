@@ -55,7 +55,7 @@ const RoleSearch = ({
 
   return (
     <div className="bg-[#bee9e8] p-4">
-      <div className="mb-4 w-full card bg-base-100 shadow-xl">
+      <div className="mb-4 w-full card bg-base-100 shadow-xl z-0">
         <div className="flex card-body">
           <div className="flex flex-row w-full justify-around items-center">
             <div className="w-9/12 mr-4">
@@ -74,8 +74,9 @@ const RoleSearch = ({
               <select
                 className="select select-bordered"
                 onChange={handleSkillSelection}
+                defaultValue="placeholder"
               >
-                <option disabled selected>
+                <option disabled value="placeholder">
                   Pick one
                 </option>
                 <option value="React">React</option>
