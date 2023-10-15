@@ -38,7 +38,7 @@ class StaffDetails(db.Model):
         self.skills = skills
 
     def json(self):
-        return {"staff_id": self.staff_id, "fname": self.fname, "lname": self.lname, "dept": self.dept, "email": self.email, "phone": self.phone, "biz_address": self.biz_address, "sys_role": self.sys_role.value, "roles": [role.json() for role in self.roles], "skills": [skill.json() for skill in self.skills]}
+        return {"staff_id": self.staff_id, "fname": self.fname, "lname": self.lname, "dept": self.dept, "email": self.email, "phone": self.phone, "biz_address": self.biz_address, "sys_role": self.sys_role.value}
 
 
 

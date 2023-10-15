@@ -5,7 +5,7 @@ import enum
 from datetime import date, timedelta, datetime
 import uuid
 
-from models import RoleListings, RoleDetails, RoleSkills
+from models import RoleListings, RoleDetails, RoleSkills, SkillDetails
 from configs.extensions import db
 
 
@@ -20,12 +20,22 @@ def getAllListedRoles():
     Get all listed roles in the role_listings SQL table.
     """
     all_role_listings = db.session.query(RoleListings, RoleDetails).join(RoleDetails, RoleListings.role_id == RoleDetails.role_id).all()
-    # all_role_listings = RoleListings.query.all()
+    all_role_skills = db.session.query(RoleSkills, SkillDetails).join(SkillDetails, RoleSkills.skill_id == SkillDetails.skill_id).all()
+    final = []
+    for role_listing in all_role_listings:
+        role_listing_json = role_listing[0].json()
+        role_listing_json["role_name"] = role_listing[1].json()["role_name"]
+        role_listing_json["role_skills"] = []
+        for role_skill in all_role_skills:
+            if role_skill[0].role_id == role_listing_json["role_id"]:
+                role_listing_json["role_skills"].append(role_skill[1].json())
+        final.append(role_listing_json)
+        
     return jsonify(
         {
             "code" : 200,
             "message" : "GET request successful",
-            "data" : [listing.json() | role.json() for listing, role in all_role_listings]
+            "data" : final
         }
     ), 200
     # role_details_json_list = [listing.json() for listing in all_role_listings]
