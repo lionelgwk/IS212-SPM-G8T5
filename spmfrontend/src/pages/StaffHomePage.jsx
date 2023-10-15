@@ -174,7 +174,7 @@ const StaffHomePage = () => {
               {currentRoles.map((role) => (
                 <RoleCard
                   key={role.role_id}
-                  id={role.role_id}
+                  id={role.role_listing_id}
                   title={role.role_name}
                   description={role.role_listing_desc}
                   skills={role.role_skills}
