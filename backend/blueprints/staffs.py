@@ -51,15 +51,20 @@ def getStaffDetails(id):
 
         staff_details = staff.json()
 
-        active_skills = db.session.query(SkillDetails.skill_name).join(
+        active_skills = db.session.query(SkillDetails).join(
             StaffSkills,
             SkillDetails.skill_id == StaffSkills.skill_id
         ).filter(
             StaffSkills.staff_id == id,
-            StaffSkills.ss_status == "active"
+            StaffSkills.ss_status == "active",
+            # SkillDetails.skill_status == "active" # if you need both to be active, if not comment this out
         ).all()
 
-        active_skill_names = [skill[0] for skill in active_skills]
+        print(active_skills)
+
+        active_skill_names = []
+        for skill in active_skills:
+            active_skill_names.append(skill.json())
 
         staff_details["active_skills"] = active_skill_names
 
