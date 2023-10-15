@@ -7,7 +7,7 @@ const RoleCard = (props) => {
       <div className="flex justify-between mb-4">
         <div className="w-9/12 pr-4 border-r">
           <div className="font-bold text-xl mb-2">{props.title}</div>
-          <div className="mb-2">Department: {props.department}</div>
+          <div className="mb-2">Department: {props.description}</div>
           <div className="text-gray-700 text-base mb-4">
             {props.description}
           </div>
@@ -17,9 +17,9 @@ const RoleCard = (props) => {
           </div>
           <p>Skills needed:</p>
           <span className="flex flex-row flex-wrap gap-2">
-            {props.skills.map((skill) => (
+            {/* {props.skills.map((skill) => (
               <div className="bg-gray-200 px-2 py-1 rounded-full">{skill}</div>
-            ))}
+            ))} */}
           </span>
         </div>
         <div className="w-3/12 pl-4 text-center">
@@ -30,7 +30,7 @@ const RoleCard = (props) => {
           <button className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm">
             Apply
           </button>
-          <NavLink to="/">
+          <NavLink to="/staff/details/1">
             <button className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm">
               View Details
             </button>

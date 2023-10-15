@@ -3,90 +3,101 @@ import RoleSearch from "../components/roleSearch";
 import RoleCard from "../components/roleCard";
 import Pagination from "../components/Pagination";
 import FetchUser from "../hook/fetchUser";
-
+import FetchListingDetails from "../hook/FetchListingDetails";
+import axios from "axios";
+import { AiFillFrown } from "react-icons/ai";
 
 const StaffHomePage = () => {
-  const roles = [
-    {
-      id: 1,
-      name: "Software Engineer",
-      description: "Software Engineer",
-      department: "Software Engineer",
-      jobLevel: "Software Engineer",
-      wage: "Software Engineer",
-      skills: ["MacOS", "Windows", "Linux"],
-    },
-    {
-      id: 2,
-      name: "2nd Job",
-      description: "Software Engineer",
-      department: "Software Engineer",
-      jobLevel: "Software Engineer",
-      wage: "Software Engineer",
-      skills: ["React", "Node", "Express"],
-    },
-    {
-      id: 3,
-      name: "3rd Job",
-      description: "Software Engineer",
-      department: "Software Engineer",
-      jobLevel: "Software Engineer",
-      wage: "Software Engineer",
-      skills: ["Excel", "Word", "Powerpoint"],
-    },
-    {
-      id: 4,
-      name: "4th Job",
-      description: "Software Engineer",
-      department: "Software Engineer",
-      jobLevel: "Software Engineer",
-      wage: "Software Engineer",
-      skills: ["Problem Solving", "Node", "Express"],
-    },
-    {
-      id: 5,
-      name: "5th Job",
-      description: "Software Engineer",
-      department: "Software Engineer",
-      jobLevel: "Software Engineer",
-      wage: "Software Engineer",
-      skills: ["React", "Node", "Teamwork"],
-    },
-    {
-      id: 6,
-      name: "6th Job",
-      description: "Software Engineer",
-      department: "Software Engineer",
-      jobLevel: "Software Engineer",
-      wage: "Software Engineer",
-      skills: ["Communication", "Teamwork", "Problem Solving"],
-    },
-    {
-      id: 7,
-      name: "7th Job",
-      description: "Software Engineer",
-      department: "Software Engineer",
-      jobLevel: "Software Engineer",
-      wage: "Software Engineer",
-      skills: ["React", "Node", "Express"],
-    },
-  ];
+  // const roles = [
+  //   {
+  //     id: 1,
+  //     name: "Software Engineer",
+  //     description: "Software Engineer",
+  //     department: "Software Engineer",
+  //     jobLevel: "Software Engineer",
+  //     wage: "Software Engineer",
+  //     skills: ["MacOS", "Windows", "Linux"],
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "2nd Job",
+  //     description: "Software Engineer",
+  //     department: "Software Engineer",
+  //     jobLevel: "Software Engineer",
+  //     wage: "Software Engineer",
+  //     skills: ["React", "Node", "Express"],
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "3rd Job",
+  //     description: "Software Engineer",
+  //     department: "Software Engineer",
+  //     jobLevel: "Software Engineer",
+  //     wage: "Software Engineer",
+  //     skills: ["Excel", "Word", "Powerpoint"],
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "4th Job",
+  //     description: "Software Engineer",
+  //     department: "Software Engineer",
+  //     jobLevel: "Software Engineer",
+  //     wage: "Software Engineer",
+  //     skills: ["Problem Solving", "Node", "Express"],
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "5th Job",
+  //     description: "Software Engineer",
+  //     department: "Software Engineer",
+  //     jobLevel: "Software Engineer",
+  //     wage: "Software Engineer",
+  //     skills: ["React", "Node", "Teamwork"],
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "6th Job",
+  //     description: "Software Engineer",
+  //     department: "Software Engineer",
+  //     jobLevel: "Software Engineer",
+  //     wage: "Software Engineer",
+  //     skills: ["Communication", "Teamwork", "Problem Solving"],
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "7th Job",
+  //     description: "Software Engineer",
+  //     department: "Software Engineer",
+  //     jobLevel: "Software Engineer",
+  //     wage: "Software Engineer",
+  //     skills: ["React", "Node", "Express"],
+  //   },
+  // ];
 
+  const [roles, setRoles] = useState([]);
   const [allRoles, setAllRoles] = useState([]);
   const [filteredRoles, setFilteredRoles] = useState([]);
+  const [currentRoles, setCurrentRoles] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isSearching, setIsSearching] = useState(false);
   const [isSkillSearching, setIsSkillSearching] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState([]);
-
   const jobsPerPage = 5;
 
+  const { user } = FetchUser();
+  const { data: data, pending: isPending } = FetchListingDetails();
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentRoles = filteredRoles.slice(indexOfFirstJob, indexOfLastJob);
-  
-  const { user } = FetchUser();
+
+  useEffect(() => {
+    if (!isPending) {
+      setAllRoles(data);
+      setFilteredRoles(data);
+      console.log(filteredRoles);
+    }
+    setCurrentRoles(filteredRoles.slice(indexOfFirstJob, indexOfLastJob));
+  }, [data]);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -100,23 +111,10 @@ const StaffHomePage = () => {
     setIsSkillSearching(searching);
   };
 
-  useEffect(() => {
-    // fetch("http://localhost:5000/roles")
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setAllRoles(data);
-    //     setFilteredRoles(data);
-    //   })
-    //   .catch((err) => console.log(err));
-
-    setAllRoles(roles);
-    setFilteredRoles(roles);
-  }, []);
-
   const filterRolesByName = (searchInput) => {
     const lowerSearchInput = searchInput.toLowerCase();
-    const filtered = allRoles.filter((job) =>
-      job.name.toLowerCase().includes(lowerSearchInput)
+    const filtered = allRoles.filter((role) =>
+      role.role_name.toLowerCase().includes(lowerSearchInput)
     );
     setFilteredRoles(filtered);
   };
@@ -127,6 +125,7 @@ const StaffHomePage = () => {
     const filtered = allRoles.filter((role) =>
       skills.every((skill) => role.skills.includes(skill))
     );
+    setFilteredRoles(filtered);
   };
 
   return (
@@ -135,12 +134,14 @@ const StaffHomePage = () => {
         <div className="font-bold text-xl pt-5 mb-1 text-center">
           Welcome {user.lname} {user.fname}{" "}
         </div>
+        <button onClick={(e) => console.log(data)}>console</button>
 
         <RoleSearch
           handleSearching={handleSearching}
           handleSkillSearching={handleSkillSearching}
           filterRolesByName={filterRolesByName}
           filterRolesBySkills={filterRolesBySkills}
+          className="z-0"
         ></RoleSearch>
 
         {isSearching || isSkillSearching ? null : (
@@ -152,33 +153,47 @@ const StaffHomePage = () => {
           />
         )}
 
-        {isSearching || isSkillSearching ? (
-          <div className="flex flex-col gap-4 mt-4">
-            {filteredRoles.map((role) => (
-              <RoleCard
-                key={role.id}
-                title={role.name}
-                description={role.description}
-                department={role.department}
-                jobLevel={role.jobLevel}
-                wage={role.wage}
-                skills={role.skills}
-              />
-            ))}
-          </div>
+        {filteredRoles.length > 0 ? (
+          (isSearching || isSkillSearching) && filteredRoles.length > 0 ? (
+            <div className="flex flex-col gap-4 mt-4">
+              {filteredRoles.map((role) => (
+                <RoleCard
+                  key={role.role_id}
+                  title={role.role_name}
+                  description={role.role_listing_desc}
+                  // department={role.department}
+                  // jobLevel={role.jobLevel}
+                  // wage={role.wage}
+                  // skills={role.skills}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4 mt-4">
+              {currentRoles.map((role) => (
+                <RoleCard
+                  key={role.role_id}
+                  title={role.role_name}
+                  description={role.role_listing_desc}
+                  // department={role.department}
+                  // jobLevel={role.jobLevel}
+                  // wage={role.wage}
+                  // skills={role.skills}
+                />
+              ))}
+            </div>
+          )
         ) : (
-          <div className="flex flex-col gap-4 mt-4">
-            {currentRoles.map((role) => (
-              <RoleCard
-                key={role.id}
-                title={role.name}
-                description={role.description}
-                department={role.department}
-                jobLevel={role.jobLevel}
-                wage={role.wage}
-                skills={role.skills}
-              />
-            ))}
+          <div className="flex justify-center p-6">
+            <div className="card w-full bg-base-100 shadow-xl">
+              <div className="flex justify-center card-body">
+                <div className="flex justify-center">
+                  <AiFillFrown size={70}/>
+                </div>
+                <h2 className="flex justify-center card-title text-[#949391]">No open roles!</h2>
+                <h2 className="flex justify-center text-[#949391]">Perhaps we could check back later?</h2>
+              </div>
+            </div>
           </div>
         )}
 
