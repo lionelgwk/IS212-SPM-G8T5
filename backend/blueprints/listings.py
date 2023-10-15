@@ -129,34 +129,60 @@ def getAllOpenRoles():
     """
     current_date = datetime.now().date()
     if request.method == "GET":
-        all_role_listings = RoleListings.query.filter(RoleListings.role_listing_close >= current_date).all()
-
+        # all_role_listings = RoleListings.query.filter(RoleListings.role_listing_close >= current_date).all()
+        all_role_listings = db.session.query(RoleListings, RoleDetails).join(RoleDetails, RoleListings.role_id == RoleDetails.role_id).filter(RoleListings.role_listing_close >= current_date).all()
+        print(all_role_listings)
+        if all_role_listings == []:
+            return jsonify(
+                {
+                    "code" : 200,
+                    "message" : "No open role listing found."
+                }
+            ), 200
+        all_role_skills = db.session.query(RoleSkills, SkillDetails).join(SkillDetails, RoleSkills.skill_id == SkillDetails.skill_id).all()
+        final = []
+        for role_listing in all_role_listings:
+            role_listing_json = role_listing[0].json()
+            role_listing_json["role_name"] = role_listing[1].json()["role_name"]
+            role_listing_json["role_skills"] = []
+            for role_skill in all_role_skills:
+                if role_skill[0].role_id == role_listing_json["role_id"]:
+                    role_listing_json["role_skills"].append(role_skill[1].json())
+            final.append(role_listing_json)
+            
+        return jsonify(
+        {
+            "code" : 200,
+            "message" : "GET request successful",
+            "data" : final
+        }
+    ), 200
     elif request.method == "POST":
         data = request.json
         list_skill_ids = data["skill_ids"]
         all_role_listings = RoleListings.query.filter(RoleListings.role_listing_close >= current_date).filter(RoleSkills.skill_id.in_(list_skill_ids)).all()
 
-    if all_role_listings is None:
+        if all_role_listings is None:
+            return jsonify(
+                {
+                    "code" : 200,
+                    "message" : "No open role listing found."
+                }
+            ), 200
+        role_details_json_list = [listing.json() for listing in all_role_listings]
+
+        for role_details_json in role_details_json_list:
+            role_id = role_details_json["role_id"]
+            role = RoleDetails.query.get(role_id)
+            role_details_json["role_name"] = role.json()["role_name"]
+        
         return jsonify(
             {
                 "code" : 200,
-                "message" : "No open role listing found."
+                "message" : "GET request successful",
+                "data" : role_details_json_list
             }
         ), 200
-    role_details_json_list = [listing.json() for listing in all_role_listings]
-
-    for role_details_json in role_details_json_list:
-        role_id = role_details_json["role_id"]
-        role = RoleDetails.query.get(role_id)
-        role_details_json["role_name"] = role.json()["role_name"]
-    
-    return jsonify(
-        {
-            "code" : 200,
-            "message" : "GET request successful",
-            "data" : role_details_json_list
-        }
-    ), 200
 
 
 @listing_bp.route('/delete_role_listing', methods=["DELETE"])
