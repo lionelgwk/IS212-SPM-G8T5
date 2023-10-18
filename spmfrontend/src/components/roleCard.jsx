@@ -4,18 +4,23 @@ import { NavLink } from "react-router-dom";
 const RoleCard = (props) => {
   const [skillsMatched, setSkillsMatched] = useState(0);
   const [percent, setPercent] = useState(0);
+  const [position, setPosition] = useState("");
 
   useEffect(() => {
     let count = 0;
     props.skills?.forEach((skill) => {
       props.mySkills?.forEach((mySkill) => {
-        if (skill.skill_id === mySkill.skill_id) {
+        if (skill === mySkill.skill_name) {
           count++;
         }
       });
     });
     setSkillsMatched(count);
     setPercent(((count / props.skills?.length) * 100).toFixed(0));
+  }, [props.skills, props.mySkills]);
+
+  useEffect(() => {
+    setPosition(localStorage.getItem("position"));
   });
 
   return (
@@ -26,7 +31,7 @@ const RoleCard = (props) => {
           <div className="mb-2">
             <h2 className="font-bold">Description</h2>
             <p>{props.description}</p>
-            </div>
+          </div>
 
           {props.skills?.length > 0 ? (
             <>
@@ -64,12 +69,12 @@ const RoleCard = (props) => {
           )}
           <span className="flex flex-row flex-wrap gap-2">
             {props.skills?.length > 0 &&
-              props.skills.map((skill) => (
+              props.skills.map((skill, index) => (
                 <div
                   className="bg-gray-200 px-2 py-1 rounded-full"
-                  key={skill.skill_id}
+                  key={index}
                 >
-                  {skill.skill_name}
+                  {skill}
                 </div>
               ))}
           </span>
@@ -78,12 +83,14 @@ const RoleCard = (props) => {
           {/* <div className="mt-6 mb-3 font-semibold">
             Date of Listing: {props.date}
           </div> */}
-          <div className="mb-6 font-semibold text-center">Deadline: {props.deadline}</div>
+          <div className="mb-6 font-semibold text-center">
+            Deadline: {props.deadline}
+          </div>
           <div className="flex flex-row justify-center items-center">
             <button className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm">
               Apply
             </button>
-            <NavLink to={`/staff/details/${props.id}`}>
+            <NavLink to={`/${position}/details/${props.id}`}>
               <button className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm">
                 View Details
               </button>
