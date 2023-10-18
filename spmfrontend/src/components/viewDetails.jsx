@@ -13,6 +13,10 @@ const Viewdetails = () => {
   const [matchedSkills, setMatchedSkills] = useState([]);
   const [percent, setPercent] = useState(0);
 
+  const handleSubmit = () => {
+    
+  }
+
   useEffect(() => {
     if (!isPending) {
       const date = new Date(listing?.role_listing_close).getTime();
