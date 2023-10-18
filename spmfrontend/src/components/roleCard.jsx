@@ -10,7 +10,7 @@ const RoleCard = (props) => {
     let count = 0;
     props.skills?.forEach((skill) => {
       props.mySkills?.forEach((mySkill) => {
-        if (skill.skill_id === mySkill.skill_id) {
+        if (skill === mySkill.skill_name) {
           count++;
         }
       });
@@ -69,12 +69,12 @@ const RoleCard = (props) => {
           )}
           <span className="flex flex-row flex-wrap gap-2">
             {props.skills?.length > 0 &&
-              props.skills.map((skill) => (
+              props.skills.map((skill, index) => (
                 <div
                   className="bg-gray-200 px-2 py-1 rounded-full"
-                  key={skill.skill_id}
+                  key={index}
                 >
-                  {skill.skill_name}
+                  {skill}
                 </div>
               ))}
           </span>
