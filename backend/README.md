@@ -346,49 +346,25 @@ Sample Output:
 
 # Staff `/staff`
 1. [ Get a staff's details ](#getStaffDetails)
+2. [ Get all managers ](#getAllManagers)
 
-## Get a staff's details `/staff/<string:staff_id>`
-Methods : GET
-Get staff details in the staff_details SQL table based on staff_id
+<br>
+<br>
+<a name="getAllManagers"></a>
 
-Sample GET input:
-```
-role_listing_id = 123456793
-```
+## Get all managers `/staff/managers`
+Methods : <strong>GET</strong> <br>
+Get all staff with the manager title from the staff_details SQL table
 
 Sample Output:
 ```json
 {
     "code": 200,
     "data": {
-        "biz_address": "60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051",
-        "dept": "FINANCE",
-        "email": "jason_tan@all-in-one.com.sg",
-        "fname": "JASON",
-        "lname": "TAN",
-        "phone": "65-1234-5672",
-        "roles": [
-            {
-                "role_description": "The Head, Talent Management is responsible for the development and implementation of talent management strategies and programs that support the organisation's growth strategies. He/She is responsible for the design and implementation of talent acquisition, development, retention and succession planning programs. He/She is responsible for the development of the organisation's talent management framework and the implementation of the framework across the organisation. He/She is responsible for the development of the organisation's talent management policies and procedures. He/She is responsible for the development of the organisation's talent management metrics and the implementation of the metrics across the organisation. He/She is responsible for the development of the organisation's talent management technology and the implementation of the technology across the organisation. He/She is responsible for the development of the organisation's talent management analytics and the implementation of the analytics across the organisation.",
-                "role_id": 234567894,
-                "role_name": "Head, Talent Management",
-                "role_status": "inactive"
-            }
-        ],
-        "skills": [
-            {
-                "skill_id": 345678914,
-                "skill_name": "Certified Scrum Master",
-                "skill_status": "active"
-            },
-            {
-                "skill_id": 345678916,
-                "skill_name": "Java Programming",
-                "skill_status": "active"
-            }
-        ],
-        "staff_id": 123456793,
-        "sys_role": "manager"
+        "staffs": [
+            "FAUD NIZAM",
+            "JASON TAN"
+        ]
     }
 }
 ```
