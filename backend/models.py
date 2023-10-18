@@ -228,6 +228,7 @@ class RoleApplications(db.Model):
         self.role_listing_id = role_listing_id
         self.staff_id = staff_id
         self.role_app_status = role_app_status
+        self.role_app_ts_create = datetime.now()
 
     def json(self):
         return {
