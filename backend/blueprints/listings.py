@@ -154,7 +154,7 @@ def getAllOpenRoles():
             for role_skill in all_role_skills:
                 if role_skill[0].role_id == role_listing_json["role_id"]:
                     role_listing_json["role_skills"].append(
-                        role_skill[1].json())
+                        role_skill[1].skill_name)
             final.append(role_listing_json)
 
         return jsonify(
