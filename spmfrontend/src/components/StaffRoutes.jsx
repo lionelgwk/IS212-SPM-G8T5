@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import StaffNavBar from "./StaffNavBar";
 import StaffHomePage from "../pages/StaffHomePage";
 import AppliedPage from "../pages/AppliedPage";
-import NoPermissionPage from "../pages/ManagerNoPermissionPage";
+import StaffNoPermissionPage from "../pages/StaffNoPermissionPage";
 import StaffProfilePage from "../pages/StaffProfilePage";
 import StaffListingDetailsPage from "../pages/StaffListingDetailsPage";
 import StaffApplicantsPage from "../pages/StaffApplicantsPage";
@@ -18,7 +18,7 @@ function StaffRoutes() {
         <Route path="/profile" element={<StaffProfilePage />} />
         <Route path="/details/:id" element={<StaffListingDetailsPage />} />
         <Route path="/details/:id/applicants" element={<StaffApplicantsPage />} />
-        <Route path="*" element={<NoPermissionPage />} />
+        <Route path="*" element={<StaffNoPermissionPage />} />
         {/* Add more staff-specific routes here */}
         {/* <Route path="/viewdetails" element={<ViewDetailsPage />} /> */}
       </Route>

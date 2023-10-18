@@ -13,6 +13,10 @@ const Viewdetails = () => {
   const [matchedSkills, setMatchedSkills] = useState([]);
   const [percent, setPercent] = useState(0);
 
+  const handleSubmit = () => {
+    
+  }
+
   useEffect(() => {
     if (!isPending) {
       const date = new Date(listing?.role_listing_close).getTime();
@@ -110,7 +114,7 @@ const Viewdetails = () => {
                 matchedSkills.length > 1 ? "grid-cols-2" : "grid-cols-1"
               } gap-4`}
             >
-              {(matchedSkills.length == 0 && missingSkills.length > 0)  ? (
+              {matchedSkills.length == 0 && missingSkills.length > 0 ? (
                 <div className="h-20 card bg-info text-white rounded-box place-items-center flex justify-center">
                   None
                 </div>
@@ -137,10 +141,8 @@ const Viewdetails = () => {
                 missingSkills.length > 1 ? "grid-cols-2" : "grid-cols-1"
               } gap-4`}
             >
-              {(missingSkills.length == 0 && matchedSkills.length > 0) ? (
-                <div
-                  className="h-20 card bg-error text-white rounded-box place-items-center flex justify-center"
-                >
+              {missingSkills.length == 0 && matchedSkills.length > 0 ? (
+                <div className="h-20 card bg-error text-white rounded-box place-items-center flex justify-center">
                   None
                 </div>
               ) : (
