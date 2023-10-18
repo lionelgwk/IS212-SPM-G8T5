@@ -60,3 +60,26 @@ def getStaffDetails(id):
                 "data" : "Staff id not found in staff_details table"
             }
         ), 404
+
+@staff_bp.route('/managers')
+def getAllManagers():
+    """
+    Get all staff with the manager title from the staff_details SQL table
+    """
+    staffs = StaffDetails.query.filter_by(sys_role="manager").all()
+    if staffs is not None:
+        return jsonify(
+            {
+                "code" : 200,
+                "data" : {
+                    "staffs" : [(staff.json()["fname"] + " " + staff.json()["lname"]) for staff in staffs]
+                }
+            }
+        ), 200
+    else:
+        return jsonify(
+            {
+                "code" : 404,
+                "message" : "No staff managers found"
+            }
+        ), 404
