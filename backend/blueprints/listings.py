@@ -5,7 +5,7 @@ import enum
 from datetime import date, timedelta, datetime
 import uuid
 
-from models import RoleListings, RoleDetails, RoleSkills, SkillDetails
+from models import RoleListings, RoleDetails, RoleSkills, SkillDetails, RoleApplications, StaffDetails
 from configs.extensions import db
 
 
@@ -318,3 +318,21 @@ def listedRoleDetails(role_listing_id):
                 "data": role.json()
             }
         ), 200
+
+
+
+@listing_bp.route('/applicants/<string:role_listing_id>')
+def getApplicants(role_listing_id):
+    """
+    Get all applicants for a role listing by sending a GET request with the role_listing_id.
+    """
+    all_applicants = db.session.query(RoleApplications).filter(RoleApplications.role_listing_id == role_listing_id).all()
+
+    
+    return jsonify(
+        {
+            "code": 200,
+            "message": "GET request successful",
+            "data": [applicant.json() for applicant in all_applicants]
+        }
+    ), 200
