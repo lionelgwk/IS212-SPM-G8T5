@@ -102,7 +102,7 @@ const RoleSearch = ({
               <div className="flex flex-row flex-wrap">
                 {selectedSkills.map((skill, index) => (
                   <div
-                    className="card bg-[#75e693] w-auto input input-rounded flex flex-row items-center justify-center"
+                    className="card bg-[#75e693] w-auto input input-rounded flex flex-row items-center justify-center mr-3 mb-3"
                     key={index}
                   >
                     <span className="selected-skill">{skill}</span>
