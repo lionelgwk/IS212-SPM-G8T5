@@ -1,13 +1,16 @@
 import React from 'react';
+import FetchUser from '../hook/FetchUser';
 
-const SkillCard = ({ user }) => {
-  
+const SkillCard = () => {
+  const { user } = FetchUser();
+  const skills = user.active_skills;
+
   return (
     <div className="bg-white border rounded-lg overflow-hidden p-6 mb-6">
       <div className="mb-4">
         <div className="font-bold text-xl mb-2">My Skills</div>
         <div>
-          {user.skills.map(skill => (
+          {skills?.map(skill => (
             <div
               key={skill.skill_id}
             >

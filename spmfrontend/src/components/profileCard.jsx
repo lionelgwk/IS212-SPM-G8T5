@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import FetchUser from "../hook/FetchUser";
 
-const ProfileCard = ({user}) => {
+const ProfileCard = () => {
+  const { user } = FetchUser();
+
+
   const [fname, setfName] = useState(user?.fname || '');
   const [lname, setlName] = useState(user?.lname || '');
   const [email, setEmail] = useState(user?.email || '');
