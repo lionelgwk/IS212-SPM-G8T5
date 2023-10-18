@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FetchAllSkills from "../hook/FetchAllSkills";
 
 const RoleSearch = ({
   filterRolesByName,
@@ -9,6 +10,7 @@ const RoleSearch = ({
   const [searchInput, setSearchInput] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedSkill, setSelectedSkill] = useState("");
+  const { data: skills } = FetchAllSkills();
 
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
@@ -79,11 +81,16 @@ const RoleSearch = ({
                 <option disabled value="placeholder">
                   Pick one
                 </option>
-                <option value="React">React</option>
+                {skills?.map((skill, index) => (
+                  <option key={index} value={skill.skill_name}>
+                    {skill.skill_name}
+                  </option>
+                ))}
+                {/* <option value="React">React</option>
                 <option value="Communication">Communication</option>
                 <option value="MacOS">MacOS</option>
                 <option value="Teamwork">Teamwork</option>
-                <option value="Node">Node</option>
+                <option value="Node">Node</option> */}
               </select>
             </div>
           </div>
@@ -92,28 +99,36 @@ const RoleSearch = ({
           <>
             <div className="selected-skills px-5 pb-3">
               <h2 className="font-bold">Selected Skills:</h2>
-              {selectedSkills.map((skill) => (
-                <div className="badge badge-secondary badge-outline h-30">
-                  <span key={skill} className="selected-skill">
-                    {skill}
-                    <button onClick={() => removeSelectedSkill(skill)}>
+              <div className="flex flex-row flex-wrap">
+                {selectedSkills.map((skill, index) => (
+                  <div
+                    className="card bg-[#75e693] w-auto input input-rounded flex flex-row items-center justify-center"
+                    key={index}
+                  >
+                    <span className="selected-skill">{skill}</span>
+                    <button
+                      className="ml-2"
+                      onClick={() => removeSelectedSkill(skill)}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
+                        width="24"
+                        height="24"
                         viewBox="0 0 24 24"
-                        className="inline-block w-4 h-4 stroke-current"
+                        fill="none"
+                        stroke="#000000"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M6 18L18 6M6 6l12 12"
-                        ></path>
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
                       </svg>
                     </button>
-                  </span>
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         )}
