@@ -169,7 +169,7 @@ Sample Output:
 <br>
 <a name="listedRoleDetails1"></a>
 
-## Get role listing details `/role/listed_roles/<string:role_listing_id>`
+## Get role listing details `/listing/listed_roles/<string:role_listing_id>`
 Methods : <strong>GET</strong><br>
 Get details of the role listing by sending a GET request with the role_listing_id.
 
@@ -197,7 +197,7 @@ Sample Output:
 <br>
 <a name="listedRoleDetails2"></a>
 
-## Edit role listing details `/role/listed_roles/<string:role_listing_id>`
+## Edit role listing details `/listing/listed_roles/<string:role_listing_id>`
 Methods : <strong>POST</strong><br>
 Edit role listing with the specified role_listing_id by sending a POST request.<br>
 Current parameters that can be changed : [ role_listing_desc , role_listing_close, role_listing_open ]

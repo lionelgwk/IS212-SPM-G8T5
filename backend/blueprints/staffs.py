@@ -6,7 +6,7 @@ import enum
 from datetime import date, timedelta, datetime
 from random import randint
 
-from models import StaffDetails
+from models import StaffDetails, StaffSkills, SkillDetails
 from configs.extensions import db
 
 
@@ -46,11 +46,32 @@ def getStaffDetails(id):
     id = 123456786
     """
     staff = StaffDetails.query.filter_by(staff_id=id).first()
+    
     if staff is not None:
+
+        staff_details = staff.json()
+
+        active_skills = db.session.query(SkillDetails).join(
+            StaffSkills,
+            SkillDetails.skill_id == StaffSkills.skill_id
+        ).filter(
+            StaffSkills.staff_id == id,
+            StaffSkills.ss_status == "active",
+            # SkillDetails.skill_status == "active" # if you need both to be active, if not comment this out
+        ).all()
+
+        print(active_skills)
+
+        active_skill_names = []
+        for skill in active_skills:
+            active_skill_names.append(skill.json())
+
+        staff_details["active_skills"] = active_skill_names
+
         return jsonify(
             {
                 "code" : 200,
-                "data" : staff.json()
+                "data" : staff_details
             }
         ), 200
     else:
