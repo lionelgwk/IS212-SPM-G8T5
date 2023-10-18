@@ -1,14 +1,21 @@
 import React, { useState } from "react";
+import FetchUser from "../hook/FetchUser";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const RoleListingForm = () => {
-  const [roleName, setRoleName] = useState("");
-  const [roleDescription, setRoleDescription] = useState("");
-  const [department, setDepartment] = useState("");
-  const [jobLevel, setJobLevel] = useState("");
-  const [wage, setWage] = useState("");
+  const { user } = FetchUser();
   const [skills, setSkills] = useState("");
   const [skillList, setSkillList] = useState([]);
+  const [roleId, setRoleId] = useState("");
+  const [roleListingOpen, setRoleListingOpen] = useState("")
+  // const [roleName, setRoleName] = useState("");
+  const [sourceManager, setSourceManager] = useState("234567892");
 
+
+  const handleDateChange = (date) => {
+    setRoleListingOpen(date);
+  };
   const handleSkillKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -16,33 +23,50 @@ const RoleListingForm = () => {
         setSkillList(prevList => [...prevList, skills]);
         setSkills("");
         console.log("hi");
+        console.log(user);  
       }
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
+  // 234511581
+  // 123456786
 
+  const handleSubmit = (e) => { 
+    e.preventDefault();
+    const data = {
+      role_id: roleId,
+      role_listing_source: sourceManager,
+      role_listing_open: roleListingOpen,
+      // skills: skillList,
+      role_listing_creator: user.staff_id
+    };
+    try {
+      const response = fetch('http://127.0.0.1:5050/listing/add_role_listing/', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Access-Control-Allow-Origin': 'http://localhost:5173',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      // Handle successful response
+      console.log('Role listing created successfully');
+    } catch (error) {
+      // Handle error
+      console.error('Error creating role listing:', error);
+    }
   }
 
   return (
     <form className="mt-4 px-4 py-8 border bg-white">
       <div className="mb-4">
-        <label htmlFor="roleName" className="block mb-2 font-medium">
-          Role Listing ID:
-        </label>
-        <input
-          type="number"
-          id="roleListingId"
-          min="0"
-        //   value={roleName}
-          onChange={(e) => setRoleName(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="roleName" className="block mb-2 font-medium">
+        <label htmlFor="roleId" className="block mb-2 font-medium">
           Role ID:
         </label>
         <input
@@ -50,11 +74,11 @@ const RoleListingForm = () => {
           id="roleId"
           min="0"
         //   value={roleName}
-          onChange={(e) => setRoleName(e.target.value)}
+          onChange={(e) => setRoleId(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
       </div>
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label htmlFor="roleName" className="block mb-2 font-medium">
           Role Name:
         </label>
@@ -65,8 +89,27 @@ const RoleListingForm = () => {
           onChange={(e) => setRoleName(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
-      </div>
+      </div> */}
       <div className="mb-4">
+        <label htmlFor="sourceManager" className="block mb-2 font-medium">
+          Source Manager:
+        </label>
+        <input
+          type="text"
+          id="sourceManager"
+        //   value={roleName}
+          onChange={(e) => setSourceManager(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <label htmlFor="roleListingOpen">Role Listing Open:</label>
+      <DatePicker
+        id="roleListingOpen"
+        selected={roleListingOpen}
+        onChange={handleDateChange}
+        dateFormat="yyyy-MM-dd"
+      />
+      {/* <div className="mb-4">
         <label htmlFor="roleDescription" className="block mb-2 font-medium">
           Role Description:
         </label>
@@ -76,82 +119,7 @@ const RoleListingForm = () => {
           onChange={(e) => setRoleDescription(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
-      </div>
-      {/* <div className="mb-4">
-        <label htmlFor="department" className="block mb-2 font-medium">
-          Department:
-        </label>
-        <select
-          id="department"
-        //   value={department}
-          onChange={(e) => setDepartment(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        >
-          <option value="">Select Department</option>
-        </select>
       </div> */}
-      {/* <div className="mb-4">
-        <label className="block mb-2 font-medium">Job Level:</label>
-        <div className="grid grid-cols-4 gap-2">
-          <label className="flex items-center">
-            <input
-              type="radio"
-              name="jobLevel"
-              value="Entry"
-            //   checked={jobLevel === "Entry"}
-              onChange={(e) => setJobLevel(e.target.value)}
-              className="mr-2"
-            />
-            Entry
-          </label>
-          <label className="flex items-center">
-            <input
-              type="radio"
-              name="jobLevel"
-              value="Junior Executive"
-            //   checked={jobLevel === "Junior Executive"}
-              onChange={(e) => setJobLevel(e.target.value)}
-              className="mr-2"
-            />
-            Junior Executive
-          </label>
-          <label className="flex items-center">
-            <input
-              type="radio"
-              name="jobLevel"
-              value="Senior"
-            //   checked={jobLevel === "Senior"}
-              onChange={(e) => setJobLevel(e.target.value)}
-              className="mr-2"
-            />
-            Senior
-          </label>
-          <label className="flex items-center">
-            <input
-              type="radio"
-              name="jobLevel"
-              value="Manager"
-            //   checked={jobLevel === "Manager"}
-              onChange={(e) => setJobLevel(e.target.value)}
-              className="mr-2"
-            />
-            Manager
-          </label>
-        </div>
-        </div> */}
-              {/* <div className="mb-4">
-                <label htmlFor="wage" className="block mb-2 font-medium">
-                  Wage:
-                </label>
-                <select
-                  id="wage"
-                //   value={wage}
-                  onChange={(e) => setWage(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                >
-                  <option value="">Select Wage</option>
-                </select>
-              </div> */}
               <div className="mb-4">
                 <label htmlFor="skills" className="block mb-2 font-medium">
                   Skills:
@@ -177,11 +145,9 @@ const RoleListingForm = () => {
               </div>
               <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2">
                 <button
-                type="submit"
+                type="button"
                 className="inline-block px-6 py-3 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-lg"
-                onClick={e=>{
-                  e.preventDefault();
-                }}
+                onClick={handleSubmit}
                 >
                 Create Role
                 </button>
