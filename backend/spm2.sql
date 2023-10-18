@@ -63,7 +63,7 @@ CREATE TABLE role_skills (
 CREATE TABLE role_listings(
     role_listing_id BIGINT NOT NULL,
     role_id INT NOT NULL,
-    role_listing_desc VARCHAR(255) NOT NULL,
+    role_listing_desc VARCHAR(10000) NOT NULL,
     role_listing_source INT,
     role_listing_open DATE NOT NULL,
     role_listing_close DATE not NULL,
