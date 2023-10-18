@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
+import FetchUser from "../hook/FetchUser";
 
 const ProfileCard = () => {
-  const [name, setName] = useState({ firstName: 'John', lastName: 'Doe' });
-  const [email, setEmail] = useState('john.doe@example.com');
-  const [phone, setPhone] = useState('65-5824-7888');
-  const [address, setAddress] = useState('1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208');
-  const[staff_id, setStaff_id] = useState('123456786');
-  const[dept, setDept] = useState('IT');
-  const [description, setDescription] = useState('');
+  const { user } = FetchUser();
+
+
+  const [fname, setfName] = useState(user?.fname || '');
+  const [lname, setlName] = useState(user?.lname || '');
+  const [email, setEmail] = useState(user?.email || '');
+  const [phone, setPhone] = useState(user?.phone || '');
+  const [biz_address, setAddress] = useState(user?.biz_address || '');
+  const [staff_id, setStaff_id] = useState(user?.staff_id || '');
   const [isEditing, setIsEditing] = useState(false);
 
-  
-  const handleFirstNameChange = (e) => {
-    setName((prevName) => ({
-      ...prevName,
-      firstName: e.target.value,
-    }));
+  const handlefNameChange = (e) => {
+    setfName(e.target.value);
   };
 
-  const handleLastNameChange = (e) => {
-    setName((prevName) => ({
-      ...prevName,
-      lastName: e.target.value,
-    }));
-  };;
+  const handlelNameChange = (e) => {
+    setlName(e.target.value);
+  };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -36,10 +32,6 @@ const ProfileCard = () => {
   const handleAddressChange = (e) => {
     setAddress(e.target.value);
   };
-
-  // const handleDescriptionChange = (e) => {
-  //   setDescription(e.target.value);
-  // };
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -60,11 +52,11 @@ const ProfileCard = () => {
             <input
               type="text"
               className="border rounded w-full py-2 px-3"
-              value={name.firstName}
-              onChange={handleFirstNameChange}
+              value={user.fname}
+              onChange={handlefNameChange}
             />
           ) : (
-            <div>{name.firstName}</div>
+            <div>{user.fname}</div>
           )}
         </div>
         <div>
@@ -73,16 +65,16 @@ const ProfileCard = () => {
             <input
               type="text"
               className="border rounded w-full py-2 px-3"
-              value={name.lastName}
-              onChange={handleLastNameChange}
+              value={user.lname}
+              onChange={handlelNameChange}
             />
           ) : (
-            <div>{name.lastName}</div>
+            <div>{user.lname}</div>
           )}
         </div>
         <div>
         <div className="font-bold text-l mb-2">Staff ID</div>
-          <div>{staff_id}</div>    
+          <div>{user.staff_id}</div>    
         </div>
         <div>
           {isEditing ? (
@@ -103,11 +95,11 @@ const ProfileCard = () => {
             <input
               type="email"
               className="border rounded w-full py-2 px-3"
-              value={email}
+              value={user.email}
               onChange={handleEmailChange}
             />
           ) : (
-            <div>{email}</div>
+            <div>{user.email}</div>
           )}
         </div>
         <div className="w-1/3 pr-4">
@@ -116,11 +108,11 @@ const ProfileCard = () => {
             <input
               type="tel"
               className="border rounded w-full py-2 px-3"
-              value={phone}
+              value={user.phone}
               onChange={handlePhoneChange}
             />
           ) : (
-            <div>{phone}</div>
+            <div>{user.phone}</div>
           )}
         </div>
         <div className="w-1/3">
@@ -129,11 +121,11 @@ const ProfileCard = () => {
             <input
               type="text"
               className="border rounded w-full py-2 px-3"
-              value={address}
+              value={user.biz_address}
               onChange={handleAddressChange}
             />
           ) : (
-            <div>{address}</div>
+            <div>{user.biz_address}</div>
           )}
         </div>
       </div>

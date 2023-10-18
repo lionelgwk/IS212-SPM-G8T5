@@ -128,8 +128,8 @@ const StaffHomePage = () => {
   };
 
   return (
-    <div className="bg-[#bee9e8]">
-      <div className="container mx-auto p-2 min-h-screen">
+    <div className="bg-[#bee9e8] h-screen">
+      <div className="container mx-auto p-2">
         <div className="font-bold text-xl pt-5 mb-1 text-center">
           Welcome {user.lname} {user.fname}{" "}
         </div>

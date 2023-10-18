@@ -7,7 +7,7 @@ const ManagerProfilePage = () => {
 
 
     return(
-        <div className="bg-white">
+        <div className="bg-white h-screen">
             <div className="container mx-auto p-2">
                 <ProfileCard></ProfileCard>
                 <SkillCard></SkillCard>
