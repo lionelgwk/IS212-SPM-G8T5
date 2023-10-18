@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import FetchUser from "../hook/FetchUser";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const RoleListingForm = () => {
@@ -8,49 +7,51 @@ const RoleListingForm = () => {
   const [skills, setSkills] = useState("");
   const [skillList, setSkillList] = useState([]);
   const [roleId, setRoleId] = useState("");
-  const [roleListingOpen, setRoleListingOpen] = useState("")
+  // const [roleListingOpen, setRoleListingOpen] = useState("")
   // const [roleName, setRoleName] = useState("");
-  const [sourceManager, setSourceManager] = useState("234567892");
+  const [sourceManager, setSourceManager] = useState("");
+  // const [roleListingClose, setRoleListingClose] = useState("");
+  const [roleListingOpen, setRoleListingOpen] = useState(new Date().toISOString().slice(0, 10));
+  const [roleListingClose, setRoleListingClose] = useState(new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10));
 
-
-  const handleDateChange = (date) => {
-    setRoleListingOpen(date);
-  };
-  const handleSkillKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      if (skills.trim() !== "") {
-        setSkillList(prevList => [...prevList, skills]);
-        setSkills("");
-        console.log("hi");
-        console.log(user);  
-      }
-    }
-  };
+  // const handleSkillKeyPress = (e) => {
+  //   if (e.key === "Enter") {
+  //     e.preventDefault();
+  //     if (skills.trim() !== "") {
+  //       setSkillList(prevList => [...prevList, skills]);
+  //       setSkills("");
+  //       console.log("hi");
+  //       console.log(user);  
+  //     }
+  //   }
+  // };
 
   // 234511581
   // 123456786
 
-  const handleSubmit = (e) => { 
+  const handleSubmit = async (e) => { 
     e.preventDefault();
+    const date = new Date(Date.parse(roleListingOpen));
+    const formattedDate = date.toISOString().slice(0, 10);
     const data = {
       role_id: roleId,
       role_listing_source: sourceManager,
-      role_listing_open: roleListingOpen,
-      // skills: skillList,
-      role_listing_creator: user.staff_id
+      role_listing_open: formattedDate,
+      // skills: skillList
+      role_listing_creator: user.staff_id,
+      role_listing_close: roleListingClose
     };
+    
     try {
-      const response = fetch('http://127.0.0.1:5050/listing/add_role_listing/', {
+      const response = await fetch('http://127.0.0.1:5050/listing/add_role_listing', {
         method: 'POST',
-        mode: 'cors',
         headers: {
-          'Access-Control-Allow-Origin': 'http://localhost:5173',
+          'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
       });
-  
+      console.log(response);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -102,13 +103,32 @@ const RoleListingForm = () => {
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
       </div>
-      <label htmlFor="roleListingOpen">Role Listing Open:</label>
+      {/* <label htmlFor="roleListingOpen">Role Listing Open:</label>
       <DatePicker
         id="roleListingOpen"
         selected={roleListingOpen}
         onChange={handleDateChange}
         dateFormat="yyyy-MM-dd"
-      />
+      /> */}
+      <div className="flex">
+        <label htmlFor="roleListingOpen" className="block mb-2 font-medium">Start Date: </label>
+          <input
+            type="date"
+            id="roleListingOpen"
+            value={roleListingOpen}
+            onChange={(e) => setRoleListingOpen(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
+          />
+
+          <label htmlFor="roleListingClose" className="block mb-2 font-medium">End Date: </label>
+          <input
+            type="date"
+            id="roleListingClose"
+            value={roleListingClose}
+            onChange={(e) => setRoleListingClose(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
+          />
+        </div>
       {/* <div className="mb-4">
         <label htmlFor="roleDescription" className="block mb-2 font-medium">
           Role Description:
@@ -120,7 +140,7 @@ const RoleListingForm = () => {
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
       </div> */}
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label htmlFor="skills" className="block mb-2 font-medium">
                   Skills:
                 </label>
@@ -142,7 +162,7 @@ const RoleListingForm = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
               <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2">
                 <button
                 type="button"
