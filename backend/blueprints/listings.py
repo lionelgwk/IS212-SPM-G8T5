@@ -154,7 +154,7 @@ def getAllOpenRoles():
             for role_skill in all_role_skills:
                 if role_skill[0].role_id == role_listing_json["role_id"]:
                     role_listing_json["role_skills"].append(
-                        role_skill[1].json())
+                        role_skill[1].skill_name)
             final.append(role_listing_json)
 
         return jsonify(
@@ -233,7 +233,7 @@ def deleteRoleListing():
         ), 500
 
 
-@listing_bp.route('/listed_roles/<string:role_listing_id>', methods=["GET", "POST"])
+@listing_bp.route('/listed_roles/<string:role_listing_id>', methods=["GET", "PUT"])
 def listedRoleDetails(role_listing_id):
     """
     Get details of the role listing by sending a GET request with the role_listing_id.
@@ -272,7 +272,8 @@ def listedRoleDetails(role_listing_id):
             }
         ), 200
 
-    elif request.method == "POST":
+            
+    elif request.method == "PUT":
         data = request.json
         if data is None:
             return jsonify(

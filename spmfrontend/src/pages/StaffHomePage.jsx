@@ -122,7 +122,7 @@ const StaffHomePage = () => {
     setSelectedSkills(skills);
     // Filter jobs based on selected skills
     const filtered = allRoles.filter((role) =>
-      skills.every((skill) => role.skills.includes(skill))
+      skills.every((skill) => role.role_skills.includes(skill))
     );
     setFilteredRoles(filtered);
   };
