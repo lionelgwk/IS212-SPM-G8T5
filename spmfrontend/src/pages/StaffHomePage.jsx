@@ -2,9 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import RoleSearch from "../components/roleSearch";
 import RoleCard from "../components/roleCard";
 import Pagination from "../components/Pagination";
-import FetchUser from "../hook/fetchUser";
-import FetchListingDetails from "../hook/FetchListingDetails";
-import axios from "axios";
+import FetchUser from "../hook/FetchUser";
+import FetchOpenListings from "../hook/FetchOpenListings";
 import { AiFillFrown } from "react-icons/ai";
 
 const StaffHomePage = () => {
@@ -86,7 +85,7 @@ const StaffHomePage = () => {
   const jobsPerPage = 5;
 
   const { user } = FetchUser();
-  const { data: data, pending: isPending } = FetchListingDetails();
+  const { data: data, pending: isPending } = FetchOpenListings();
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 
@@ -123,7 +122,7 @@ const StaffHomePage = () => {
     setSelectedSkills(skills);
     // Filter jobs based on selected skills
     const filtered = allRoles.filter((role) =>
-      skills.every((skill) => role.skills.includes(skill))
+      skills.every((skill) => role.role_skills.includes(skill))
     );
     setFilteredRoles(filtered);
   };
@@ -134,7 +133,9 @@ const StaffHomePage = () => {
         <div className="font-bold text-xl pt-5 mb-1 text-center">
           Welcome {user.lname} {user.fname}{" "}
         </div>
-        <button onClick={(e) => console.log(data)}>console</button>
+        <button onClick={(e) => console.log(user.active_skills)}>
+          console
+        </button>
 
         <RoleSearch
           handleSearching={handleSearching}
@@ -161,10 +162,10 @@ const StaffHomePage = () => {
                   key={role.role_id}
                   title={role.role_name}
                   description={role.role_listing_desc}
-                  // department={role.department}
-                  // jobLevel={role.jobLevel}
-                  // wage={role.wage}
-                  // skills={role.skills}
+                  skills={role.role_skills}
+                  date={role.role_listing_open}
+                  deadline={role.role_listing_close}
+                  mySkills={user.active_skills}
                 />
               ))}
             </div>
@@ -173,12 +174,13 @@ const StaffHomePage = () => {
               {currentRoles.map((role) => (
                 <RoleCard
                   key={role.role_id}
+                  id={role.role_listing_id}
                   title={role.role_name}
                   description={role.role_listing_desc}
-                  // department={role.department}
-                  // jobLevel={role.jobLevel}
-                  // wage={role.wage}
-                  // skills={role.skills}
+                  skills={role.role_skills}
+                  date={role.role_listing_open}
+                  deadline={role.role_listing_close}
+                  mySkills={user.active_skills}
                 />
               ))}
             </div>
@@ -188,10 +190,14 @@ const StaffHomePage = () => {
             <div className="card w-full bg-base-100 shadow-xl">
               <div className="flex justify-center card-body">
                 <div className="flex justify-center">
-                  <AiFillFrown size={70}/>
+                  <AiFillFrown size={70} />
                 </div>
-                <h2 className="flex justify-center card-title text-[#949391]">No open roles!</h2>
-                <h2 className="flex justify-center text-[#949391]">Perhaps we could check back later?</h2>
+                <h2 className="flex justify-center card-title text-[#949391]">
+                  No open roles!
+                </h2>
+                <h2 className="flex justify-center text-[#949391]">
+                  Perhaps we could check back later?
+                </h2>
               </div>
             </div>
           </div>

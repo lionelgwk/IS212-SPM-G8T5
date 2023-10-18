@@ -8,7 +8,7 @@
 <br>
 <a name="listing"></a>
 
-# Roles `/listing`
+# Listing `/listing`
 1. [ Get all listed roles ](#getAllListedRoles)
 2. [ Get all open roles ](#getAllOpenRoles)
 3. [ Delete existing role listing ](#deleteRoleListing)
@@ -169,7 +169,7 @@ Sample Output:
 <br>
 <a name="listedRoleDetails1"></a>
 
-## Get role listing details `/role/listed_roles/<string:role_listing_id>`
+## Get role listing details `/listing/listed_roles/<string:role_listing_id>`
 Methods : <strong>GET</strong><br>
 Get details of the role listing by sending a GET request with the role_listing_id.
 
@@ -197,7 +197,7 @@ Sample Output:
 <br>
 <a name="listedRoleDetails2"></a>
 
-## Edit role listing details `/role/listed_roles/<string:role_listing_id>`
+## Edit role listing details `/listing/listed_roles/<string:role_listing_id>`
 Methods : <strong>POST</strong><br>
 Edit role listing with the specified role_listing_id by sending a POST request.<br>
 Current parameters that can be changed : [ role_listing_desc , role_listing_close, role_listing_open ]
@@ -346,38 +346,64 @@ Sample Output:
 
 # Staff `/staff`
 1. [ Get a staff's details ](#getStaffDetails)
+2. [ Get all managers ](#getAllManagers)
 
-## Get a staff's details `/staff/<string:staff_id>`
-Methods : GET
-Get staff details in the staff_details SQL table based on staff_id
+<br>
+<br>
+<a name="getAllManagers"></a>
 
-Sample GET input:
-```
-role_listing_id = 123456786
-```
+## Get all managers `/staff/managers`
+Methods : <strong>GET</strong> <br>
+Get all staff with the manager title from the staff_details SQL table
 
 Sample Output:
 ```json
 {
     "code": 200,
     "data": {
-        "biz_address": "1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208",
-        "dept": "IT",
-        "email": "John_doe@all-in-one.com.sg",
-        "fname": "JOHN",
-        "lname": "DOE",
-        "phone": "65-5824-7888",
-        "staff_id": 123456786
+        "staffs": [
+            "FAUD NIZAM",
+            "JASON TAN"
+        ]
     }
 }
-
 ```
 
+<br>
+<br>
+<a name="skill"></a>
 
+# Skill `/skill`
 
+1. [ Get all skill details](#getAllSkillDetails)
 
+<br>
+<br>
+<a name="getAllSkillDetails"></a>
 
+## Get all skill details `/skill`
+Methods : <strong>GET</strong><br>
+Get all skill details in the skill_details SQL table
 
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": [
+        {
+            "skill_id": 345678912,
+            "skill_name": "Pascal Programming",
+            "skill_status": "inactive"
+        },
+        {
+            "skill_id": 345678913,
+            "skill_name": "Python Programming",
+            "skill_status": "active"
+        }
+    ],
+    "message": "Successfully retrieved all skill details"
+}
+```
 
 <br>
 <br>
@@ -388,6 +414,7 @@ Sample Output:
 1. [ Get all role details](#getAllRoleDetails)
 2. [ Create new role details ](#addRoleDetails)
 3. [ Get role details ](#getRoleDetails)
+
 
 
 <br>
