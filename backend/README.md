@@ -8,7 +8,7 @@
 <br>
 <a name="listing"></a>
 
-# Roles `/listing`
+# Listing `/listing`
 1. [ Get all listed roles ](#getAllListedRoles)
 2. [ Get all open roles ](#getAllOpenRoles)
 3. [ Delete existing role listing ](#deleteRoleListing)
@@ -353,7 +353,7 @@ Get staff details in the staff_details SQL table based on staff_id
 
 Sample GET input:
 ```
-role_listing_id = 123456786
+role_listing_id = 123456793
 ```
 
 Sample Output:
@@ -361,23 +361,73 @@ Sample Output:
 {
     "code": 200,
     "data": {
-        "biz_address": "1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208",
-        "dept": "IT",
-        "email": "John_doe@all-in-one.com.sg",
-        "fname": "JOHN",
-        "lname": "DOE",
-        "phone": "65-5824-7888",
-        "staff_id": 123456786
+        "biz_address": "60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051",
+        "dept": "FINANCE",
+        "email": "jason_tan@all-in-one.com.sg",
+        "fname": "JASON",
+        "lname": "TAN",
+        "phone": "65-1234-5672",
+        "roles": [
+            {
+                "role_description": "The Head, Talent Management is responsible for the development and implementation of talent management strategies and programs that support the organisation's growth strategies. He/She is responsible for the design and implementation of talent acquisition, development, retention and succession planning programs. He/She is responsible for the development of the organisation's talent management framework and the implementation of the framework across the organisation. He/She is responsible for the development of the organisation's talent management policies and procedures. He/She is responsible for the development of the organisation's talent management metrics and the implementation of the metrics across the organisation. He/She is responsible for the development of the organisation's talent management technology and the implementation of the technology across the organisation. He/She is responsible for the development of the organisation's talent management analytics and the implementation of the analytics across the organisation.",
+                "role_id": 234567894,
+                "role_name": "Head, Talent Management",
+                "role_status": "inactive"
+            }
+        ],
+        "skills": [
+            {
+                "skill_id": 345678914,
+                "skill_name": "Certified Scrum Master",
+                "skill_status": "active"
+            },
+            {
+                "skill_id": 345678916,
+                "skill_name": "Java Programming",
+                "skill_status": "active"
+            }
+        ],
+        "staff_id": 123456793,
+        "sys_role": "manager"
     }
 }
-
 ```
 
+<br>
+<br>
+<a name="skill"></a>
 
+# Skill `/skill`
 
+1. [ Get all skill details](#getAllSkillDetails)
 
+<br>
+<br>
+<a name="getAllSkillDetails"></a>
 
+## Get all skill details `/skill`
+Methods : <strong>GET</strong><br>
+Get all skill details in the skill_details SQL table
 
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": [
+        {
+            "skill_id": 345678912,
+            "skill_name": "Pascal Programming",
+            "skill_status": "inactive"
+        },
+        {
+            "skill_id": 345678913,
+            "skill_name": "Python Programming",
+            "skill_status": "active"
+        }
+    ],
+    "message": "Successfully retrieved all skill details"
+}
+```
 
 <br>
 <br>
@@ -388,6 +438,7 @@ Sample Output:
 1. [ Get all role details](#getAllRoleDetails)
 2. [ Create new role details ](#addRoleDetails)
 3. [ Get role details ](#getRoleDetails)
+
 
 
 <br>
