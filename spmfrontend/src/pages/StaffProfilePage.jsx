@@ -6,8 +6,6 @@ import FetchUser from "../hook/FetchUser";
 const StaffProfilePage = () => {
     const { user } = FetchUser();
 
-
-
     return(
         <div className="bg-[#f8fdff] h-screen">
             <div className="container mx-auto p-2">
