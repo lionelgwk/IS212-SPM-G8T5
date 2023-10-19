@@ -5,7 +5,7 @@ import enum
 from datetime import date, timedelta, datetime
 import uuid
 
-from models import RoleListings, RoleDetails, RoleSkills, SkillDetails
+from models import RoleListings, RoleDetails, RoleSkills, SkillDetails, RoleApplications, StaffDetails
 from configs.extensions import db
 
 
@@ -233,7 +233,7 @@ def deleteRoleListing():
         ), 500
 
 
-@listing_bp.route('/listed_roles/<string:role_listing_id>', methods=["GET", "POST"])
+@listing_bp.route('/listed_roles/<string:role_listing_id>', methods=["GET", "PUT"])
 def listedRoleDetails(role_listing_id):
     """
     Get details of the role listing by sending a GET request with the role_listing_id.
@@ -272,7 +272,8 @@ def listedRoleDetails(role_listing_id):
             }
         ), 200
 
-    elif request.method == "POST":
+            
+    elif request.method == "PUT":
         data = request.json
         if data is None:
             return jsonify(
@@ -318,3 +319,77 @@ def listedRoleDetails(role_listing_id):
                 "data": role.json()
             }
         ), 200
+
+
+
+@listing_bp.route('/applicants/<string:role_listing_id>')
+def getApplicants(role_listing_id):
+    """
+    Get all applicants for a role listing by sending a GET request with the role_listing_id.
+    """
+    all_applicants = db.session.query(RoleApplications).filter(RoleApplications.role_listing_id == role_listing_id).all()
+
+    
+    return jsonify(
+        {
+            "code": 200,
+            "message": "GET request successful",
+            "data": [applicant.json() for applicant in all_applicants]
+        }
+    ), 200
+
+
+@listing_bp.route('/apply', methods=["POST"])
+def applyListing():
+    """
+    Apply for a role listing by sending a POST request with the role_listing_id and staff_id.
+    """
+    data = request.json
+    role_listing_id = data["role_listing_id"]
+    staff_id = data["staff_id"]
+
+    role_listing = RoleListings.query.filter_by(
+        role_listing_id=role_listing_id).first()
+    if role_listing is None:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "Role listing ID does not exist"
+            }
+        ), 404
+
+    staff = StaffDetails.query.filter_by(staff_id=staff_id).first()
+    if staff is None:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "Staff ID does not exist"
+            }
+        ), 404
+
+    role_application = RoleApplications.query.filter_by(
+        role_listing_id=role_listing_id, staff_id=staff_id).first()
+    if role_application is not None:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "Application already exists"
+            }
+        ), 404
+
+    new_role_application = RoleApplications(
+        role_listing_id=role_listing_id,
+        staff_id=staff_id,
+        role_app_status="applied",
+    )
+
+    db.session.add(new_role_application)
+    db.session.commit()
+
+    return jsonify(
+        {
+            "code": 200,
+            "message": "Application successfully submitted",
+            "data": new_role_application.json()
+        }
+    ), 200

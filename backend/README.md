@@ -8,7 +8,7 @@
 <br>
 <a name="listing"></a>
 
-# Roles `/listing`
+# Listing `/listing`
 1. [ Get all listed roles ](#getAllListedRoles)
 2. [ Get all open roles ](#getAllOpenRoles)
 3. [ Delete existing role listing ](#deleteRoleListing)
@@ -16,8 +16,9 @@
 5. [ Get singular role listing information ](#listedRoleDetails1)
 6. [ Edit singular role listing information ](#listedRoleDetails2)
 7. [ Filter for roles using skill id ](#filterBySkill)
-7. [ Get all role applications ](#getAllRoleApplications)
-7. [ Get all role applications by role listing id ](#getAllRoleApplicationsByRoleId)
+8. [ Get all role applications ](#getAllRoleApplications)
+9. [ Get all role applications by role listing id ](#getAllRoleApplicationsByRoleId)
+10. [ Apply for a role listing ](#applyListing)
 
 
 <br>
@@ -282,7 +283,7 @@ Sample Output:
     "message": "GET request successful"
 }
 ```
-<br>
+<!-- <br>
 <br>
 <a name="getAllRoleApplications"></a>
 
@@ -313,12 +314,12 @@ Sample Output:
     ],
     "message": ""
 }
-```
+``` -->
 <br>
 <br>
 <a name="getAllRoleApplicationsByRoleId"></a>
 
-## Get all role applications by role listing id `/role/applications/<string:role_listing_id>`
+## Get all role applications by role listing id `/listing/applicants/<string:role_listing_id>`
 Methods : <strong>GET</strong><br>
 Get all role applications for a role listing from the role_application sql table, based on the role_listing_id
 <br>
@@ -329,14 +330,51 @@ Sample Output:
     "code": 200,
     "data": [
         {
-            "role_app_id": 4,
-            "role_app_status": "withdrawn",
-            "role_app_ts_create": "Fri, 13 Oct 2023 21:48:07 GMT",
-            "role_listing_id": 102,
+            "role_app_id": 1,
+            "role_app_status": "applied",
+            "role_app_ts_create": "Sat, 14 Oct 2023 21:49:30 GMT",
+            "role_listing_id": 101,
+            "staff_id": 123456789
+        },
+        {
+            "role_app_id": 5,
+            "role_app_status": "applied",
+            "role_app_ts_create": "Wed, 18 Oct 2023 16:36:32 GMT",
+            "role_listing_id": 101,
             "staff_id": 123456786
         }
     ],
-    "message": ""
+    "message": "GET request successful"
+}
+```
+<br>
+<br>
+<a name="applyListing"></a>
+
+## Apply for a listing `/listing/apply`
+Methods : <strong>POST</strong><br>
+Apply for an open role listings<br>
+
+Sample Input JSON Package:
+```json
+{
+        "role_listing_id" : 101,
+        "staff_id" : 123456786
+}
+```
+
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": {
+        "role_app_id": 6,
+        "role_app_status": "applied",
+        "role_app_ts_create": "Wed, 18 Oct 2023 16:47:19 GMT",
+        "role_listing_id": 102,
+        "staff_id": 123456786
+    },
+    "message": "Application successfully submitted"
 }
 ```
 
@@ -346,38 +384,64 @@ Sample Output:
 
 # Staff `/staff`
 1. [ Get a staff's details ](#getStaffDetails)
+2. [ Get all managers ](#getAllManagers)
 
-## Get a staff's details `/staff/<string:staff_id>`
-Methods : GET
-Get staff details in the staff_details SQL table based on staff_id
+<br>
+<br>
+<a name="getAllManagers"></a>
 
-Sample GET input:
-```
-role_listing_id = 123456786
-```
+## Get all managers `/staff/managers`
+Methods : <strong>GET</strong> <br>
+Get all staff with the manager title from the staff_details SQL table
 
 Sample Output:
 ```json
 {
     "code": 200,
     "data": {
-        "biz_address": "1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208",
-        "dept": "IT",
-        "email": "John_doe@all-in-one.com.sg",
-        "fname": "JOHN",
-        "lname": "DOE",
-        "phone": "65-5824-7888",
-        "staff_id": 123456786
+        "staffs": [
+            "FAUD NIZAM",
+            "JASON TAN"
+        ]
     }
 }
-
 ```
 
+<br>
+<br>
+<a name="skill"></a>
 
+# Skill `/skill`
 
+1. [ Get all skill details](#getAllSkillDetails)
 
+<br>
+<br>
+<a name="getAllSkillDetails"></a>
 
+## Get all skill details `/skill`
+Methods : <strong>GET</strong><br>
+Get all skill details in the skill_details SQL table
 
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": [
+        {
+            "skill_id": 345678912,
+            "skill_name": "Pascal Programming",
+            "skill_status": "inactive"
+        },
+        {
+            "skill_id": 345678913,
+            "skill_name": "Python Programming",
+            "skill_status": "active"
+        }
+    ],
+    "message": "Successfully retrieved all skill details"
+}
+```
 
 <br>
 <br>
@@ -388,6 +452,7 @@ Sample Output:
 1. [ Get all role details](#getAllRoleDetails)
 2. [ Create new role details ](#addRoleDetails)
 3. [ Get role details ](#getRoleDetails)
+
 
 
 <br>

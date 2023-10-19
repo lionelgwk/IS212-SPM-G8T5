@@ -10,7 +10,7 @@ const HrListingDetailsPage = () => {
     const { user } = FetchUser();
 
     return(
-        <div className="bg-[#bee9e8]">
+        <div className="bg-[#bee9e8] h-screen">
             <div className="container mx-auto p-2">
                 <Viewdetails />
             </div>
