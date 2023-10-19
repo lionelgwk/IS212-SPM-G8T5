@@ -62,7 +62,7 @@ const Viewdetails = () => {
   //     : "text-red-600 font-bold";
 
   return (
-    <div className="bg-[#bee9e8] p-4">
+    <div className="bg-[#bee9e8] p-4 min-h-screen">
       <div className="bg-white rounded p-4 mb-4 shadow-md">
         <div className="text-center font-bold text-xl pb-2 mb-3 border-b">
           {listing?.role_name}
@@ -74,7 +74,7 @@ const Viewdetails = () => {
               Roles & Responsibilities
             </p>
             <div>{listing?.role_listing_desc}</div>
-            <div className="text-[#1b4965] font-medium">Status</div>
+            <div className="text-[#1b4965] font-medium mt-2">Status</div>
             <div
               className={`font-bold ${
                 overdue ? "text-red-600" : "text-green-600"
