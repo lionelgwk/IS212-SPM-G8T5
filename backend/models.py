@@ -26,7 +26,7 @@ class StaffDetails(db.Model):
     roles = db.relationship("RoleDetails", secondary="staff_roles", back_populates="staffs")
     skills = db.relationship("SkillDetails", secondary="staff_skills", back_populates="staffs")
 
-    def __init__(self, staff_id, fname, lname, dept, email, phone, biz_address, roles=None, skills=None):
+    def __init__(self, staff_id, fname, lname, dept, email, phone, biz_address, sys_role, roles=None, skills=None):
         self.staff_id = staff_id
         self.fname = fname
         self.lname = lname
@@ -34,6 +34,7 @@ class StaffDetails(db.Model):
         self.email = email
         self.phone = phone
         self.biz_address = biz_address
+        self.sys_role = sys_role
         self.roles = roles
         self.skills = skills
 
