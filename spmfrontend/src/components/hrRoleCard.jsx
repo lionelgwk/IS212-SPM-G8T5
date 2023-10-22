@@ -1,12 +1,12 @@
 import React from "react";
 
-const HrRoleCard = () => {
+const HrRoleCard = ({id}) => {
   return (
     <div className="bg-white border rounded-lg overflow-hidden shadow-md p-6 mb-6">
       <div className="flex justify-between mb-1">
         <div className="w-9/12 pr-4 border-r">
           <div className="font-bold text-xl mb-2">%Role Name%</div>
-          <div className="mb-2">ID: %Role listing id%</div>
+          <div className="mb-2">ID: {id}</div>
           <div className="mb-2">Department: %Department Name%</div>
           <div className="text-gray-700 text-base mb-4">
             %Description of the role goes here.%

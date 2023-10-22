@@ -22,11 +22,11 @@ function HrRoutes() {
         <Route path="/profile" element={<HrProfilePage />} />
         {/* <Route path="/applicants" element={<ApplicantsPage />} /> */}
         <Route path="/details/:id" element={<HrListingDetailsPage />} />
-        <Route path="/details/:id/applicants" element={<HrApplicantsPage />} />
-        <Route path="/details/:id/applicants/:staffid" element={<HrApplicantDetailsPage />} />
         <Route path="*" element={<NoPermissionPage />} />
         {/* Add more hr-specific routes here */}
         <Route path="/mylisting/:id" element={<HrMyListingPage />} />
+        <Route path="/mylisting/:id/applicants" element={<HrApplicantsPage />} />
+        <Route path="/mylisting/:id/applicants/:staffid" element={<HrApplicantDetailsPage />} />
       </Route>
     </Routes>
   );
