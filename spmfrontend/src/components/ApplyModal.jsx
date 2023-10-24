@@ -1,19 +1,69 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const ApplyModal = (props) => {
   const [toastVisible, setToastVisible] = useState(false);
+  const [toastVisibleNo, setToastVisibleNo] = useState(false);
   const [animateOut, setAnimateOut] = useState(false);
 
-  const handleApply = () => {
+  const handleApply = async () => {
     console.log("submitted");
-    setToastVisible(true);
+    try {
+      const response = await axios.post("http://localhost:5050/listing/apply", {
+        role_listing_id: props.id,
+        staff_id: localStorage.getItem("staffId"),
+      });
+
+      const code = response.data.code;
+
+      if (code == 200) {
+        setToastVisible(true);
+        setAnimateOut(false); // Make sure it's set to false when showing the toast
+
+        setTimeout(() => {
+          setAnimateOut(true); // Start the animation to slide out after 3 seconds
+
+          setTimeout(() => {
+            setToastVisible(false); // Hide the toast after the animation completes
+          }, 300); // The duration of the animation
+        }, 3000);
+      } else {
+        setToastVisibleNo(true);
+        setAnimateOut(false); // Make sure it's set to false when showing the toast
+
+        setTimeout(() => {
+          setAnimateOut(true); // Start the animation to slide out after 3 seconds
+
+          setTimeout(() => {
+            setToastVisibleNo(false); // Hide the toast after the animation completes
+          }, 300); // The duration of the animation
+        }, 3000);
+      }
+    } catch (error) {
+      console.log(error);
+      setToastVisibleNo(true);
+      setAnimateOut(false); // Make sure it's set to false when showing the toast
+
+      setTimeout(() => {
+        setAnimateOut(true); // Start the animation to slide out after 3 seconds
+
+        setTimeout(() => {
+          setToastVisibleNo(false); // Hide the toast after the animation completes
+        }, 300); // The duration of the animation
+      }, 3000);
+    }
+  };
+
+  const handleReject = () => {
+    console.log("rejected");
+    setToastVisibleNo(true);
     setAnimateOut(false); // Make sure it's set to false when showing the toast
 
     setTimeout(() => {
       setAnimateOut(true); // Start the animation to slide out after 3 seconds
 
       setTimeout(() => {
-        setToastVisible(false); // Hide the toast after the animation completes
+        setToastVisibleNo(false); // Hide the toast after the animation completes
       }, 300); // The duration of the animation
     }, 3000);
   };
@@ -22,7 +72,7 @@ const ApplyModal = (props) => {
     <>
       {/* You can open the modal using document.getElementById('ID').showModal() method */}
       <button
-        className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm disabled:opacity-75 disabled:bg-[#62b6cb] disabled:cursor-not-allowed"
+        className={props.className}
         onClick={() =>
           document.getElementById(`my_modal_${props.id}`).showModal()
         }
@@ -67,7 +117,10 @@ const ApplyModal = (props) => {
                 </svg>
                 <p className="ps-2">Yes</p>
               </button>
-              <button className="mx-4 px-4 py-2 bg-error rounded-xl shadow-sm flex items-center w-24 justify-center">
+              <button
+                onClick={handleReject}
+                className="mx-4 px-4 py-2 bg-error rounded-xl shadow-sm flex items-center w-24 justify-center"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -95,7 +148,18 @@ const ApplyModal = (props) => {
               animateOut ? "transform translate-x-full" : ""
             }`}
           >
-            <span>Message sent successfully.</span>
+            <span>Application sent successfully!</span>
+          </div>
+        </div>
+      )}
+      {toastVisibleNo && (
+        <div className="toast toast-end">
+          <div
+            className={`alert alert-error transition-all duration-300 ${
+              animateOut ? "transform translate-x-full" : ""
+            }`}
+          >
+            <span>Application was not sent.</span>
           </div>
         </div>
       )}
