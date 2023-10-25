@@ -272,7 +272,6 @@ def listedRoleDetails(role_listing_id):
             }
         ), 200
 
-            
     elif request.method == "PUT":
         data = request.json
         if data is None:
@@ -321,15 +320,14 @@ def listedRoleDetails(role_listing_id):
         ), 200
 
 
-
 @listing_bp.route('/applicants/<string:role_listing_id>')
 def getApplicants(role_listing_id):
     """
     Get all applicants for a role listing by sending a GET request with the role_listing_id.
     """
-    all_applicants = db.session.query(RoleApplications).filter(RoleApplications.role_listing_id == role_listing_id).all()
+    all_applicants = db.session.query(RoleApplications).filter(
+        RoleApplications.role_listing_id == role_listing_id).all()
 
-    
     return jsonify(
         {
             "code": 200,
@@ -393,3 +391,26 @@ def applyListing():
             "data": new_role_application.json()
         }
     ), 200
+
+
+@listing_bp.route('/applied_roles/<string:staff_id>', methods=["GET"])
+def get_role_listings_by_staff(staff_id):
+    results = (db.session.query(RoleListings, RoleDetails, RoleApplications)
+               .join(RoleDetails, RoleListings.role_id == RoleDetails.role_id)
+               .join(RoleApplications, RoleListings.role_listing_id == RoleApplications.role_listing_id)
+               .filter(RoleApplications.staff_id == staff_id)
+               .all())
+
+    # Convert results to JSON-friendly format
+    data = [{
+        **listing.json(),
+        **details.json(),
+        **role_app.json()
+    } for listing, details, role_app in results]
+
+    return jsonify(
+        {
+            "code": 200,
+            "message": "GET request successful",
+            "data": data
+        }), 200
