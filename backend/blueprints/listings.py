@@ -379,3 +379,15 @@ def applyListing():
             "data": new_role_application.json()
         }
     ), 200
+
+
+@listing_bp.route('/applied_roles/<string:staff_id>', methods=["GET"])
+def getAllRoleAppliedFor(staff_id):
+    applications = RoleApplications.query.filter_by(staff_id=staff_id)
+    json_list = [application.json() for application in applications]
+    return jsonify(
+        {
+            "data" : json_list,
+            "message" : "GET request sucessful"
+        }
+    ),200
