@@ -172,10 +172,11 @@ VALUES
 
 INSERT INTO role_listings(role_listing_id, role_id, role_listing_desc, role_listing_source, role_listing_creator, role_listing_updater, role_listing_open, role_listing_close)
 VALUES
-(101, 234567891, 'Job listing for Head, Talent Attraction role', 123456789, 123456788, 123456788, '2023-09-15', '2023-09-29'),
-(102, 234567892, 'Job listing for Learning Facilitator / Trainer role', 123456789, 123456788, 123456788, '2023-09-20', '2023-10-04'),
-(103, 234567893, 'Job listing for Agile Coach (SM) role', 123456787, 123456788, 123456788, '2023-09-25', '2023-10-09'),
-(104, 234511581, 'Job listing for Fire Warden role', 123456788, 123456787, 123456789, '2023-09-30', '2023-10-14');
+(101, 234567891, 'Job listing for Head, Talent Attraction role', 123456789, 123456788, 123456788, '2023-09-15', '2023-12-29'),
+(102, 234567892, 'Job listing for Learning Facilitator / Trainer role', 123456789, 123456788, 123456788, '2023-09-20', '2023-12-04'),
+(103, 234567893, 'Job listing for Agile Coach (SM) role', 123456787, 123456788, 123456788, '2023-09-25', '2023-12-09'),
+(104, 234511581, 'Job listing for Fire Warden role', 123456788, 123456787, 123456789, '2023-09-30', '2023-12-14'),
+(105, 234511581, 'Job listing for Fire Warden role', 123456788, 123456787, 123456789, '2023-09-30', '2023-10-14');
 
 INSERT INTO ROLE_APPLICATIONS (role_listing_id, staff_id, role_app_status)
 VALUES
