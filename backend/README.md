@@ -107,11 +107,10 @@ Sample Output:
     message : "GET request successful"
 }
 ```
-
-
 <br>
 <br>
 <a name="deleteRoleListing"></a>
+
 ## Delete role listing `/listing/delete_role_listing`
 Methods : <strong>DELETE</strong><br>
 Delete role listing from the role_listing SQL table.
