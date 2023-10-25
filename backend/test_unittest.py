@@ -50,8 +50,9 @@ class TestStaffReportingOfficer(unittest.TestCase):
     def setUp(self):
         # Create a sample StaffDetails object for testing
         self.staff_id = 1
+        self.sys_role = SysRoles.staff
         self.staff_details_obj = StaffDetails(
-            self.staff_id, "John", "Doe", "IT", "john.doe@example.com", "123-456-7890", "123 Main St", roles=[], skills=[])
+            self.staff_id, "John", "Doe", "IT", "john.doe@example.com", "123-456-7890", "123 Main St",  self.sys_role, roles=[], skills=[])
 
         # Create a sample StaffReportingOfficer object for testing
         self.ro_id = 2
@@ -69,7 +70,7 @@ class TestStaffReportingOfficer(unittest.TestCase):
     def test_json_method(self):
         expected_json = {
             "staff_id": self.staff_id,
-            "RO_id": self.ro_id
+            "RO_id": self.ro_id,
         }
 
         # Check if the json() method returns the expected dictionary
