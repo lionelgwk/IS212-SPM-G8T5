@@ -119,7 +119,7 @@ Delete role listing from the role_listing SQL table.
 Sample Input JSON Package:
 ```json
 {
-    "role_id" : 12391747
+    "role_listing_id" : 12391747
 }
 ```
 
