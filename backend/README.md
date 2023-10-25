@@ -143,6 +143,7 @@ Sample Input JSON Package:
         "role_id" : 234567323,
         "role_listing_source" : 123456787,
         "role_listing_open" : "2023-09-29",
+        "role_listing_open" : "2023-10-29",
         "role_listing_creator" : 123456792
 }
 ```
