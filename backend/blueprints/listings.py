@@ -41,20 +41,6 @@ def getAllListedRoles():
             "data": final
         }
     ), 200
-    # role_details_json_list = [listing.json() for listing in all_role_listings]
-
-    # for role_details_json in role_details_json_list:
-    #     role_id = role_details_json["role_id"]
-    #     role = RoleDetails.query.get(role_id)
-    #     role_details_json["role_name"] = role.json()["role_name"]
-
-    # return jsonify(
-    #     {
-    #         "code" : 200,
-    #         "message" : "GET request successful",
-    #         "data" : role_details_json_list
-    #     }
-    # ), 200
 
 
 @listing_bp.route('/add_role_listing', methods=["POST"])
