@@ -5,6 +5,7 @@ const ApplyModal = (props) => {
   const [toastVisible, setToastVisible] = useState(false);
   const [toastVisibleNo, setToastVisibleNo] = useState(false);
   const [animateOut, setAnimateOut] = useState(false);
+  const [errorName, setErrorName] = useState("");
 
   const handleApply = async () => {
     console.log("submitted");
@@ -18,38 +19,44 @@ const ApplyModal = (props) => {
 
       if (code == 200) {
         setToastVisible(true);
-        setAnimateOut(false); // Make sure it's set to false when showing the toast
+        setAnimateOut(false);
 
         setTimeout(() => {
-          setAnimateOut(true); // Start the animation to slide out after 3 seconds
+          setAnimateOut(true);
 
           setTimeout(() => {
-            setToastVisible(false); // Hide the toast after the animation completes
-          }, 300); // The duration of the animation
+            setToastVisible(false);
+          }, 300);
         }, 3000);
       } else {
+        setErrorName("Unexpected error occurred.");
         setToastVisibleNo(true);
-        setAnimateOut(false); // Make sure it's set to false when showing the toast
+        setAnimateOut(false);
 
         setTimeout(() => {
-          setAnimateOut(true); // Start the animation to slide out after 3 seconds
+          setAnimateOut(true);
 
           setTimeout(() => {
-            setToastVisibleNo(false); // Hide the toast after the animation completes
-          }, 300); // The duration of the animation
+            setToastVisibleNo(false);
+          }, 300);
         }, 3000);
       }
     } catch (error) {
       console.log(error);
+      if (!error.response) {
+        setErrorName("Unexpected error occurred.");
+      } else {
+        setErrorName("You have already applied for this role!");
+      }
       setToastVisibleNo(true);
-      setAnimateOut(false); // Make sure it's set to false when showing the toast
+      setAnimateOut(false);
 
       setTimeout(() => {
-        setAnimateOut(true); // Start the animation to slide out after 3 seconds
+        setAnimateOut(true);
 
         setTimeout(() => {
-          setToastVisibleNo(false); // Hide the toast after the animation completes
-        }, 300); // The duration of the animation
+          setToastVisibleNo(false);
+        }, 300);
       }, 3000);
     }
   };
@@ -159,7 +166,7 @@ const ApplyModal = (props) => {
               animateOut ? "transform translate-x-full" : ""
             }`}
           >
-            <span>Application was not sent.</span>
+            <span>{errorName}</span>
           </div>
         </div>
       )}
