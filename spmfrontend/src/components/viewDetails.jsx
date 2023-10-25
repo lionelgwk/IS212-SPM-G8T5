@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import FetchListingDetails from "../hook/FetchListingDetails";
 import FetchUser from "../hook/FetchUser";
 import Countdown from "../components/Countdown";
+import ApplyModal from "./ApplyModal";
 
 const Viewdetails = () => {
   const { id } = useParams();
@@ -195,7 +196,7 @@ const Viewdetails = () => {
             )}
           </div>
           <div className="flex text-center justify-end items-center w-6/12 mt-4">
-            <button
+            {/* <button
               type="submit"
               className="inline-block px-6 py-3 bg-success text-white hover:bg-base-300 hover:text-success rounded-xl shadow-sm h-full w-full text-3xl"
               onClick={(e) => {
@@ -204,7 +205,8 @@ const Viewdetails = () => {
               disabled={overdue}
             >
               Apply
-            </button>
+            </button> */}
+            <ApplyModal className="inline-block px-6 py-3 bg-success text-white hover:bg-base-300 hover:text-success rounded-xl shadow-sm h-full w-full text-3xl" id={id} title={listing?.role_name}/>
           </div>
         </div>
       </div>
