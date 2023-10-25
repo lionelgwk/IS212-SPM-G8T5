@@ -14,9 +14,7 @@ const Viewdetails = () => {
   const [matchedSkills, setMatchedSkills] = useState([]);
   const [percent, setPercent] = useState(0);
 
-  const handleSubmit = () => {
-    
-  }
+  const handleSubmit = () => {};
 
   useEffect(() => {
     if (!isPending) {
@@ -206,7 +204,11 @@ const Viewdetails = () => {
             >
               Apply
             </button> */}
-            <ApplyModal className="inline-block px-6 py-3 bg-success text-white hover:bg-base-300 hover:text-success rounded-xl shadow-sm h-full w-full text-3xl" id={id} title={listing?.role_name}/>
+            <ApplyModal
+              className="inline-block px-6 py-3 bg-success text-white hover:bg-base-300 hover:text-success rounded-xl shadow-sm h-full w-full text-3xl"
+              id={id}
+              title={listing?.role_name}
+            />
           </div>
         </div>
       </div>

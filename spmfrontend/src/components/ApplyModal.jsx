@@ -62,7 +62,8 @@ const ApplyModal = (props) => {
   };
 
   const handleReject = () => {
-    console.log("rejected");
+    // console.log("rejected");
+    setErrorName("Application was cancelled.");
     setToastVisibleNo(true);
     setAnimateOut(false); // Make sure it's set to false when showing the toast
 
