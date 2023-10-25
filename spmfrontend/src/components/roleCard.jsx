@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import ApplyModal from "./ApplyModal";
 
 const RoleCard = (props) => {
   const [skillsMatched, setSkillsMatched] = useState(0);
@@ -87,9 +88,7 @@ const RoleCard = (props) => {
             Deadline: {props.deadline}
           </div>
           <div className="flex flex-row justify-center items-center">
-            <button className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm">
-              Apply
-            </button>
+            <ApplyModal className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm disabled:opacity-75 disabled:bg-[#62b6cb] disabled:cursor-not-allowed" id={props.id} title={props.title} />
             <NavLink to={`/${position}/details/${props.id}`}>
               <button className="mx-2 px-4 py-2 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-sm">
                 View Details

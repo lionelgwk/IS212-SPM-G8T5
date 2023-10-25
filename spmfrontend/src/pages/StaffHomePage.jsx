@@ -5,6 +5,7 @@ import Pagination from "../components/Pagination";
 import FetchUser from "../hook/FetchUser";
 import FetchOpenListings from "../hook/FetchOpenListings";
 import { AiFillFrown } from "react-icons/ai";
+// import ApplyModal from "../components/ApplyModal";
 
 const StaffHomePage = () => {
   // const roles = [
@@ -128,7 +129,7 @@ const StaffHomePage = () => {
   };
 
   return (
-    <div className="bg-[#bee9e8]">
+    <div className="bg-[#bee9e8] h-screen">
       <div className="container mx-auto p-2">
         <div className="font-bold text-xl pt-5 mb-1 text-center">
           Welcome {user.lname} {user.fname}{" "}
@@ -160,6 +161,7 @@ const StaffHomePage = () => {
               {filteredRoles.map((role) => (
                 <RoleCard
                   key={role.role_id}
+                  id={role.role_id}
                   title={role.role_name}
                   description={role.role_listing_desc}
                   skills={role.role_skills}
