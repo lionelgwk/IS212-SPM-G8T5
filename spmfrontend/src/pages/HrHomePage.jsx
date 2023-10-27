@@ -56,7 +56,7 @@ const HrHomePage = () => {
     setSelectedSkills(skills);
     // Filter jobs based on selected skills
     const filtered = allRoles.filter((role) =>
-      skills.every((skill) => role.skills.includes(skill))
+      skills.every((skill) => role.role_skills.includes(skill))
     );
     setFilteredRoles(filtered);
   };
@@ -94,6 +94,7 @@ const HrHomePage = () => {
               {filteredRoles.map((role) => (
                 <RoleCard
                   key={role.role_id}
+                  id={role.role_listing_id}
                   title={role.role_name}
                   description={role.role_listing_desc}
                   skills={role.role_skills}

@@ -1,9 +1,13 @@
 import React from "react";
 import AppliedCard from "../components/appliedCard";
 import FetchUser from "../hook/FetchUser";
+import FetchAppliedListings from "../hook/FetchAppliedListings";
 
-const Applied = () => {
+const AppliedPage = () => {
   const { user } = FetchUser();
+  const { data: appliedRoles, isPending: isPending } = FetchAppliedListings(
+    localStorage.getItem("staffId")
+  );
 
   return (
     <div className="bg-[#bee9e8]">
@@ -23,12 +27,13 @@ const Applied = () => {
             {/* Add more sorting options if needed */}
           </select>
         </div>
-        <AppliedCard></AppliedCard>
-        <AppliedCard></AppliedCard>
-        <AppliedCard></AppliedCard>
+        {appliedRoles?.length > 0 &&
+          appliedRoles.map((role, index) => (
+            <AppliedCard {...role}></AppliedCard>
+          ))}
       </div>
     </div>
   );
 };
 
-export default Applied;
+export default AppliedPage;

@@ -4,6 +4,7 @@ import FetchListingDetails from "../hook/FetchListingDetails";
 import FetchUser from "../hook/FetchUser";
 import Countdown from "../components/Countdown";
 import ApplyModal from "./ApplyModal";
+import { NavLink } from "react-router-dom";
 
 const Viewdetails = () => {
   const { id } = useParams();
@@ -14,9 +15,7 @@ const Viewdetails = () => {
   const [matchedSkills, setMatchedSkills] = useState([]);
   const [percent, setPercent] = useState(0);
 
-  const handleSubmit = () => {
-    
-  }
+  const handleSubmit = () => {};
 
   useEffect(() => {
     if (!isPending) {
@@ -83,6 +82,11 @@ const Viewdetails = () => {
             >
               {overdue ? "Closed" : "Active"}
             </div>
+            <div>
+              <NavLink to={`/${localStorage.getItem('position')}/details/${id}/edit`}>
+                <button className="btn btn-info">Edit</button>
+              </NavLink>
+            </div>
           </div>
           <div className="flex flex-col justify-center items-center">
             {overdue ? (
@@ -116,13 +120,13 @@ const Viewdetails = () => {
               } gap-4`}
             >
               {matchedSkills.length == 0 && missingSkills.length > 0 ? (
-                <div className="h-20 card bg-info text-white rounded-box place-items-center flex justify-center">
+                <div className="h-20 card bg-info text-white rounded-box place-items-center flex justify-center p-4">
                   None
                 </div>
               ) : (
                 matchedSkills.map((skill) => (
                   <div
-                    className="h-20 card bg-info text-white rounded-box place-items-center flex justify-center"
+                    className="h-20 card bg-info text-white rounded-box place-items-center flex justify-center p-4"
                     key={skill.skill_id}
                   >
                     {skill.skill_name}
@@ -143,13 +147,13 @@ const Viewdetails = () => {
               } gap-4`}
             >
               {missingSkills.length == 0 && matchedSkills.length > 0 ? (
-                <div className="h-20 card bg-error text-white rounded-box place-items-center flex justify-center">
+                <div className="h-20 card bg-error text-white rounded-box place-items-center flex justify-center p-4">
                   None
                 </div>
               ) : (
                 missingSkills.map((skill) => (
                   <div
-                    className="h-20 card bg-error text-white rounded-box place-items-center flex justify-center"
+                    className="h-20 card bg-error text-white rounded-box place-items-center flex justify-center p-4"
                     key={skill.skill_id}
                   >
                     {skill.skill_name}
@@ -206,7 +210,11 @@ const Viewdetails = () => {
             >
               Apply
             </button> */}
-            <ApplyModal className="inline-block px-6 py-3 bg-success text-white hover:bg-base-300 hover:text-success rounded-xl shadow-sm h-full w-full text-3xl" id={id} title={listing?.role_name}/>
+            <ApplyModal
+              className="inline-block px-6 py-3 bg-success text-white hover:bg-base-300 hover:text-success rounded-xl shadow-sm h-full w-full text-3xl"
+              id={id}
+              title={listing?.role_name}
+            />
           </div>
         </div>
       </div>
