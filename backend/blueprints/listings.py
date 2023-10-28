@@ -258,7 +258,6 @@ def listedRoleDetails(role_listing_id):
             }
         ), 200
 
-            
     elif request.method == "PUT":
         data = request.json
         if "role_listing_desc" in data:
@@ -299,14 +298,13 @@ def listedRoleDetails(role_listing_id):
         ), 200
 
 
-
 @listing_bp.route('/applicants/<string:role_listing_id>')
 def getApplicants(role_listing_id):
     """
     Get all applicants for a role listing by sending a GET request with the role_listing_id.
     """
     all_applicants = db.session.query(RoleApplications).filter(RoleApplications.role_listing_id == role_listing_id).all()
-    
+   
     return jsonify(
         {
             "code": 200,
@@ -373,6 +371,7 @@ def applyListing():
 
 
 @listing_bp.route('/applied_roles/<string:staff_id>', methods=["GET"])
+
 def getAllRoleAppliedFor(staff_id):
     """
     Get all applications made by a staff
@@ -400,4 +399,4 @@ def deleteApplication(staff_id, role_application_id):
         {
             "message" : "Application deleted successfully."
         }
-    )
+    ),200

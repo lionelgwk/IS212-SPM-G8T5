@@ -8,7 +8,7 @@ import HrProfilePage from "../pages/HrProfilePage";
 import NoPermissionPage from "../pages/HrNoPermissionPage";
 import HrListingDetailsPage from "../pages/HrListingDetailsPage";
 import HrApplicantsPage from "../pages/HrApplicantsPage";
-import HrMyListingPage from "../pages/HrMyListingPage";
+import HrEditListingPage from "../pages/HrEditListingPage";
 import HrApplicantDetailsPage from "../pages/HrApplicantDetailsPage";
 
 function HrRoutes() {
@@ -24,7 +24,7 @@ function HrRoutes() {
         <Route path="/details/:id" element={<HrListingDetailsPage />} />
         <Route path="*" element={<NoPermissionPage />} />
         {/* Add more hr-specific routes here */}
-        <Route path="/mylisting/:id" element={<HrMyListingPage />} />
+        <Route path="/details/:id/edit" element={<HrEditListingPage />} />
         <Route path="/mylisting/:id/applicants" element={<HrApplicantsPage />} />
         <Route path="/mylisting/:id/applicants/:staffid" element={<HrApplicantDetailsPage />} />
       </Route>
