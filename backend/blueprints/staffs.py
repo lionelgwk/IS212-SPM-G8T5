@@ -104,3 +104,46 @@ def getAllManagers():
                 "message" : "No staff managers found"
             }
         ), 404
+
+
+@staff_bp.route('/new_staff', methods=["POST"])
+def addNewStaff():
+    """
+    Create new staff and add into the SQL table - THIS IS FOR REPEATABLE TESTING
+    """
+    data = request.json
+    new_staff = StaffDetails(
+        data["staff_id"], 
+        data["fname"], 
+        data["lname"], 
+        data["dept"], 
+        data["email"], 
+        data["phone"], 
+        data["biz_address"], 
+        data["sys_role"]
+    )
+    db.session.add(new_staff)
+    db.session.commit()
+
+    return jsonify(
+        {
+            "data" : new_staff.json(),
+            "message" : "new staff created"
+        }
+    ), 200
+
+
+@staff_bp.route('/delete_staff/<string:id>', methods=["DELETE"])
+def deleteStaff(id):
+    """
+    Delete staff from SQL table - THIS IS FOR REPEATABLE TESTING
+    """
+    staff = StaffDetails.query.filter_by(staff_id=id).first()
+    if staff is not None:
+        db.session.delete(staff)
+        db.session.commit()
+    return jsonify(
+        {
+            "message" : f"Staff with the id {id} successfully deleted"
+        }
+    )

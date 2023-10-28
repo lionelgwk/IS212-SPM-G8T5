@@ -32,8 +32,8 @@ Get all listed roles in the role_listings SQL table.
 Sample Output:
 ```json
 {
-    code : 200,
-    data : [
+    "code" : 200,
+    "data" : [
         {
             "role_id": 234567891,
             "role_listing_close": "Fri, 29 Sep 2023 00:00:00 GMT",
@@ -61,7 +61,7 @@ Sample Output:
             "role_name": "Learning Facilitator / Trainer"
         }
     ],
-    message : "GET request successful"
+    "message" : "GET request successful"
 }
 ```
 <br>
@@ -107,11 +107,10 @@ Sample Output:
     message : "GET request successful"
 }
 ```
-
-
 <br>
 <br>
 <a name="deleteRoleListing"></a>
+
 ## Delete role listing `/listing/delete_role_listing`
 Methods : <strong>DELETE</strong><br>
 Delete role listing from the role_listing SQL table.
@@ -119,7 +118,7 @@ Delete role listing from the role_listing SQL table.
 Sample Input JSON Package:
 ```json
 {
-    "role_id" : 12391747
+    "role_listing_id" : 12391747
 }
 ```
 
@@ -144,6 +143,7 @@ Sample Input JSON Package:
         "role_id" : 234567323,
         "role_listing_source" : 123456787,
         "role_listing_open" : "2023-09-29",
+        "role_listing_open" : "2023-10-29",
         "role_listing_creator" : 123456792
 }
 ```
@@ -199,7 +199,7 @@ Sample Output:
 <a name="listedRoleDetails2"></a>
 
 ## Edit role listing details `/listing/listed_roles/<string:role_listing_id>`
-Methods : <strong>POST</strong><br>
+Methods : <strong>PUT</strong><br>
 Edit role listing with the specified role_listing_id by sending a POST request.<br>
 Current parameters that can be changed : [ role_listing_desc , role_listing_close, role_listing_open ]
 
@@ -377,6 +377,36 @@ Sample Output:
     "message": "Application successfully submitted"
 }
 ```
+<br>
+<br>
+<a name="getAllRoleAppliedFor"></a>
+
+## Get all applications by a staff `/listing/applied_roles/<string:staff_id>`
+Methods : <strong>GET</strong><br>
+Get all roles that a singular staff applied for based on the staff_id<br>
+
+Sample Output:
+```json
+{
+    "data": [
+        {
+            "role_app_id": 4,
+            "role_app_status": "withdrawn",
+            "role_app_ts_create": "Fri, 13 Oct 2023 21:48:07 GMT",
+            "role_listing_id": 102,
+            "staff_id": 123456786
+        },
+        {
+            "role_app_id": 5,
+            "role_app_status": "applied",
+            "role_app_ts_create": "Wed, 25 Oct 2023 13:07:50 GMT",
+            "role_listing_id": 101,
+            "staff_id": 123456786
+        }
+    ],
+    "message": "GET request sucessful"
+}
+```
 
 <br>
 <br>
@@ -385,6 +415,44 @@ Sample Output:
 # Staff `/staff`
 1. [ Get a staff's details ](#getStaffDetails)
 2. [ Get all managers ](#getAllManagers)
+3. [ Get all staff details ](#getAllStaff)
+
+<br>
+<br>
+<a name="getStaffDetails"></a>
+
+## Get all managers `/staff/<string:id>`
+Methods : <strong>GET</strong> <br>
+Get details of one staff member based on staff_id
+
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": {
+        "active_skills": [
+            {
+                "skill_id": 345678914,
+                "skill_name": "Certified Scrum Master",
+                "skill_status": "active"
+            },
+            {
+                "skill_id": 345678916,
+                "skill_name": "Java Programming",
+                "skill_status": "active"
+            }
+        ],
+        "biz_address": "60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051",
+        "dept": "FINANCE",
+        "email": "jason_tan@all-in-one.com.sg",
+        "fname": "JASON",
+        "lname": "TAN",
+        "phone": "65-1234-5672",
+        "staff_id": 123456793,
+        "sys_role": "manager"
+    }
+}
+```
 
 <br>
 <br>
@@ -402,6 +470,44 @@ Sample Output:
         "staffs": [
             "FAUD NIZAM",
             "JASON TAN"
+        ]
+    }
+}
+```
+<br>
+<br>
+<a name="getAllManagers"></a>
+
+## Get all staff details `/staff`
+Methods : <strong>GET</strong> <br>
+Get all staff details from the staff_details SQL table
+
+Sample Output:
+```json
+{
+    "code": 200,
+    "data": {
+        "staffs": [
+            {
+                "biz_address": "1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208",
+                "dept": "IT",
+                "email": "John_doe@all-in-one.com.sg",
+                "fname": "JOHN",
+                "lname": "DOE",
+                "phone": "65-5824-7888",
+                "staff_id": 123456786,
+                "sys_role": "inactive"
+            },
+            {
+                "biz_address": "60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051",
+                "dept": "HUMAN RESOURCE AND ADMIN",
+                "email": "colins_vincent_rex@all-in-one.com.sg",
+                "fname": "VINCENT REX",
+                "lname": "COLINS",
+                "phone": "65-1234-5679",
+                "staff_id": 123456788,
+                "sys_role": "hr"
+            }
         ]
     }
 }
