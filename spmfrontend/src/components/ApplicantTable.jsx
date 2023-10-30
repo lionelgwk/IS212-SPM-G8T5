@@ -3,6 +3,7 @@ import { Space, Table, Tag, Button } from "antd";
 import FetchListingApplicants from "../hook/FetchListingApplicants";
 import { useParams } from "react-router-dom";
 import FetchSkillFilters from "../hook/FetchSkillFilters";
+import AcceptModal from "./AcceptModal";
 
 const ApplicantTable = () => {
   const [filteredInfo, setFilteredInfo] = useState({});
@@ -69,16 +70,18 @@ const ApplicantTable = () => {
       title: "Status",
       dataIndex: "role_app_status",
       key: "role_app_status",
+      align: "center",
     },
     {
       title: "Action",
       key: "action",
+      align: "center",
       render: (_, record) => (
         <Space size="middle" className="flex justify-center">
           {record.role_app_status == "applied" ? (
-            <button className="text-blue-700">
+            <AcceptModal className="text-blue-700" role_listing_id={role_listing_id} fname={record.name.fname} lname={record.name.lname} >
               Accept {record.name.fname} {record.name.lname}
-            </button>
+            </AcceptModal>
           ) : (
             <p className="text-gray-400">Withdrawn</p>
           )}
@@ -89,7 +92,6 @@ const ApplicantTable = () => {
 
   return (
     <>
-    <button onClick={(e) => console.log(allSkills)}>console</button>
       <Table
         columns={columns}
         dataSource={data}
