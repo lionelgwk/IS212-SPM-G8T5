@@ -13,6 +13,7 @@ const RoleListingForm = () => {
   // const [roleListingClose, setRoleListingClose] = useState("");
   const [roleListingOpen, setRoleListingOpen] = useState(new Date().toISOString().slice(0, 10));
   const [roleListingClose, setRoleListingClose] = useState(new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10));
+  const [roleDescription, setRoleDescription] = useState("");
 
   // const handleSkillKeyPress = (e) => {
   //   if (e.key === "Enter") {
@@ -39,7 +40,8 @@ const RoleListingForm = () => {
       role_listing_open: formattedDate,
       // skills: skillList
       role_listing_creator: user.staff_id,
-      role_listing_close: roleListingClose
+      role_listing_close: roleListingClose,
+      role_listing_desc: roleDescription
     };
     
     try {
@@ -110,6 +112,17 @@ const RoleListingForm = () => {
         onChange={handleDateChange}
         dateFormat="yyyy-MM-dd"
       /> */}
+      <div className="mb-4">
+        <label htmlFor="roleDescription" className="block mb-2 font-medium">
+          Role Description:
+        </label>
+        <textarea
+          id="roleDescription"
+          value={roleDescription}
+          onChange={(e) => setRoleDescription(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+        />
+      </div>
       <div className="flex">
         <label htmlFor="roleListingOpen" className="block mb-2 font-medium">Start Date: </label>
           <input
@@ -169,7 +182,7 @@ const RoleListingForm = () => {
                 className="inline-block px-6 py-3 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-lg"
                 onClick={handleSubmit}
                 >
-                Create Role
+                Create Role Listing
                 </button>
               </div>
             </form>

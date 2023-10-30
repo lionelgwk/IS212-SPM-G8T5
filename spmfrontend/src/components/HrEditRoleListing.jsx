@@ -10,13 +10,10 @@ const HrEditListingForm = ({id}) => {
   const [skills, setSkills] = useState("");
   const [skillList, setSkillList] = useState([]);
   const [roleId, setRoleId] = useState("");
-  // const [roleListingOpen, setRoleListingOpen] = useState("")
-  // const [roleName, setRoleName] = useState("");
   const [sourceManager, setSourceManager] = useState("");
-  // const [roleListingClose, setRoleListingClose] = useState("");
   const [roleListingOpen, setRoleListingOpen] = useState(new Date().toISOString().slice(0, 10));
   const [roleListingClose, setRoleListingClose] = useState(new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10));
-
+  const [roleListingDesc, setRoleListingDescription] = useState("");
   // const handleSkillKeyPress = (e) => {
   //   if (e.key === "Enter") {
   //     e.preventDefault();
@@ -50,6 +47,7 @@ const HrEditListingForm = ({id}) => {
         const date_close = new Date(close_date);
         const formattedDate_close = date_close.toISOString().slice(0, 10);
         setRoleId(result.data.role_id);
+        setRoleListingDescription(result.data.role_listing_desc);
         setSourceManager(result.data.role_listing_source);
         setRoleListingOpen(formattedDate_open);
         setRoleListingClose(formattedDate_close);
@@ -140,6 +138,18 @@ const HrEditListingForm = ({id}) => {
         onChange={handleDateChange}
         dateFormat="yyyy-MM-dd"
       /> */}
+      <div className="mb-4">
+        <label htmlFor="roleListingDescription" className="block mb-2 font-medium">
+          Role Listing Description
+        </label>
+        <input
+          type="text"
+          id="roleListingDescription"
+          value={roleListingDesc}
+          onChange={(e) => setRoleListingDescription(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+        />
+      </div>
       <div className="flex">
         <label htmlFor="roleListingOpen" className="block mb-2 font-medium">Start Date: </label>
           <input
