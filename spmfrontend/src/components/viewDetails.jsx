@@ -5,6 +5,7 @@ import FetchUser from "../hook/FetchUser";
 import Countdown from "../components/Countdown";
 import ApplyModal from "./ApplyModal";
 import { NavLink } from "react-router-dom";
+import ApplicantTable from "./ApplicantTable";
 
 const Viewdetails = () => {
   const { id } = useParams();
@@ -82,11 +83,15 @@ const Viewdetails = () => {
             >
               {overdue ? "Closed" : "Active"}
             </div>
-            <div>
-              <NavLink to={`/${localStorage.getItem('position')}/details/${id}/edit`}>
-                <button className="btn btn-info">Edit</button>
-              </NavLink>
-            </div>
+            {localStorage.getItem("position") == "hr" && (
+              <div>
+                <NavLink
+                  to={`/${localStorage.getItem("position")}/details/${id}/edit`}
+                >
+                  <button className="btn btn-info">Edit</button>
+                </NavLink>
+              </div>
+            )}
           </div>
           <div className="flex flex-col justify-center items-center">
             {overdue ? (
@@ -216,6 +221,9 @@ const Viewdetails = () => {
               title={listing?.role_name}
             />
           </div>
+        </div>
+        <div>
+          <ApplicantTable/>
         </div>
       </div>
     </div>
