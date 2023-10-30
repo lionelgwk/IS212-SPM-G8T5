@@ -422,7 +422,7 @@ Sample Output:
 <br>
 <a name="getStaffDetails"></a>
 
-## Get all managers `/staff/<string:id>`
+## Get a staff's details `/staff/<string:id>`
 Methods : <strong>GET</strong> <br>
 Get details of one staff member based on staff_id
 
