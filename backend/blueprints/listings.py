@@ -61,7 +61,7 @@ def addRoleListing():
             }
         ), 404
     role = roleObj.json()
-    role_listing_desc = role["role_description"]
+    role_listing_desc = data["role_description"]
     role_name = role["role_name"]
 
     role_listing_source = data['role_listing_source']

@@ -144,7 +144,8 @@ Sample Input JSON Package:
         "role_listing_source" : 123456787,
         "role_listing_open" : "2023-09-29",
         "role_listing_open" : "2023-10-29",
-        "role_listing_creator" : 123456792
+        "role_listing_creator" : 123456792,
+        "role_listing_desc" : "testesttestet"
 }
 ```
 
@@ -156,7 +157,7 @@ Sample Output:
         {
             "role_id": 234567323,
             "role_listing_close": "Fri, 13 Oct 2023 00:00:00 GMT",
-            "role_listing_desc": "Help to build and test new API endpoints for existing systems",
+            "role_listing_desc": "testesttestet",
             "role_listing_id": 9608029253891076348,
             "role_listing_open": "Fri, 29 Sep 2023 00:00:00 GMT",
             "role_listing_source": 123456787,
