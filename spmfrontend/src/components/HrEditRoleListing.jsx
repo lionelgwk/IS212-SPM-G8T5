@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FetchUser from "../hook/FetchUser";
 import 'react-datepicker/dist/react-datepicker.css';
 
-const RoleListingForm = () => {
+
+
+
+const HrEditListingForm = ({id}) => {
   const { user } = FetchUser();
   const [skills, setSkills] = useState("");
   const [skillList, setSkillList] = useState([]);
   const [roleId, setRoleId] = useState("");
-  // const [roleListingOpen, setRoleListingOpen] = useState("")
-  // const [roleName, setRoleName] = useState("");
   const [sourceManager, setSourceManager] = useState("");
-  // const [roleListingClose, setRoleListingClose] = useState("");
   const [roleListingOpen, setRoleListingOpen] = useState(new Date().toISOString().slice(0, 10));
   const [roleListingClose, setRoleListingClose] = useState(new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10));
-  const [roleDescription, setRoleDescription] = useState("");
-
+  const [roleListingDesc, setRoleListingDescription] = useState("");
   // const handleSkillKeyPress = (e) => {
   //   if (e.key === "Enter") {
   //     e.preventDefault();
@@ -30,6 +29,35 @@ const RoleListingForm = () => {
   // 234511581
   // 123456786
 
+  useEffect(() => {
+    const fetchRoleListingData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5050/listing/listed_roles/${id}`, {
+          method: 'GET',
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+          }
+        });
+        const result = await response.json();
+        const open_date = result.data.role_listing_open
+        const date_open = new Date(open_date);
+        const formattedDate_open = date_open.toISOString().slice(0, 10);
+        const close_date = result.data.role_listing_close
+        const date_close = new Date(close_date);
+        const formattedDate_close = date_close.toISOString().slice(0, 10);
+        setRoleId(result.data.role_id);
+        setRoleListingDescription(result.data.role_listing_desc);
+        setSourceManager(result.data.role_listing_source);
+        setRoleListingOpen(formattedDate_open);
+        setRoleListingClose(formattedDate_close);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchRoleListingData();
+  }, [id]);
+
   const handleSubmit = async (e) => { 
     e.preventDefault();
     const date = new Date(Date.parse(roleListingOpen));
@@ -40,20 +68,18 @@ const RoleListingForm = () => {
       role_listing_open: formattedDate,
       // skills: skillList
       role_listing_creator: user.staff_id,
-      role_listing_close: roleListingClose,
-      role_listing_desc: roleDescription
+      role_listing_close: roleListingClose
     };
-    
+    //NEED TO CHANGE THIS PART, waiting for julian to change the part where we can edit the role listing, and the input parameters for the api
     try {
-      const response = await fetch('http://127.0.0.1:5050/listing/add_role_listing', {
-        method: 'POST',
+      const response = await fetch(`http://127.0.0.1:5050/listing/listed_roles/${id}`, {
+        method: 'PUT',
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
       });
-      console.log(response);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -76,7 +102,7 @@ const RoleListingForm = () => {
           type="number"
           id="roleId"
           min="0"
-        //   value={roleName}
+          value={roleId}
           onChange={(e) => setRoleId(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
@@ -100,7 +126,7 @@ const RoleListingForm = () => {
         <input
           type="text"
           id="sourceManager"
-        //   value={roleName}
+          value={sourceManager}
           onChange={(e) => setSourceManager(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
@@ -113,13 +139,14 @@ const RoleListingForm = () => {
         dateFormat="yyyy-MM-dd"
       /> */}
       <div className="mb-4">
-        <label htmlFor="roleDescription" className="block mb-2 font-medium">
-          Role Description:
+        <label htmlFor="roleListingDescription" className="block mb-2 font-medium">
+          Role Listing Description
         </label>
-        <textarea
-          id="roleDescription"
-          value={roleDescription}
-          onChange={(e) => setRoleDescription(e.target.value)}
+        <input
+          type="text"
+          id="roleListingDescription"
+          value={roleListingDesc}
+          onChange={(e) => setRoleListingDescription(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
       </div>
@@ -182,11 +209,11 @@ const RoleListingForm = () => {
                 className="inline-block px-6 py-3 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-lg"
                 onClick={handleSubmit}
                 >
-                Create Role Listing
+                Edit Listing
                 </button>
               </div>
             </form>
           );
         };
         
-        export default RoleListingForm;
+        export default HrEditListingForm;
