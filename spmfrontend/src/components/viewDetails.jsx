@@ -219,11 +219,15 @@ const Viewdetails = () => {
               className="inline-block px-6 py-3 bg-success text-white hover:bg-base-300 hover:text-success rounded-xl shadow-sm h-full w-full text-3xl"
               id={id}
               title={listing?.role_name}
+              disabled={overdue}
             />
           </div>
         </div>
-        <div>
-          <ApplicantTable/>
+        <div className="mt-5 border-t py-4">
+          <div className="col-span-1 text-center font-bold text-xl mb-5 pb-2 border-b">
+            Applicants
+          </div>
+          {localStorage.getItem("position") == "hr" && <ApplicantTable />}
         </div>
       </div>
     </div>

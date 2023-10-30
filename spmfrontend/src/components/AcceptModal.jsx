@@ -47,6 +47,7 @@ const AcceptModal = (props) => {
       if (!error.response) {
         setErrorName("Unexpected error occurred.");
       } else {
+        // TODO: watch this clause, might be able to be removed
         setErrorName("You have already applied for this role!");
       }
       setToastVisibleNo(true);
@@ -66,14 +67,14 @@ const AcceptModal = (props) => {
     // console.log("rejected");
     setErrorName("Applicant was not accepted.");
     setToastVisibleNo(true);
-    setAnimateOut(false); // Make sure it's set to false when showing the toast
+    setAnimateOut(false);
 
     setTimeout(() => {
-      setAnimateOut(true); // Start the animation to slide out after 3 seconds
+      setAnimateOut(true);
 
       setTimeout(() => {
-        setToastVisibleNo(false); // Hide the toast after the animation completes
-      }, 300); // The duration of the animation
+        setToastVisibleNo(false);
+      }, 300);
     }, 3000);
   };
 
@@ -99,7 +100,7 @@ const AcceptModal = (props) => {
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg mb-5">Application Confirmation</h3>
+          <h3 className="font-bold text-lg mb-5">Acceptance Confirmation</h3>
           <p className="mb-5">
             You are accepting:{" "}
             <b>

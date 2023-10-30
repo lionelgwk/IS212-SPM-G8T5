@@ -65,14 +65,14 @@ const ApplyModal = (props) => {
     // console.log("rejected");
     setErrorName("Application was cancelled.");
     setToastVisibleNo(true);
-    setAnimateOut(false); // Make sure it's set to false when showing the toast
+    setAnimateOut(false);
 
     setTimeout(() => {
-      setAnimateOut(true); // Start the animation to slide out after 3 seconds
+      setAnimateOut(true);
 
       setTimeout(() => {
-        setToastVisibleNo(false); // Hide the toast after the animation completes
-      }, 300); // The duration of the animation
+        setToastVisibleNo(false);
+      }, 300);
     }, 3000);
   };
 
@@ -84,7 +84,7 @@ const ApplyModal = (props) => {
         onClick={() =>
           document.getElementById(`my_modal_${props.id}`).showModal()
         }
-        // disabled
+        disabled={props.disabled}
       >
         Apply
       </button>
