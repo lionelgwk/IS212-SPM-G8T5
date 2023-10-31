@@ -8,7 +8,7 @@ const FetchUser = () => {
         axios.get("http://localhost:5050/staff/" + localStorage.getItem("staffId"))
             .then((response) => {
                 setUser(response.data.data);
-                console.log(response.data);
+                // console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
