@@ -71,6 +71,18 @@ const ApplicantTable = () => {
       dataIndex: "role_app_status",
       key: "role_app_status",
       align: "center",
+      filters: [
+        {
+          text: "Applied",
+          value: "applied",
+        },
+        {
+          text: "Withdrawn",
+          value: "withdrawn",
+        },
+      ],
+        filteredValue: filteredInfo.role_app_status || null,
+        onFilter: (value, record) => record.role_app_status.includes(value),
     },
     {
       title: "Action",
