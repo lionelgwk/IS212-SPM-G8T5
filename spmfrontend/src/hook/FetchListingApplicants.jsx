@@ -27,7 +27,7 @@ const FetchListingApplicants = (role_listing_id) => {
           // console.log(backendData.data[i]);
           hookData.push({
             role_app_id: backendData[i].role_app_id,
-            role_app_status: backendData[i].role_app_status,
+            role_app_status: backendData[i].role_app_status.charAt(0).toUpperCase() + backendData[i].role_app_status.slice(1),
             role_app_ts_create: backendData[i].role_app_ts_create,
             role_listing_id: backendData[i].role_listing_id,
             staff_id: backendData[i].staff_id,
