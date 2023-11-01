@@ -29,7 +29,8 @@ def test_add_role_listing(client):
         "role_id" : 234511581,
         "role_listing_source" : 123456787,
         "role_listing_open" : "2023-09-29",
-        "role_listing_creator" : 123456792
+        "role_listing_creator" : 123456792,
+        "role_listing_desc" : "testtestestesttt"
     }
     response = client.post('/listing/add_role_listing', json=request)
     assert response.status_code == 200
@@ -106,7 +107,8 @@ def test_delete_role_listing(client):
         "role_id" : 234567896,
         "role_listing_source" : 123456787,
         "role_listing_open" : "2023-09-29",
-        "role_listing_creator" : 123456792
+        "role_listing_creator" : 123456792,
+        "role_listing_desc" : "this is a test role description"
     }
     response = client.post('/listing/add_role_listing', json=request)
     data = response.get_json()
