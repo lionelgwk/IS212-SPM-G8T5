@@ -61,7 +61,7 @@ CREATE TABLE role_skills (
 );
 
 CREATE TABLE role_listings(
-    role_listing_id BIGINT NOT NULL,
+    role_listing_id INT NOT NULL,
     role_id INT NOT NULL,
     role_listing_desc VARCHAR(10000) NOT NULL,
     role_listing_source INT,
@@ -80,7 +80,7 @@ CREATE TABLE role_listings(
 
 CREATE TABLE ROLE_APPLICATIONS (
     role_app_id INT AUTO_INCREMENT PRIMARY KEY,
-    role_listing_id BIGINT NOT NULL,
+    role_listing_id INT NOT NULL,
     staff_id INT NOT NULL,
     role_app_status ENUM('applied', 'withdrawn') NOT NULL,
     role_app_ts_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

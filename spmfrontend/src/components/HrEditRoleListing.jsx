@@ -7,30 +7,43 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const HrEditListingForm = ({id}) => {
   const { user } = FetchUser();
-  const [skills, setSkills] = useState("");
-  const [skillList, setSkillList] = useState([]);
   const [roleId, setRoleId] = useState("");
   const [sourceManager, setSourceManager] = useState("");
   const [roleListingOpen, setRoleListingOpen] = useState(new Date().toISOString().slice(0, 10));
   const [roleListingClose, setRoleListingClose] = useState(new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10));
   const [roleListingDesc, setRoleListingDescription] = useState("");
-  // const handleSkillKeyPress = (e) => {
-  //   if (e.key === "Enter") {
-  //     e.preventDefault();
-  //     if (skills.trim() !== "") {
-  //       setSkillList(prevList => [...prevList, skills]);
-  //       setSkills("");
-  //       console.log("hi");
-  //       console.log(user);  
-  //     }
-  //   }
-  // };
+  const [roleDetails, setRoleDetails] = useState([]);
+  const [selectedRole, setSelectedRole] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [managerSearchTerm, setManagerSearchTerm] = useState('');
+  const [selectedManager, setSelectedManager] = useState(null);
+  const [staffDetails, setStaffDetails] = useState([]);
+  const [roleName, setRoleName] = useState("");
+  const [isLoading, setIsLoading] = useState(true); 
 
-  // 234511581
-  // 123456786
+  const handleRoleChange = (event) => {
+  
+    const selectedRoleName = event.target.value;
+    const selectedRole = roleDetails.find(role => role.role_name === selectedRoleName);
+    setSelectedRole(selectedRole);
+    setRoleId(selectedRole.role_id);
+
+  };
+
+  const handleManagerChange = (event) => {
+    console.log(sourceManager);
+    const selectedManagerId = event.target.value;
+    const selectedManager = staffDetails.find(staff => staff.staff_id.toString() === selectedManagerId);
+    setSelectedManager(selectedManager);
+    setSourceManager(selectedManager.staff_id);
+  };
+
+  const filteredRoles = roleDetails.filter(role => role.role_name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredManagers = staffDetails.filter(manager => `${manager.fname} ${manager.lname}`.toLowerCase().includes(managerSearchTerm.toLowerCase()));
+
 
   useEffect(() => {
-    const fetchRoleListingData = async () => {
+    const fetchDetails = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:5050/listing/listed_roles/${id}`, {
           method: 'GET',
@@ -51,12 +64,28 @@ const HrEditListingForm = ({id}) => {
         setSourceManager(result.data.role_listing_source);
         setRoleListingOpen(formattedDate_open);
         setRoleListingClose(formattedDate_close);
-      } catch (error) {
+        const roleResponse = await fetch('http://127.0.0.1:5050/role');
+        const roleData = await roleResponse.json();
+        setRoleDetails(roleData.data);
+        
+        const staffResponse = await fetch('http://127.0.0.1:5050/staff');
+        const staffData = await staffResponse.json();
+        const managers = staffData.data.staffs.filter(staff => staff.sys_role == "manager");
+        setStaffDetails(managers);
+        const role = roleData.data.find(role => role.role_id === result.data.role_id);
+        const manager = managers.find(manager => manager.staff_id === result.data.role_listing_source);
+        setRoleName(role.role_name);
+        setSelectedManager(manager);
+        setIsLoading(false);
+        
+       } catch (error) {
         console.error(error);
       }
     };
-    fetchRoleListingData();
+
+    fetchDetails();
   }, [id]);
+
 
   const handleSubmit = async (e) => { 
     e.preventDefault();
@@ -67,6 +96,7 @@ const HrEditListingForm = ({id}) => {
       role_listing_source: sourceManager,
       role_listing_open: formattedDate,
       // skills: skillList
+      role_listing_desc: roleListingDesc,
       role_listing_creator: user.staff_id,
       role_listing_close: roleListingClose
     };
@@ -91,10 +121,12 @@ const HrEditListingForm = ({id}) => {
       console.error('Error creating role listing:', error);
     }
   }
-
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
   return (
     <form className="mt-4 px-4 py-8 border bg-white">
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label htmlFor="roleId" className="block mb-2 font-medium">
           Role ID:
         </label>
@@ -102,11 +134,11 @@ const HrEditListingForm = ({id}) => {
           type="number"
           id="roleId"
           min="0"
-          value={roleId}
+        //   value={roleName}
           onChange={(e) => setRoleId(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
-      </div>
+      </div> */}
       {/* <div className="mb-4">
         <label htmlFor="roleName" className="block mb-2 font-medium">
           Role Name:
@@ -119,17 +151,67 @@ const HrEditListingForm = ({id}) => {
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
       </div> */}
-      <div className="mb-4">
+       <div className="mb-4">
+       <label htmlFor="roleId" className="block mb-2 font-medium">
+          Role:
+        </label>
+       <input 
+        type="text" 
+        id="roleId"
+        placeholder="Search roles..." 
+        onChange={event => setSearchTerm(event.target.value)} 
+      />
+      <select value={roleName} onChange={handleRoleChange}>
+        <option value="">Select a role</option> {/* Initial empty option */}
+        {filteredRoles.map((role, index) => (
+          <option key={index} value={role.role_name}>
+            {role.role_name}
+          </option>
+        ))}
+      </select>
+      {selectedRole && (
+        <div>
+          <h2 className="block mb-2 font-medium">Role ID: {selectedRole.role_id}</h2>
+          <p>Description: {selectedRole.role_description}</p>
+        </div>
+      )}
+    </div>
+      {/* <div className="mb-4">
         <label htmlFor="sourceManager" className="block mb-2 font-medium">
           Source Manager:
         </label>
         <input
           type="text"
           id="sourceManager"
-          value={sourceManager}
+        //   value={roleName}
           onChange={(e) => setSourceManager(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
+      </div> */}
+      <div className="mb-4">
+      <label htmlFor="sourceManager" className="block mb-2 font-medium">
+          Source Manager:
+        </label>
+      <input 
+        type="text" 
+        id="sourceManager"
+        placeholder="Search managers..." 
+        onChange={event => setManagerSearchTerm(event.target.value)} 
+      />
+      <select value={selectedManager ? selectedManager.staff_id: ""} onChange={handleManagerChange}>
+        <option value="">Select a manager</option>
+        {filteredManagers.map((manager, index) => (
+          <option key={index} value={manager.staff_id}>
+            {manager.fname} {manager.lname}
+          </option>
+        ))}
+      </select>
+      {selectedManager && (
+        <div>
+          <h2>Manager ID: {selectedManager.staff_id}</h2>
+          <p>Name: {selectedManager.fname} {selectedManager.lname}</p>
+        </div>
+      )}
       </div>
       {/* <label htmlFor="roleListingOpen">Role Listing Open:</label>
       <DatePicker
@@ -140,10 +222,9 @@ const HrEditListingForm = ({id}) => {
       /> */}
       <div className="mb-4">
         <label htmlFor="roleListingDescription" className="block mb-2 font-medium">
-          Role Listing Description
+          Role Listing Description:
         </label>
-        <input
-          type="text"
+        <textarea
           id="roleListingDescription"
           value={roleListingDesc}
           onChange={(e) => setRoleListingDescription(e.target.value)}
@@ -169,40 +250,6 @@ const HrEditListingForm = ({id}) => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
           />
         </div>
-      {/* <div className="mb-4">
-        <label htmlFor="roleDescription" className="block mb-2 font-medium">
-          Role Description:
-        </label>
-        <textarea
-          id="roleDescription"
-        //   value={roleDescription}
-          onChange={(e) => setRoleDescription(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        />
-      </div> */}
-              {/* <div className="mb-4">
-                <label htmlFor="skills" className="block mb-2 font-medium">
-                  Skills:
-                </label>
-                <input
-                  type="text"
-                  id="skills"
-                  value={skills}
-                  onChange={(e) => setSkills(e.target.value)}
-                  onKeyUp={handleSkillKeyPress}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 font-medium">Added Skills:</label>
-                <ul className="pl-4 flex flex-wrap">
-                  {skillList.map((skill, index) => (
-                    <li key={index} className="mb-2 mr-2">
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-              </div> */}
               <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2">
                 <button
                 type="button"

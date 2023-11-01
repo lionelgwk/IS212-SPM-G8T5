@@ -169,7 +169,7 @@ class RoleSkills(db.Model):
 class RoleListings(db.Model):
     __tablename__ = 'role_listings'
 
-    role_listing_id = db.Column(db.BigInteger, primary_key=True, autoincrement=False)
+    role_listing_id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     role_id = db.Column(db.Integer, db.ForeignKey('role_details.role_id'))
     role_listing_desc = db.Column(db.String)
     role_listing_source = db.Column(db.Integer, db.ForeignKey('staff_details.staff_id'))

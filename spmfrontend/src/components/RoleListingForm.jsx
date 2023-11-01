@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FetchUser from "../hook/FetchUser";
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -14,7 +14,56 @@ const RoleListingForm = () => {
   const [roleListingOpen, setRoleListingOpen] = useState(new Date().toISOString().slice(0, 10));
   const [roleListingClose, setRoleListingClose] = useState(new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10));
   const [roleDescription, setRoleDescription] = useState("");
+  const [roleDetails, setRoleDetails] = useState([]);
+  const [selectedRole, setSelectedRole] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [managerSearchTerm, setManagerSearchTerm] = useState('');
+  const [selectedManager, setSelectedManager] = useState(null);
+  const [staffDetails, setStaffDetails] = useState([]);
 
+
+  const handleRoleChange = (event) => {
+    console.log(roleId)
+    const selectedRoleName = event.target.value;
+    const selectedRole = roleDetails.find(role => role.role_name === selectedRoleName);
+    setSelectedRole(selectedRole);
+    setRoleId(selectedRole.role_id);
+    console.log(selectedRole.role_id); // Log the latest role_id
+  };
+
+  const handleManagerChange = (event) => {
+    console.log(sourceManager);
+    const selectedManagerId = event.target.value;
+    const selectedManager = staffDetails.find(staff => staff.staff_id.toString() === selectedManagerId);
+    setSelectedManager(selectedManager);
+    setSourceManager(selectedManager.staff_id);
+  };
+
+  const filteredRoles = roleDetails.filter(role => role.role_name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredManagers = staffDetails.filter(manager => `${manager.fname} ${manager.lname}`.toLowerCase().includes(managerSearchTerm.toLowerCase()));
+
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const roleResponse = await fetch('http://127.0.0.1:5050/role');
+        const roleData = await roleResponse.json();
+        setRoleDetails(roleData.data);
+
+        const staffResponse = await fetch('http://127.0.0.1:5050/staff');
+        const staffData = await staffResponse.json();
+        const managers = staffData.data.staffs.filter(staff => staff.sys_role === 'manager');
+        setStaffDetails(managers);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchDetails();
+  }, []);
+
+
+  
   // const handleSkillKeyPress = (e) => {
   //   if (e.key === "Enter") {
   //     e.preventDefault();
@@ -68,53 +117,60 @@ const RoleListingForm = () => {
 
   return (
     <form className="mt-4 px-4 py-8 border bg-white">
-      <div className="mb-4">
-        <label htmlFor="roleId" className="block mb-2 font-medium">
-          Role ID:
+      
+       <div className="mb-4">
+       <label htmlFor="roleId" className="block mb-2 font-medium">
+          Role:
         </label>
-        <input
-          type="number"
-          id="roleId"
-          min="0"
-        //   value={roleName}
-          onChange={(e) => setRoleId(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        />
-      </div>
-      {/* <div className="mb-4">
-        <label htmlFor="roleName" className="block mb-2 font-medium">
-          Role Name:
-        </label>
-        <input
-          type="text"
-          id="roleName"
-        //   value={roleName}
-          onChange={(e) => setRoleName(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        />
-      </div> */}
+       <input 
+        type="text" 
+        id="roleId"
+        placeholder="Search roles..." 
+        onChange={event => setSearchTerm(event.target.value)} 
+      />
+      <select onChange={handleRoleChange}>
+        <option value="">Select a role</option> {/* Initial empty option */}
+        {filteredRoles.map((role, index) => (
+          <option key={index} value={role.role_name}>
+            {role.role_name}
+          </option>
+        ))}
+      </select>
+      {selectedRole && (
+        <div>
+          <h2 className="block mb-2 font-medium">Role ID: {selectedRole.role_id}</h2>
+          <p>Description: {selectedRole.role_description}</p>
+        </div>
+      )}
+    </div>
       <div className="mb-4">
-        <label htmlFor="sourceManager" className="block mb-2 font-medium">
+      <label htmlFor="sourceManager" className="block mb-2 font-medium">
           Source Manager:
         </label>
-        <input
-          type="text"
-          id="sourceManager"
-        //   value={roleName}
-          onChange={(e) => setSourceManager(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        />
+      <input 
+        type="text" 
+        id="sourceManager"
+        placeholder="Search managers..." 
+        onChange={event => setManagerSearchTerm(event.target.value)} 
+      />
+      <select onChange={handleManagerChange}>
+        <option value="">Select a manager</option>
+        {filteredManagers.map((manager, index) => (
+          <option key={index} value={manager.staff_id}>
+            {manager.fname} {manager.lname}
+          </option>
+        ))}
+      </select>
+      {selectedManager && (
+        <div>
+          <h2>Manager ID: {selectedManager.staff_id}</h2>
+          <p>Name: {selectedManager.fname} {selectedManager.lname}</p>
+        </div>
+      )}
       </div>
-      {/* <label htmlFor="roleListingOpen">Role Listing Open:</label>
-      <DatePicker
-        id="roleListingOpen"
-        selected={roleListingOpen}
-        onChange={handleDateChange}
-        dateFormat="yyyy-MM-dd"
-      /> */}
       <div className="mb-4">
         <label htmlFor="roleDescription" className="block mb-2 font-medium">
-          Role Description:
+          Role Listing Description:
         </label>
         <textarea
           id="roleDescription"
