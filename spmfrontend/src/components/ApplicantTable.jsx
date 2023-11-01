@@ -74,11 +74,11 @@ const ApplicantTable = () => {
       filters: [
         {
           text: "Applied",
-          value: "applied",
+          value: "Applied",
         },
         {
           text: "Withdrawn",
-          value: "withdrawn",
+          value: "Withdrawn",
         },
       ],
         filteredValue: filteredInfo.role_app_status || null,
