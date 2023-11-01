@@ -4,6 +4,9 @@ from flask_cors import CORS
 import enum
 from datetime import date, timedelta, datetime
 import uuid
+import time
+import random
+
 
 from models import RoleListings, RoleDetails, RoleSkills, SkillDetails, RoleApplications, StaffDetails
 from configs.extensions import db
@@ -67,7 +70,11 @@ def addRoleListing():
     role_listing_source = data['role_listing_source']
     role_listing_open = datetime.strptime(
         data['role_listing_open'], '%Y-%m-%d')
-    role_listing_id = int(str(uuid.uuid4().int)[:19])
+    timestamp = int(time.time())
+    
+
+    # Ensure the ID has exactly 11 digits
+    role_listing_id = random.randint(0, 2147483647)
     role_listing_creator = data['role_listing_creator']
 
     try:
