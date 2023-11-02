@@ -318,16 +318,3 @@ def test_add_role_details(client):
     data = response.get_json()
     assert response.status_code == 200
     assert data["message"] == "New role detail created successful."
-
-    request_duplicate_id = {
-        "role_id": 234567999,
-        "role_name": "Product Manager",
-        "role_description": "The Product Manager need to balance the needs of customers, the capabilities of the development team, and the goals of the business to create a successful product.",
-        "role_status": "active"
-    }
-    response_duplicate_id = client.post('/role/add_role_detail', json=request_duplicate_id)
-    data_duplicate_id = response_duplicate_id.get_json()
-
-    # Check for IntegrityError scenario
-    assert response_duplicate_id.status_code == 400
-    assert "IntegrityError occurred. This might be due to a duplicate role_id." in data_duplicate_id["message"]

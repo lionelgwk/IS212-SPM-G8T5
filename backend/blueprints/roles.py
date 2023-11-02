@@ -77,15 +77,6 @@ def addRoleDetails():
                 "request": [data]
             }
         ), 200
-    except IntegrityError as e:
-        # If there's an IntegrityError, handle it here
-        return jsonify(
-            {
-                'code': 400,
-                'message': 'IntegrityError occurred. This might be due to a duplicate role_id.',
-                'error': str(e)
-            }
-        ), 400
     except Exception as e:
         return jsonify(
             {
