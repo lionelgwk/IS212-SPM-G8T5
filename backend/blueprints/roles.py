@@ -4,6 +4,7 @@ from flask_cors import CORS
 import enum
 from datetime import date, timedelta, datetime
 import uuid
+from sqlalchemy.exc import IntegrityError
 
 from models import RoleListings, RoleDetails, RoleSkills, RoleApplications
 from configs.extensions import db
@@ -76,6 +77,15 @@ def addRoleDetails():
                 "request": [data]
             }
         ), 200
+    except IntegrityError as e:
+        # If there's an IntegrityError, handle it here
+        return jsonify(
+            {
+                'code': 400,
+                'message': 'IntegrityError occurred. This might be due to a duplicate role_id.',
+                'error': str(e)
+            }
+        ), 400
     except Exception as e:
         return jsonify(
             {
