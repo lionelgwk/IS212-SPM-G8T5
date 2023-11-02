@@ -4,7 +4,6 @@ from flask_cors import CORS
 import enum
 from datetime import date, timedelta, datetime
 import uuid
-from sqlalchemy.exc import IntegrityError
 
 from models import RoleListings, RoleDetails, RoleSkills, RoleApplications
 from configs.extensions import db
