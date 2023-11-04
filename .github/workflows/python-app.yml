@@ -37,8 +37,9 @@ jobs:
     
     - name: Create test database
       run: |
-        sudo /etc/init.d/mysql start
-        mysql -uroot -proot < spm2.sql
+        # sudo /etc/init.d/mysql start
+        # mysql -uroot -proot < spm2.sql
+        mysql -h hostname --port 3306 -uis213 -p -e "source spm2.sql";
 
     - name: Lint with flake8
       run: |
