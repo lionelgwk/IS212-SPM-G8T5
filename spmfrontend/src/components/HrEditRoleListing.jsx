@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+// import HrEditModal from "./HrEditModal
 import FetchUser from "../hook/FetchUser";
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -20,7 +21,6 @@ const HrEditListingForm = ({id}) => {
   const [staffDetails, setStaffDetails] = useState([]);
   const [roleName, setRoleName] = useState("");
   const [isLoading, setIsLoading] = useState(true); 
-
   const handleRoleChange = (event) => {
   
     const selectedRoleName = event.target.value;
@@ -89,6 +89,7 @@ const HrEditListingForm = ({id}) => {
 
   const handleSubmit = async (e) => { 
     e.preventDefault();
+    
     const date = new Date(Date.parse(roleListingOpen));
     const formattedDate = date.toISOString().slice(0, 10);
     const data = {
@@ -115,6 +116,8 @@ const HrEditListingForm = ({id}) => {
       }
   
       // Handle successful response
+      window.location.href='/hr';
+      alert('Edit Successful');
       console.log('Role listing created successfully');
     } catch (error) {
       // Handle error
@@ -176,18 +179,6 @@ const HrEditListingForm = ({id}) => {
         </div>
       )}
     </div>
-      {/* <div className="mb-4">
-        <label htmlFor="sourceManager" className="block mb-2 font-medium">
-          Source Manager:
-        </label>
-        <input
-          type="text"
-          id="sourceManager"
-        //   value={roleName}
-          onChange={(e) => setSourceManager(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-        />
-      </div> */}
       <div className="mb-4">
       <label htmlFor="sourceManager" className="block mb-2 font-medium">
           Source Manager:
@@ -216,7 +207,7 @@ const HrEditListingForm = ({id}) => {
       {/* <label htmlFor="roleListingOpen">Role Listing Open:</label>
       <DatePicker
         id="roleListingOpen"
-        selected={roleListingOpen}
+        selected={roleListingOpenn}
         onChange={handleDateChange}
         dateFormat="yyyy-MM-dd"
       /> */}
@@ -250,6 +241,9 @@ const HrEditListingForm = ({id}) => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
           />
         </div>
+        <div>
+        {/* <HrEditModal onButtonClick={handleSubmit/> */}
+        </div>
               <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2">
                 <button
                 type="button"
@@ -259,6 +253,7 @@ const HrEditListingForm = ({id}) => {
                 Edit Listing
                 </button>
               </div>
+              
             </form>
           );
         };
