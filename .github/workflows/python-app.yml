@@ -40,4 +40,4 @@ jobs:
         python backend/test_unittest.py
     - name: Run pytest
       run: |
-        pytest backend/test_app.py
+        python -m pytest backend/test_app.py
