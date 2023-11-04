@@ -23,7 +23,7 @@ CREATE TABLE staff_reporting_officer (
 CREATE TABLE role_details (
 	role_id INT PRIMARY KEY,
 	role_name VARCHAR(50),
-	role_description VARCHAR(50000),
+	role_description TEXT(50000),
 	role_status ENUM('active', 'inactive')
 );
 
