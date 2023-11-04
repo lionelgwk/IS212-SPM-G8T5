@@ -89,7 +89,10 @@ const HrEditListingForm = ({id}) => {
 
   const handleSubmit = async (e) => { 
     e.preventDefault();
-    
+    if (roleListingDesc.length < 10) {
+      alert('Role description must be at least 10 characters long');
+      return;
+    }
     const date = new Date(Date.parse(roleListingOpen));
     const formattedDate = date.toISOString().slice(0, 10);
     const data = {
