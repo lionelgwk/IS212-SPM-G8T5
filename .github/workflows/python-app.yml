@@ -36,10 +36,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     
     - name: Create test database
-      run: |
-        # sudo /etc/init.d/mysql start
-        # mysql -uroot -proot < spm2.sql
-        mysql -h localhost --port 3306 -uis213 -p -e "source spm2.sql";
+      run: mysql -h localhost --port 3306 -uis213 -p -e "source spm2.sql";
 
     - name: Lint with flake8
       run: |
