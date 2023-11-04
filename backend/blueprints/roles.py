@@ -83,6 +83,35 @@ def addRoleDetails():
                 "error" : e
             }
         ), 500
-
-
-
+    
+@role_bp.route('/delete_role_detail/<string:role_id>', methods=["DELETE"])
+def deleteRole(role_id):
+    """
+    Delete role  from the role_details SQL table.
+    Input parameters are in JSON format
+    """
+    try:
+        role_detail = RoleDetails.query.filter_by(role_id=role_id).first()
+        if role_detail is not None:
+            db.session.delete(role_detail)
+            db.session.commit()
+            return jsonify(
+                {
+                    "code" : 200,
+                    "message" : "Role detail deleted successfully."
+                }
+            ), 200
+        else:
+            return jsonify(
+                {
+                    "code" : 404,
+                    "message" : "Role id not found."
+                }
+            ), 404
+    except Exception as e: 
+        return jsonify(
+            {
+                "code" : 500,
+                "error" : e
+            }
+        ), 500
