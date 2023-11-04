@@ -318,3 +318,4 @@ def test_add_role_details(client):
     data = response.get_json()
     assert response.status_code == 200
     assert data["message"] == "New role detail created successful."
+    response = client.delete(f'/role/delete_role_detail/234567999')
