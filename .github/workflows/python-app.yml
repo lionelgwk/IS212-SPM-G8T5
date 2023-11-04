@@ -37,7 +37,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run unit tests
       run: |
-        python backend/test_unittest.py
+        python IS212-SPM-G8T5/backend/test_unittest.py
     - name: Run pytest
       run: |
-        python -m pytest backend/test_app.py
+        python -m pytest IS212-SPM-G8T5/backend/test_app.py
