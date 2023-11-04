@@ -78,14 +78,14 @@ CREATE TABLE role_listings(
     FOREIGN KEY(role_listing_updater) REFERENCES staff_details(staff_id)
 );
 
-CREATE TABLE ROLE_APPLICATIONS (
+CREATE TABLE role_applications (
     role_app_id INT AUTO_INCREMENT PRIMARY KEY,
     role_listing_id INT NOT NULL,
     staff_id INT NOT NULL,
     role_app_status ENUM('applied', 'withdrawn') NOT NULL,
     role_app_ts_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (role_listing_id) REFERENCES ROLE_LISTINGS (role_listing_id),
-    FOREIGN KEY (staff_id) REFERENCES STAFF_DETAILS (staff_id)
+    FOREIGN KEY (role_listing_id) REFERENCES role_listings (role_listing_id),
+    FOREIGN KEY (staff_id) REFERENCES staff_details (staff_id)
 );
 
 INSERT INTO staff_details (staff_id, fname, lname, dept, email, phone, biz_address, sys_role)
@@ -178,7 +178,7 @@ VALUES
 (104, 234511581, 'Job listing for Fire Warden role', 123456788, 123456787, 123456789, '2023-09-30', '2023-12-14'),
 (105, 234511581, 'Job listing for Fire Warden role', 123456788, 123456787, 123456789, '2023-09-30', '2023-10-14');
 
-INSERT INTO ROLE_APPLICATIONS (role_listing_id, staff_id, role_app_status)
+INSERT INTO role_applications (role_listing_id, staff_id, role_app_status)
 VALUES
     (101, 123456789, 'applied'),
     (101, 123456788, 'withdrawn'),
