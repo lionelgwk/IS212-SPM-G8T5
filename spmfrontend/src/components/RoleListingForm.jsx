@@ -108,6 +108,8 @@ const RoleListingForm = () => {
       }
   
       // Handle successful response
+      window.location.href='/hr';
+      alert('Listing Creation Successful');
       console.log('Role listing created successfully');
     } catch (error) {
       // Handle error
