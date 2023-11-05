@@ -26,6 +26,7 @@ const ProfileCard = () => {
 
   const validateName = (name) => name.length >= 3;
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
+  const validatePhoneNumber = (phone) => /^[89]\d{7}$/.test(phone);
 
   const handlefNameChange = (e) => {
     setfName(e.target.value);
@@ -64,20 +65,28 @@ const ProfileCard = () => {
     if (!validateEmail(email)) {
       newErrors.email = "Please enter a valid email address.";
     }
+    if (!validatePhoneNumber(phone)) {
+      newErrors.phone =
+        "Please enter a valid phone number. It should have 8 numbers, that start with either 8 or 9.";
+    }
 
     if (Object.keys(newErrors).length === 0) {
       setIsEditing(false);
-      
-      const response = await axios.put(`http://localhost:5050/staff/update_staff/${user.staff_id}`, {
-        fname: fname,
-        lname: lname,
-        email: email,
-        phone: phone,
-        biz_address: biz_address,
-      });
+
+      const response = await axios.put(
+        `http://localhost:5050/staff/update_staff/${user.staff_id}`,
+        {
+          fname: fname,
+          lname: lname,
+          email: email,
+          phone: phone,
+          biz_address: biz_address,
+        }
+      );
       console.log(response);
 
       alert("Profile updated successfully!");
+      location.reload();
     } else {
       setErrors(newErrors);
     }
@@ -167,12 +176,15 @@ const ProfileCard = () => {
         <div className="w-1/3 pr-4">
           <div className="font-bold text-l mb-2">Phone Number</div>
           {isEditing ? (
-            <input
-              type="tel"
-              className="border rounded w-full py-2 px-3"
-              value={phone}
-              onChange={handlePhoneChange}
-            />
+            <>
+              <input
+                type="tel"
+                className="border rounded w-full py-2 px-3"
+                value={phone}
+                onChange={handlePhoneChange}
+              />
+              {errors.phone && <p className="text-red-500">{errors.phone}</p>}
+            </>
           ) : (
             <div>{user.phone}</div>
           )}
