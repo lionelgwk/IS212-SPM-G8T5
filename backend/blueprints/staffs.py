@@ -132,6 +132,30 @@ def addNewStaff():
         }
     ), 200
 
+@staff_bp.route('/update_staff/<string:id>', methods=["PUT"])
+def updateStaff(id):
+    """
+    Update new staff and add into the SQL table - THIS IS FOR REPEATABLE TESTING
+    """
+    data = request.json
+    staff = StaffDetails.query.filter_by(staff_id=id).first()
+    if not staff:
+        return jsonify({"message": "Staff not found"}), 404
+    
+    staff.fname = data.get("fname", staff.fname)
+    staff.lname = data.get("lname", staff.lname)
+    staff.email = data.get("email", staff.email)
+    staff.phone = data.get("phone", staff.phone)
+    staff.biz_address = data.get("biz_address", staff.biz_address)
+
+    db.session.commit()
+
+    return jsonify(
+        {
+            "data" : staff.json(),
+            "message" : "Staff updated successfully"
+        }
+    ), 200
 
 @staff_bp.route('/delete_staff/<string:id>', methods=["DELETE"])
 def deleteStaff(id):
