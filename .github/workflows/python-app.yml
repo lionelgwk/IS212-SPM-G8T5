@@ -42,6 +42,7 @@ jobs:
       run: |
         sudo /etc/init.d/mysql start
         mysql -uroot -proot < spm2.sql
+        mysql -uroot -proot -e 'USE spm2.sql; SHOW TABLES;
 
     - name: Lint with flake8
       run: |
@@ -52,7 +53,8 @@ jobs:
 
     - name: Run unit tests
       run: |
-        python test_unittest.py
+        # python test_unittest.py
+        python -m unittest discover -s 'flask' -p '*test*'
 
     - name: Run pytest
       run: |
