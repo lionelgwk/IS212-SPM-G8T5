@@ -44,6 +44,12 @@ jobs:
         mysql -uroot -proot < spm2.sql
         mysql -uroot -proot -e 'USE spm; SHOW TABLES;'
 
+    - name: Create MySQL user
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql -uroot -proot -e "CREATE USER 'is213'@'localhost';"
+        GRANT ALL PRIVILEGES ON *.* TO 'is213'@'localhost';
+
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
