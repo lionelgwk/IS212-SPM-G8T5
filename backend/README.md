@@ -422,7 +422,7 @@ Sample Output:
 <br>
 <a name="getStaffDetails"></a>
 
-## Get all managers `/staff/<string:id>`
+## Get a staff's details `/staff/<string:id>`
 Methods : <strong>GET</strong> <br>
 Get details of one staff member based on staff_id
 
@@ -448,7 +448,7 @@ Sample Output:
         "email": "jason_tan@all-in-one.com.sg",
         "fname": "JASON",
         "lname": "TAN",
-        "phone": "65-1234-5672",
+        "phone": "92345672",
         "staff_id": 123456793,
         "sys_role": "manager"
     }
@@ -495,7 +495,7 @@ Sample Output:
                 "email": "John_doe@all-in-one.com.sg",
                 "fname": "JOHN",
                 "lname": "DOE",
-                "phone": "65-5824-7888",
+                "phone": "98247888",
                 "staff_id": 123456786,
                 "sys_role": "inactive"
             },
@@ -505,7 +505,7 @@ Sample Output:
                 "email": "colins_vincent_rex@all-in-one.com.sg",
                 "fname": "VINCENT REX",
                 "lname": "COLINS",
-                "phone": "65-1234-5679",
+                "phone": "92345679",
                 "staff_id": 123456788,
                 "sys_role": "hr"
             }

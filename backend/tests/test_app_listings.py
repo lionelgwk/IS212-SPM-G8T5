@@ -1,6 +1,6 @@
 import pytest
 from spm import app
-from models import StaffDetails
+# from models import StaffDetails
 
 @pytest.fixture
 def client():
@@ -8,7 +8,7 @@ def client():
     with app.test_client() as client:
         yield client
 
-
+##### Testing for listings #####
 def test_all_listed_roles(client):
     """
     Flask API Test to get all listed roles
@@ -219,3 +219,103 @@ def test_get_applications_by_staff(client):
     data = response.get_json()
     assert response.status_code == 200
     assert data["message"] == "GET request sucessful"
+
+##### Testing for staffs #####
+def test_get_staff(client):
+    response = client.get('/staff/')
+    data = response.get_json()
+    assert response.status_code == 200
+    try:
+        assert type(data['data']) is dict
+        assert len(data['data']) != 0
+    except:
+        assert data['data'] == "No staffs found in staff_details table"
+
+def test_get_staff_details(client):
+    response = client.get('/staff/123456786')
+    data = response.get_json()
+    assert response.status_code == 200
+    try:
+        assert type(data['data']) is dict
+        assert len(data['data']) != 0
+    except:
+        assert data['data'] == "Staff id not found in staff_details table"
+
+def test_add_new_staff(client):
+    request = {
+        "staff_id":987654321, 
+        "fname":"Julian", 
+        "lname":"Ooi", 
+        "dept":"Engineering", 
+        "email":"test@gmail.com", 
+        "phone":"999", 
+        "biz_address":"Istana",
+        "sys_role":"staff"
+    }
+    response = client.post('/staff/new_staff', json=request)
+    data = response.get_json()
+    assert response.status_code == 200
+    assert data["message"] == "new staff created"
+    response = client.delete(f'/staff/delete_staff/987654321')
+
+def test_delete_staff(client):
+    request = {
+        "staff_id":987654321, 
+        "fname":"Julian", 
+        "lname":"Ooi", 
+        "dept":"Engineering", 
+        "email":"test@gmail.com", 
+        "phone":"999", 
+        "biz_address":"Istana",
+        "sys_role":"staff"
+    }
+    response = client.post('/staff/new_staff', json=request)
+    data = response.get_json()
+    staff_id = data["data"]["staff_id"]
+
+    request = {
+        "staff_id":staff_id, 
+    }
+    response = client.delete(f'/staff/delete_staff/{staff_id}')
+    data = response.get_json()
+    assert data["message"] == f"Staff with the id {staff_id} successfully deleted"
+
+##### Testing for skills #####
+def test_get_skill_details(client):
+    response = client.get('/skill/')
+    data = response.get_json()
+    assert response.status_code == 200
+    assert data["message"] == "Successfully retrieved all skill details"
+    assert type(data["data"]) is list
+
+##### Testing for roles #####
+def test_get_all_roles(client):
+    response = client.get('/role/')
+    data = response.get_json()
+    assert response.status_code == 200
+    assert data["message"] == "GET request successful"
+    assert type(data["data"]) is list
+
+def test_get_role_details(client):
+    response = client.get('/role/234511581')
+    data = response.get_json()
+    assert response.status_code == 200
+    try:
+        assert type(data['data']) is dict
+        assert len(data['data']) != 0
+    except:
+        assert data['data'] == "Role id not found in role_details table"
+
+
+def test_add_role_details(client):
+    request = {
+        "role_id": 234567999,
+        "role_name": "Product Manager",
+        "role_description": "The Product Manager need to balance the needs of customers, the capabilities of the development team, and the goals of the business to create a successful product.",
+        "role_status": "active"
+    }
+    response = client.post('/role/add_role_detail', json=request)
+    data = response.get_json()
+    assert response.status_code == 200
+    assert data["message"] == "New role detail created successful."
+    response = client.delete(f'/role/delete_role_detail/234567999')

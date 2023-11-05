@@ -27,7 +27,6 @@ const HrHomePage = () => {
     if (!isPending) {
       setAllRoles(data);
       setFilteredRoles(data);
-      console.log(filteredRoles);
     }
     setCurrentRoles(filteredRoles.slice(indexOfFirstJob, indexOfLastJob));
   }, [data]);
@@ -67,10 +66,6 @@ const HrHomePage = () => {
         <div className="font-bold text-xl pt-5 mb-1 text-center">
           Welcome {user.lname} {user.fname}{" "}
         </div>
-        <button onClick={(e) => console.log(user.active_skills)}>
-          console
-        </button>
-
         <RoleSearch
           handleSearching={handleSearching}
           handleSkillSearching={handleSkillSearching}

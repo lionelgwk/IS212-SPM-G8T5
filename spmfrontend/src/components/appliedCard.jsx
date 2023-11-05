@@ -14,10 +14,22 @@ const AppliedCard = (props) => {
           <div className="text-gray-700 text-base mb-4">
             {props.role_listing_desc}
           </div>
-          {/* <label className="text-gray-500">% Skills Matched</label>
-          <div className="bg-gray-200 h-4 w-full rounded-full">
-            <div className="bg-blue-500 h-full w-3/4 rounded-full"></div>
-          </div> */}
+
+          <div>
+            {props.role_skills?.length > 0 ? (
+              <p>Skills needed:</p>
+            ) : (
+              <p className="font-bold">No prior skills needed!</p>
+            )}
+          </div>
+          <span className="flex flex-row flex-wrap gap-2">
+            {props.role_skills?.length > 0 &&
+              props.role_skills.map((skill, index) => (
+                <div className="bg-gray-200 px-2 py-1 rounded-full" key={index}>
+                  {skill.skill_name}
+                </div>
+              ))}
+          </span>
         </div>
         <div className="w-3/12 pl-4 text-center">
           <div className="mt-3 mb-3 font-semibold">

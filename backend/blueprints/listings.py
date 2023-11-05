@@ -4,6 +4,9 @@ from flask_cors import CORS
 import enum
 from datetime import date, timedelta, datetime
 import uuid
+import time
+import random
+
 
 from models import RoleListings, RoleDetails, RoleSkills, SkillDetails, RoleApplications, StaffDetails
 from configs.extensions import db
@@ -67,7 +70,11 @@ def addRoleListing():
     role_listing_source = data['role_listing_source']
     role_listing_open = datetime.strptime(
         data['role_listing_open'], '%Y-%m-%d')
-    role_listing_id = int(str(uuid.uuid4().int)[:19])
+    timestamp = int(time.time())
+    
+
+    # Ensure the ID has exactly 11 digits
+    role_listing_id = random.randint(0, 2147483647)
     role_listing_creator = data['role_listing_creator']
 
     try:
@@ -156,7 +163,7 @@ def getAllOpenRoles():
         all_role_listings = RoleListings.query.filter(RoleListings.role_listing_close >= current_date).filter(
             RoleSkills.skill_id.in_(list_skill_ids)).all()
         print("test", all_role_listings)
-        if all_role_listings is None or len(all_role_listings)==0:
+        if all_role_listings is None or len(all_role_listings) == 0:
             return jsonify(
                 {
                     "code": 200,
@@ -303,8 +310,9 @@ def getApplicants(role_listing_id):
     """
     Get all applicants for a role listing by sending a GET request with the role_listing_id.
     """
-    all_applicants = db.session.query(RoleApplications).filter(RoleApplications.role_listing_id == role_listing_id).all()
-   
+    all_applicants = db.session.query(RoleApplications).filter(
+        RoleApplications.role_listing_id == role_listing_id).all()
+
     return jsonify(
         {
             "code": 200,
@@ -371,7 +379,6 @@ def applyListing():
 
 
 @listing_bp.route('/applied_roles/<string:staff_id>', methods=["GET"])
-
 def getAllRoleAppliedFor(staff_id):
     """
     Get all applications made by a staff
@@ -380,10 +387,10 @@ def getAllRoleAppliedFor(staff_id):
     json_list = [application.json() for application in applications]
     return jsonify(
         {
-            "data" : json_list,
-            "message" : "GET request sucessful"
+            "data": json_list,
+            "message": "GET request sucessful"
         }
-    ),200
+    ), 200
 
 
 @listing_bp.route('/<string:staff_id>/delete_application/<int:role_application_id>', methods=["DELETE"])
@@ -391,12 +398,13 @@ def deleteApplication(staff_id, role_application_id):
     """
     Delete role application of a staff
     """
-    applications = RoleApplications.query.filter_by(staff_id=staff_id).filter_by(role_app_id=role_application_id).first()
+    applications = RoleApplications.query.filter_by(
+        staff_id=staff_id).filter_by(role_app_id=role_application_id).first()
     if applications is not None:
         db.session.delete(applications)
         db.session.commit()
     return jsonify(
         {
-            "message" : "Application deleted successfully."
+            "message": "Application deleted successfully."
         }
-    ),200
+    ), 200

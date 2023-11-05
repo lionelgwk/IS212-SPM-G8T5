@@ -1,17 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const ApplyModal = (props) => {
+const AcceptModal = (props) => {
   const [toastVisible, setToastVisible] = useState(false);
   const [toastVisibleNo, setToastVisibleNo] = useState(false);
   const [animateOut, setAnimateOut] = useState(false);
   const [errorName, setErrorName] = useState("");
 
-  const handleApply = async () => {
+  const handleAccept = async () => {
     console.log("submitted");
     try {
+      // TODO: Add updated API call to accept applicant
       const response = await axios.post("http://localhost:5050/listing/apply", {
-        role_listing_id: props.id,
+        role_listing_id: props.role_listing_id,
         staff_id: localStorage.getItem("staffId"),
       });
 
@@ -46,6 +47,7 @@ const ApplyModal = (props) => {
       if (!error.response) {
         setErrorName("Unexpected error occurred.");
       } else {
+        // TODO: watch this clause, might be able to be removed
         setErrorName("You have already applied for this role!");
       }
       setToastVisibleNo(true);
@@ -63,7 +65,7 @@ const ApplyModal = (props) => {
 
   const handleReject = () => {
     // console.log("rejected");
-    setErrorName("Application was cancelled.");
+    setErrorName("Applicant was not accepted.");
     setToastVisibleNo(true);
     setAnimateOut(false);
 
@@ -78,36 +80,43 @@ const ApplyModal = (props) => {
 
   return (
     <>
-      
+      {/* You can open the modal using document.getElementById('ID').showModal() method */}
       <button
         className={props.className}
         onClick={() =>
-          document.getElementById(`my_modal_${props.id}`).showModal()
+          document
+            .getElementById(`accept_modal_${props.role_listing_id}`)
+            .showModal()
         }
-        disabled={props.disabled}
+        // disabled
       >
-        Apply
+        Accept {props.fname} {props.lname}
       </button>
-      <dialog id={`my_modal_${props.id}`} className="modal">
+      <dialog id={`accept_modal_${props.role_listing_id}`} className="modal">
         <div className="modal-box">
           <form method="dialog">
-            
+            {/* if there is a button in form, it will close the modal */}
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg mb-5">Application Confirmation</h3>
+          <h3 className="font-bold text-lg mb-5">Acceptance Confirmation</h3>
           <p className="mb-5">
-            You are applying for: <b>{props.title}</b>
+            You are accepting:{" "}
+            <b>
+              {props.fname} {props.lname}
+            </b>
           </p>
-          <p className="mb-5">Are you sure you want to apply for this role?</p>
+          <p className="mb-5">
+            Are you sure you want to accept this applicant?
+          </p>
           <div className="flex flex-row justify-center items-center">
             <form
               method="dialog"
               className="flex flex-row justify-center items-center"
             >
               <button
-                onClick={handleApply}
+                onClick={handleAccept}
                 className="mx-4 px-4 py-2 bg-success rounded-xl shadow-sm flex items-center w-24 justify-center"
               >
                 <svg
@@ -156,7 +165,7 @@ const ApplyModal = (props) => {
               animateOut ? "transform translate-x-full" : ""
             }`}
           >
-            <span>Application sent successfully!</span>
+            <span>Applicant accepted successfully!</span>
           </div>
         </div>
       )}
@@ -175,4 +184,4 @@ const ApplyModal = (props) => {
   );
 };
 
-export default ApplyModal;
+export default AcceptModal;
