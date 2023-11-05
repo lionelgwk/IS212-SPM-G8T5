@@ -38,8 +38,8 @@ jobs:
     - name: Create test database
       run: |
         sudo /etc/init.d/mysql start
-        mysql -uroot -proot < spm2.sql
-        mysql -uroot -proot -e 'USE spm; SHOW TABLES;'
+        mysql -u $DB_USER -p $DB_PASS < spm2.sql
+        mysql -u $DB_USER -p $DB_PASS -e 'USE spm; SHOW TABLES;'
 
     - name: Create MySQL user
       run: |
