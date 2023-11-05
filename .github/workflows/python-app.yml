@@ -20,6 +20,10 @@ jobs:
     defaults:
       run:
         working-directory: ./backend/ # Change working directory to backend folder
+    
+    env:
+      DB_USER: ${{ secrets.dbUser }}
+      DB_PASS:  ${{ secrets.dbPassword }}
 
     steps:
     - uses: actions/checkout@v3
@@ -38,14 +42,14 @@ jobs:
     - name: Create test database
       run: |
         sudo /etc/init.d/mysql start
-        mysql -uroot -proot < spm2.sql
-        mysql -uroot -proot -e 'USE spm; SHOW TABLES;'
+        mysql -u $DB_USER -p $DB_PASS < spm2.sql
+        mysql -u $DB_USER -p $DB_PASS -e 'USE spm2; SHOW TABLES;'
 
     - name: Create MySQL user
       run: |
         sudo /etc/init.d/mysql start
-        mysql -uroot -proot -e "CREATE USER 'is213'@'localhost';"
-        mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'is213'@'localhost';"
+        mysql -u $DB_USER -p $DB_PASS -e "CREATE USER 'is213'@'localhost';"
+        mysql -u $DB_USER -p $DB_PASS -e "GRANT ALL PRIVILEGES ON *.* TO 'is213'@'localhost';"
 
     - name: Lint with flake8
       run: |
