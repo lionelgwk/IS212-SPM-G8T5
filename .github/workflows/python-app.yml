@@ -42,7 +42,7 @@ jobs:
       run: |
         sudo /etc/init.d/mysql start
         mysql -uroot -proot < spm2.sql
-        mysql -uroot -proot -e 'USE spm2.sql; SHOW TABLES;'
+        mysql -uroot -proot -e 'USE spm2; SHOW TABLES;'
 
     - name: Lint with flake8
       run: |
