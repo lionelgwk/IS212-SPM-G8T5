@@ -56,7 +56,7 @@ const AppliedPage = () => {
         )}
         {filteredRoles?.length > 0 &&
           filteredRoles.map((role, index) => (
-            <AppliedCard {...role}></AppliedCard>
+            <AppliedCard {...role} key={index}></AppliedCard>
           ))}
       </div>
     </div>

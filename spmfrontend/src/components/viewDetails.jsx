@@ -223,12 +223,12 @@ const Viewdetails = () => {
             />
           </div>
         </div>
-        <div className="mt-5 border-t py-4">
+        {localStorage.getItem("position") == "hr" && <div className="mt-5 border-t py-4">
           <div className="col-span-1 text-center font-bold text-xl mb-5 pb-2 border-b">
             Applicants
           </div>
           {localStorage.getItem("position") == "hr" && <ApplicantTable />}
-        </div>
+        </div>}
       </div>
     </div>
   );

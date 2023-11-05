@@ -44,12 +44,12 @@ const LoginPage = () => {
           Login As Staff
         </button>
 
-        <button
+        {/* <button
           onClick={handleLoginManager}
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mx-2"
         >
           Login As Manager
-        </button>
+        </button> */}
 
         <button
           onClick={handleLoginHr}

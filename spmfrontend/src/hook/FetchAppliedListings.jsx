@@ -20,7 +20,6 @@ const FetchAppliedListings = (id) => {
       try {
         let hookData = [];
         const backendDataAPI = await fetchAppliedRoles(id);
-        console.log(backendDataAPI);
 
         const backendData = backendDataAPI.data;
         for (let i = 0; i < backendData.length; i++) {
