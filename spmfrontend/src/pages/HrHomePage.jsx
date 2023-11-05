@@ -5,6 +5,7 @@ import Pagination from "../components/Pagination";
 import FetchUser from "../hook/FetchUser";
 import FetchOpenListings from "../hook/FetchOpenListings";
 import { AiFillFrown } from "react-icons/ai";
+// import ApplyModal from "../components/ApplyModal";
 
 const HrHomePage = () => {
   const [roles, setRoles] = useState([]);
@@ -27,9 +28,13 @@ const HrHomePage = () => {
     if (!isPending) {
       setAllRoles(data);
       setFilteredRoles(data);
+      setCurrentPage(1);
     }
+  }, [data, isPending]);
+
+  useEffect(() => {
     setCurrentRoles(filteredRoles.slice(indexOfFirstJob, indexOfLastJob));
-  }, [data]);
+  }, [currentPage, filteredRoles, indexOfFirstJob, indexOfLastJob]);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -49,6 +54,7 @@ const HrHomePage = () => {
       role.role_name.toLowerCase().includes(lowerSearchInput)
     );
     setFilteredRoles(filtered);
+    setCurrentPage(1); // Reset pagination to the first page after search
   };
 
   const filterRolesBySkills = (skills) => {
@@ -62,7 +68,7 @@ const HrHomePage = () => {
 
   return (
     <div className="bg-[#bee9e8]">
-      <div className="container mx-auto p-2 min-h-screen">
+      <div className="container mx-auto p-2">
         <div className="font-bold text-xl pt-5 mb-1 text-center">
           Welcome {user.lname} {user.fname}{" "}
         </div>
@@ -88,7 +94,7 @@ const HrHomePage = () => {
             <div className="flex flex-col gap-4 mt-4">
               {filteredRoles.map((role) => (
                 <RoleCard
-                  key={role.role_id}
+                  key={role.role_listing_id}
                   id={role.role_listing_id}
                   title={role.role_name}
                   description={role.role_listing_desc}
@@ -103,7 +109,7 @@ const HrHomePage = () => {
             <div className="flex flex-col gap-4 mt-4">
               {currentRoles.map((role) => (
                 <RoleCard
-                  key={role.role_id}
+                  key={role.role_listing_id}
                   id={role.role_listing_id}
                   title={role.role_name}
                   description={role.role_listing_desc}
