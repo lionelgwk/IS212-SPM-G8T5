@@ -90,14 +90,14 @@ CREATE TABLE ROLE_APPLICATIONS (
 
 INSERT INTO staff_details (staff_id, fname, lname, dept, email, phone, biz_address, sys_role)
 VALUES
-	(123456789, 'AH GAO', 'TAN', 'FINANCE', 'tan_ah_gao@all-in-one.com.sg', '65-1234-5678', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'staff'),
-	(123456788, 'VINCENT REX', 'COLINS', 'HUMAN RESOURCE AND ADMIN', 'colins_vincent_rex@all-in-one.com.sg', '65-1234-5679', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'hr'),
-	(123456787, 'FAUD', 'NIZAM', 'SALES', 'faud_nizam@all-in-one.com.sg', '60-03-21345678', 'Unit 3A-07, Tower A, The Vertical Business Suite, 8, Jalan Kerinchi, Bangsar South, 59200 Kuala Lumpur, Malaysia', 'manager'),
-	(123456786, 'JOHN', 'DOE', 'IT', 'John_doe@all-in-one.com.sg', '65-5824-7888', '1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208', 'inactive'),
-    (123456791, 'JOHN', 'SMITH', 'SALES', 'john_smith@all-in-one.com.sg', '65-1234-5670', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'staff'),
-    (123456792, 'JESSICA', 'LEE', 'HUMAN RESOURCE AND ADMIN', 'jessica_lee@all-in-one.com.sg', '65-1234-5671', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'hr'),
-    (123456793, 'JASON', 'TAN', 'FINANCE', 'jason_tan@all-in-one.com.sg', '65-1234-5672', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'manager'),
-    (123456794, 'JIMMY', 'NG', 'IT', 'jimmy_ng@all-in-one.com.sg', '65-1234-5673', '1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208', 'inactive');
+	(123456789, 'AH GAO', 'TAN', 'FINANCE', 'tan_ah_gao@all-in-one.com.sg', '82345678', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'staff'),
+	(123456788, 'VINCENT REX', 'COLINS', 'HUMAN RESOURCE AND ADMIN', 'colins_vincent_rex@all-in-one.com.sg', '92345679', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'hr'),
+	(123456787, 'FAUD', 'NIZAM', 'SALES', 'faud_nizam@all-in-one.com.sg', '83213456', 'Unit 3A-07, Tower A, The Vertical Business Suite, 8, Jalan Kerinchi, Bangsar South, 59200 Kuala Lumpur, Malaysia', 'manager'),
+	(123456786, 'JOHN', 'DOE', 'IT', 'John_doe@all-in-one.com.sg', '98247888', '1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208', 'inactive'),
+    (123456791, 'JOHN', 'SMITH', 'SALES', 'john_smith@all-in-one.com.sg', '92345670', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'staff'),
+    (123456792, 'JESSICA', 'LEE', 'HUMAN RESOURCE AND ADMIN', 'jessica_lee@all-in-one.com.sg', '82345671', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'hr'),
+    (123456793, 'JASON', 'TAN', 'FINANCE', 'jason_tan@all-in-one.com.sg', '92345672', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'manager'),
+    (123456794, 'JIMMY', 'NG', 'IT', 'jimmy_ng@all-in-one.com.sg', '82345673', '1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208', 'inactive');
 
 
 INSERT INTO staff_reporting_officer (staff_id, RO_id)
