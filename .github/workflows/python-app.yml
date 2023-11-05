@@ -34,6 +34,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install flask_sqlalchemy flask-cors flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
+    # - name: Verify that the Docker image for the action builds
+    #   run: docker build . --file Dockerfile
     
     - name: Create test database
       run: |
