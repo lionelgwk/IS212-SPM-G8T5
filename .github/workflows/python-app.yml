@@ -21,6 +21,12 @@ jobs:
       run:
         working-directory: ./backend/ # Change working directory to backend folder
 
+    env:
+      DB_DATABASE: spm
+      DB_USER: root
+      DB_PASSWORD: 
+
+
     steps:
     - uses: actions/checkout@v3
 
@@ -38,7 +44,7 @@ jobs:
     - name: Create test database
       run: |
         sudo /etc/init.d/mysql start
-        mysql -uroot -proot < spm2.sql
+        mysql -hlocalhost -uroot -proot < spm2.sql
 
     - name: Lint with flake8
       run: |
