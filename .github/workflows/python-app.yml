@@ -48,7 +48,7 @@ jobs:
       run: |
         sudo /etc/init.d/mysql start
         mysql -uroot -proot -e "CREATE USER 'is213'@'localhost';"
-        GRANT ALL PRIVILEGES ON *.* TO 'is213'@'localhost';
+        mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'is213'@'localhost';"
 
     - name: Lint with flake8
       run: |
