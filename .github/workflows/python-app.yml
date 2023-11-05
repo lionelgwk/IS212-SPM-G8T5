@@ -48,7 +48,7 @@ jobs:
     - name: Create MySQL user
       run: |
         sudo /etc/init.d/mysql start
-        mysql -u $DB_USER -p $DB_PASS -e "CREATE USER 'is213'@'localhost' IDENTIFIED BY '';"
+        mysql -u $DB_USER -p $DB_PASS -e "CREATE USER 'is213'@'localhost' IDENTIFIED BY '$DB_PASS';"
         mysql -u $DB_USER -p $DB_PASS -e "GRANT ALL PRIVILEGES ON *.* TO 'is213'@'localhost';"
 
     - name: Lint with flake8
