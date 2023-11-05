@@ -53,8 +53,8 @@ jobs:
 
     - name: Run unit tests
       run: |
-        # python test_unittest.py
-        python -m unittest discover -s 'flask' -p '*test*'
+        python test_unittest.py
+        
 
     - name: Run pytest
       run: |
