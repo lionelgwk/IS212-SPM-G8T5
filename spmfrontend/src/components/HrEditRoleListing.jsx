@@ -85,6 +85,9 @@ const HrEditListingForm = ({id}) => {
 
     fetchDetails();
   }, [id]);
+  const getTodayDate = () => {
+    return new Date().toISOString().split('T')[0];
+  };
 
 
   const handleSubmit = async (e) => { 
@@ -232,6 +235,8 @@ const HrEditListingForm = ({id}) => {
             id="roleListingOpen"
             value={roleListingOpen}
             onChange={(e) => setRoleListingOpen(e.target.value)}
+            min={getTodayDate()}
+            max={roleListingClose}
             className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
           />
 
@@ -241,6 +246,7 @@ const HrEditListingForm = ({id}) => {
             id="roleListingClose"
             value={roleListingClose}
             onChange={(e) => setRoleListingClose(e.target.value)}
+            min={roleListingOpen}
             className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
           />
         </div>

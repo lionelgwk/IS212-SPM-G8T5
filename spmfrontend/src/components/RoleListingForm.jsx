@@ -232,6 +232,7 @@ const RoleListingForm = () => {
           onChange={(e) => setRoleListingOpen(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
           min={getTodayDate()}
+          max={roleListingClose}
         />
 
         <label htmlFor="roleListingClose" className="block mb-2 font-medium">
