@@ -43,7 +43,7 @@ const HrEditListingForm = ({id}) => {
   };
 
   const filteredRoles = roleDetails.filter(role => role.role_name.toLowerCase().includes(searchTerm.toLowerCase()));
-  const filteredManagers = staffDetails.filter(manager => `${manager.fname} ${manager.lname}`.toLowerCase().includes(managerSearchTerm.toLowerCase()));
+  const filteredManagers = staffDetails.filter(manager => `${manager?.fname} ${manager?.lname}`.toLowerCase().includes(managerSearchTerm.toLowerCase()));
 
 
   useEffect(() => {
@@ -176,7 +176,7 @@ const HrEditListingForm = ({id}) => {
       <label htmlFor="sourceManager" className="block mb-2 font-medium">
           Source Manager:
         </label>
-      <h1>{selectedManager.fname} {selectedManager.lname}</h1>
+      <h1>{selectedManager?.fname} {selectedManager?.lname}</h1>
       </div>
       {/* <label htmlFor="roleListingOpen">Role Listing Open:</label>
       <DatePicker
