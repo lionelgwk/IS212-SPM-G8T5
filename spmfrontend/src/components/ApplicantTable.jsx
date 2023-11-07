@@ -90,7 +90,7 @@ const ApplicantTable = () => {
       align: "center",
       render: (_, record) => (
         <Space size="middle" className="flex justify-center">
-          {record.role_app_status == "applied" ? (
+          {record.role_app_status == "Applied" ? (
             <AcceptModal className="text-blue-700" role_listing_id={role_listing_id} fname={record.name.fname} lname={record.name.lname} >
               Accept {record.name.fname} {record.name.lname}
             </AcceptModal>

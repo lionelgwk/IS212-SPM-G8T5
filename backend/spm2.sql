@@ -23,7 +23,7 @@ CREATE TABLE staff_reporting_officer (
 CREATE TABLE role_details (
 	role_id INT PRIMARY KEY,
 	role_name VARCHAR(50),
-	role_description VARCHAR(50000),
+	role_description TEXT(50000),
 	role_status ENUM('active', 'inactive')
 );
 
@@ -78,26 +78,26 @@ CREATE TABLE role_listings(
     FOREIGN KEY(role_listing_updater) REFERENCES staff_details(staff_id)
 );
 
-CREATE TABLE ROLE_APPLICATIONS (
+CREATE TABLE role_applications (
     role_app_id INT AUTO_INCREMENT PRIMARY KEY,
     role_listing_id INT NOT NULL,
     staff_id INT NOT NULL,
     role_app_status ENUM('applied', 'withdrawn') NOT NULL,
     role_app_ts_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (role_listing_id) REFERENCES ROLE_LISTINGS (role_listing_id),
-    FOREIGN KEY (staff_id) REFERENCES STAFF_DETAILS (staff_id)
+    FOREIGN KEY (role_listing_id) REFERENCES role_listings (role_listing_id),
+    FOREIGN KEY (staff_id) REFERENCES staff_details (staff_id)
 );
 
 INSERT INTO staff_details (staff_id, fname, lname, dept, email, phone, biz_address, sys_role)
 VALUES
 	(123456789, 'AH GAO', 'TAN', 'FINANCE', 'tan_ah_gao@all-in-one.com.sg', '82345678', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'staff'),
 	(123456788, 'VINCENT REX', 'COLINS', 'HUMAN RESOURCE AND ADMIN', 'colins_vincent_rex@all-in-one.com.sg', '92345679', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'hr'),
-	(123456787, 'FAUD', 'NIZAM', 'SALES', 'faud_nizam@all-in-one.com.sg', '83213456', 'Unit 3A-07, Tower A, The Vertical Business Suite, 8, Jalan Kerinchi, Bangsar South, 59200 Kuala Lumpur, Malaysia', 'manager'),
+	(123456787, 'FAUD', 'NIZAM', 'SALES', 'faud_nizam@all-in-one.com.sg', '81345678', 'Unit 3A-07, Tower A, The Vertical Business Suite, 8, Jalan Kerinchi, Bangsar South, 59200 Kuala Lumpur, Malaysia', 'manager'),
 	(123456786, 'JOHN', 'DOE', 'IT', 'John_doe@all-in-one.com.sg', '98247888', '1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208', 'inactive'),
-    (123456791, 'JOHN', 'SMITH', 'SALES', 'john_smith@all-in-one.com.sg', '92345670', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'staff'),
-    (123456792, 'JESSICA', 'LEE', 'HUMAN RESOURCE AND ADMIN', 'jessica_lee@all-in-one.com.sg', '82345671', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'hr'),
-    (123456793, 'JASON', 'TAN', 'FINANCE', 'jason_tan@all-in-one.com.sg', '92345672', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'manager'),
-    (123456794, 'JIMMY', 'NG', 'IT', 'jimmy_ng@all-in-one.com.sg', '82345673', '1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208', 'inactive');
+    (123456791, 'JOHN', 'SMITH', 'SALES', 'john_smith@all-in-one.com.sg', '82345670', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'staff'),
+    (123456792, 'JESSICA', 'LEE', 'HUMAN RESOURCE AND ADMIN', 'jessica_lee@all-in-one.com.sg', '92345671', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'hr'),
+    (123456793, 'JASON', 'TAN', 'FINANCE', 'jason_tan@all-in-one.com.sg', '82345672', '60 Paya Lebar Rd, #06-33 Paya Lebar Square, Singapore 409051', 'manager'),
+    (123456794, 'JIMMY', 'NG', 'IT', 'jimmy_ng@all-in-one.com.sg', '92345673', '1 Scotts Rd, #24-10 Shaw Centre, Singapore 228208', 'inactive');
 
 
 INSERT INTO staff_reporting_officer (staff_id, RO_id)
@@ -178,7 +178,7 @@ VALUES
 (104, 234511581, 'Job listing for Fire Warden role', 123456788, 123456787, 123456789, '2023-09-30', '2023-12-14'),
 (105, 234511581, 'Job listing for Fire Warden role', 123456788, 123456787, 123456789, '2023-09-30', '2023-10-14');
 
-INSERT INTO ROLE_APPLICATIONS (role_listing_id, staff_id, role_app_status)
+INSERT INTO role_applications (role_listing_id, staff_id, role_app_status)
 VALUES
     (101, 123456789, 'applied'),
     (101, 123456788, 'withdrawn'),

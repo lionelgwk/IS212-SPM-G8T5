@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import RoleSearch from "../components/roleSearch";
-import RoleCard from "../components/roleCard";
+import RoleSearchAll from "../components/roleSearchAll";
+import RoleCardAll from "../components/roleCardAll";
 import Pagination from "../components/Pagination";
 import FetchUser from "../hook/FetchUser";
-import FetchOpenListings from "../hook/FetchOpenListings";
+import FetchAllListings from "../hook/FetchAllListings";
 import { AiFillFrown } from "react-icons/ai";
 // import ApplyModal from "../components/ApplyModal";
 
-const HrHomePage = () => {
+const HrAllListingsPage = () => {
   const [roles, setRoles] = useState([]);
   const [allRoles, setAllRoles] = useState([]);
   const [filteredRoles, setFilteredRoles] = useState([]);
@@ -20,7 +20,7 @@ const HrHomePage = () => {
   const jobsPerPage = 5;
 
   const { user } = FetchUser();
-  const { data: data, pending: isPending } = FetchOpenListings();
+  const { data: data, pending: isPending } = FetchAllListings();
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 
@@ -68,17 +68,17 @@ const HrHomePage = () => {
 
   return (
     <div className="bg-[#bee9e8]">
-      <div className="container mx-auto p-2 min-h-screen">
+      <div className="container mx-auto p-2">
         <div className="font-bold text-xl pt-5 mb-1 text-center">
-          Welcome {user.lname} {user.fname}{" "}
+          All Listing Search
         </div>
-        <RoleSearch
+        <RoleSearchAll
           handleSearching={handleSearching}
           handleSkillSearching={handleSkillSearching}
           filterRolesByName={filterRolesByName}
           filterRolesBySkills={filterRolesBySkills}
           className="z-0"
-        ></RoleSearch>
+        ></RoleSearchAll>
 
         {isSearching || isSkillSearching ? null : (
           <Pagination
@@ -93,7 +93,7 @@ const HrHomePage = () => {
           (isSearching || isSkillSearching) && filteredRoles.length > 0 ? (
             <div className="flex flex-col gap-4 mt-4">
               {filteredRoles.map((role) => (
-                <RoleCard
+                <RoleCardAll
                   key={role.role_listing_id}
                   id={role.role_listing_id}
                   title={role.role_name}
@@ -108,7 +108,7 @@ const HrHomePage = () => {
           ) : (
             <div className="flex flex-col gap-4 mt-4">
               {currentRoles.map((role) => (
-                <RoleCard
+                <RoleCardAll
                   key={role.role_listing_id}
                   id={role.role_listing_id}
                   title={role.role_name}
@@ -151,4 +151,4 @@ const HrHomePage = () => {
     </div>
   );
 };
-export default HrHomePage;
+export default HrAllListingsPage;
