@@ -163,7 +163,7 @@ const RoleListingForm = () => {
   };
 
   return (
-    <form className="mt-4 px-4 py-8 border bg-white">
+    <form className="mt-4 px-7 py-10 border rounded-lg bg-white">
       <div className="mb-4">
         <label htmlFor="roleId" className="block mb-2 font-medium">
           Role:
@@ -174,7 +174,7 @@ const RoleListingForm = () => {
           placeholder="Search roles..."
           onChange={(event) => setSearchTerm(event.target.value)}
         />
-        <select onChange={handleRoleChange}>
+        <select className="border border-gray-400" onChange={handleRoleChange}>
           <option value="">Select a role</option> {/* Initial empty option */}
           {filteredRoles.map((role, index) => (
             <option key={index} value={role.role_name}>
@@ -201,7 +201,7 @@ const RoleListingForm = () => {
           placeholder="Search managers..."
           onChange={(event) => setManagerSearchTerm(event.target.value)}
         />
-        <select onChange={handleManagerChange}>
+        <select className="border border-gray-400" onChange={handleManagerChange}>
           <option value="">Select a manager</option>
           {filteredManagers.map((manager, index) => (
             <option key={index} value={manager.staff_id}>
@@ -230,7 +230,7 @@ const RoleListingForm = () => {
         />
       </div>
       <div className="flex">
-        <label htmlFor="roleListingOpen" className="block mb-2 font-medium">
+        <label htmlFor="roleListingOpen" className="block mb-2 font-medium me-4">
           Start Date:{" "}
         </label>
         <input
@@ -238,12 +238,12 @@ const RoleListingForm = () => {
           id="roleListingOpen"
           value={roleListingOpen}
           onChange={(e) => setRoleListingOpen(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2 me-7"
           min={getTodayDate()}
           max={roleListingClose}
         />
 
-        <label htmlFor="roleListingClose" className="block mb-2 font-medium">
+        <label htmlFor="roleListingClose" className="block mb-2 me-4 ms-4 font-medium">
           End Date:{" "}
         </label>
         <input

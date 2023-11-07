@@ -95,7 +95,7 @@ const ProfileCard = () => {
   return (
     <div className="bg-white border rounded-lg overflow-hidden p-6 mb-6">
       <div className="flex justify-between mb-4">
-        <div>
+        <div className="w-4/12 pr-4">
           <div className="font-bold text-l mb-2">First Name</div>
           {isEditing ? (
             <>
@@ -114,7 +114,7 @@ const ProfileCard = () => {
             </>
           )}
         </div>
-        <div>
+        <div className="w-3/12 pr-4">
           <div className="font-bold text-l mb-2">Last Name</div>
           {isEditing ? (
             <>
@@ -133,11 +133,11 @@ const ProfileCard = () => {
             </>
           )}
         </div>
-        <div>
+        <div className="w-4/12 pr-4">
           <div className="font-bold text-l mb-2">Staff ID</div>
           <div>{staff_id}</div>
         </div>
-        <div>
+        <div className="w-1/12 pr-4">
           {isEditing ? (
             <button
               type="button"
@@ -154,7 +154,7 @@ const ProfileCard = () => {
         </div>
       </div>
       <div className="flex mb-4">
-        <div className="w-1/3 pr-4">
+        <div className="w-4/12 pr-4">
           <div className="font-bold text-l mb-2">Email</div>
           {isEditing ? (
             <>
@@ -173,7 +173,7 @@ const ProfileCard = () => {
             </>
           )}
         </div>
-        <div className="w-1/3 pr-4">
+        <div className="w-3/12 pr-4">
           <div className="font-bold text-l mb-2">Phone Number</div>
           {isEditing ? (
             <>
@@ -189,7 +189,7 @@ const ProfileCard = () => {
             <div>{user.phone}</div>
           )}
         </div>
-        <div className="w-1/3">
+        <div className="w-4/12">
           <div className="font-bold text-l mb-2">Address</div>
           {isEditing ? (
             <input
@@ -202,6 +202,7 @@ const ProfileCard = () => {
             <div>{user.biz_address}</div>
           )}
         </div>
+        <div className="w-1/12"></div>
       </div>
     </div>
   );

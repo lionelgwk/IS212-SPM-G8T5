@@ -4,9 +4,9 @@ import SkillCard from "../components/skillCard";
 
 const StaffProfilePage = () => {
     return(
-        <div className="bg-[#f8fdff] h-screen">
+        <div className="bg-[#bee9e8] h-screen">
             <div className="container mx-auto p-2">
-                <div className="font-bold text-xl pt-10 mb-1 text-center">My Profile</div>
+                <div className="font-bold text-xl pt-10 mb-4 text-center">My Profile</div>
                 <ProfileCard></ProfileCard>
                 <SkillCard></SkillCard>
             </div>
