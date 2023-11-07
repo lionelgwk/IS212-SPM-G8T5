@@ -4,9 +4,9 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 const HrNavBar = () => {
   // Sign out function
   const handleSignOut = () => {
-    localStorage.removeItem('position');
-    window.location.href = '/login'; // Redirect to homepage
-  }
+    localStorage.removeItem("position");
+    window.location.href = "/login"; // Redirect to homepage
+  };
 
   return (
     <>
@@ -17,7 +17,8 @@ const HrNavBar = () => {
               <img src="/src/assets/logo.png" alt="logo" className="h-[30px]" />
             </Link>
             <NavLink
-              to="/hr" end
+              to="/hr"
+              end
               className={({ isActive }) =>
                 isActive
                   ? "bg-[#1b4965] p-2 rounded-md text-white"
@@ -26,7 +27,7 @@ const HrNavBar = () => {
             >
               Home
             </NavLink>
-            
+
             <NavLink
               to="/hr/applied"
               className={({ isActive }) =>
@@ -60,19 +61,24 @@ const HrNavBar = () => {
               Create Listing
             </NavLink>
 
-            {/* <NavLink
-              to="/hr/mylisting/:id"
+            <NavLink
+              to="/hr/listings"
               className={({ isActive }) =>
                 isActive
                   ? "bg-[#1b4965] p-2 rounded-md text-white"
                   : "hover:bg-[#4dc494] hover:text-white p-2 rounded-md"
               }
             >
-              Listings
-            </NavLink> */}
+              All Listings
+            </NavLink>
           </div>
           <div className="flex justify-end ml-auto">
-            <button className="hover:bg-[#f5655b] hover:text-white p-2 rounded-md gap-5" onClick={handleSignOut}>Sign Out</button>
+            <button
+              className="hover:bg-[#f5655b] hover:text-white p-2 rounded-md gap-5"
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </button>
           </div>
         </div>
       </header>

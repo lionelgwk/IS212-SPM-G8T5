@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FetchUser from "../hook/FetchUser";
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 const RoleListingForm = () => {
   const { user } = FetchUser();
@@ -11,21 +11,28 @@ const RoleListingForm = () => {
   // const [roleName, setRoleName] = useState("");
   const [sourceManager, setSourceManager] = useState("");
   // const [roleListingClose, setRoleListingClose] = useState("");
-  const [roleListingOpen, setRoleListingOpen] = useState(new Date().toISOString().slice(0, 10));
-  const [roleListingClose, setRoleListingClose] = useState(new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10));
+  const [roleListingOpen, setRoleListingOpen] = useState(
+    new Date().toISOString().slice(0, 10)
+  );
+  const [roleListingClose, setRoleListingClose] = useState(
+    new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 10)
+  );
   const [roleDescription, setRoleDescription] = useState("");
   const [roleDetails, setRoleDetails] = useState([]);
   const [selectedRole, setSelectedRole] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [managerSearchTerm, setManagerSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [managerSearchTerm, setManagerSearchTerm] = useState("");
   const [selectedManager, setSelectedManager] = useState(null);
   const [staffDetails, setStaffDetails] = useState([]);
 
-
   const handleRoleChange = (event) => {
-    console.log(roleId)
+    console.log(roleId);
     const selectedRoleName = event.target.value;
-    const selectedRole = roleDetails.find(role => role.role_name === selectedRoleName);
+    const selectedRole = roleDetails.find(
+      (role) => role.role_name === selectedRoleName
+    );
     setSelectedRole(selectedRole);
     setRoleId(selectedRole.role_id);
     console.log(selectedRole.role_id); // Log the latest role_id
@@ -34,25 +41,34 @@ const RoleListingForm = () => {
   const handleManagerChange = (event) => {
     console.log(sourceManager);
     const selectedManagerId = event.target.value;
-    const selectedManager = staffDetails.find(staff => staff.staff_id.toString() === selectedManagerId);
+    const selectedManager = staffDetails.find(
+      (staff) => staff.staff_id.toString() === selectedManagerId
+    );
     setSelectedManager(selectedManager);
     setSourceManager(selectedManager.staff_id);
   };
 
-  const filteredRoles = roleDetails.filter(role => role.role_name.toLowerCase().includes(searchTerm.toLowerCase()));
-  const filteredManagers = staffDetails.filter(manager => `${manager.fname} ${manager.lname}`.toLowerCase().includes(managerSearchTerm.toLowerCase()));
-
+  const filteredRoles = roleDetails.filter((role) =>
+    role.role_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const filteredManagers = staffDetails.filter((manager) =>
+    `${manager.fname} ${manager.lname}`
+      .toLowerCase()
+      .includes(managerSearchTerm.toLowerCase())
+  );
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const roleResponse = await fetch('http://127.0.0.1:5050/role');
+        const roleResponse = await fetch("http://127.0.0.1:5050/role");
         const roleData = await roleResponse.json();
         setRoleDetails(roleData.data);
 
-        const staffResponse = await fetch('http://127.0.0.1:5050/staff');
+        const staffResponse = await fetch("http://127.0.0.1:5050/staff");
         const staffData = await staffResponse.json();
-        const managers = staffData.data.staffs.filter(staff => staff.sys_role === 'manager');
+        const managers = staffData.data.staffs.filter(
+          (staff) => staff.sys_role === "manager"
+        );
         setStaffDetails(managers);
       } catch (error) {
         console.error(error);
@@ -62,8 +78,22 @@ const RoleListingForm = () => {
     fetchDetails();
   }, []);
 
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    setRoleListingOpen(today);
+  }, []);
 
-  
+  // Whenever roleListingOpen changes, update roleListingClose if it is before roleListingOpen
+  useEffect(() => {
+    if (roleListingClose && roleListingOpen > roleListingClose) {
+      setRoleListingClose(roleListingOpen);
+    }
+  }, [roleListingOpen]);
+
+  const getTodayDate = () => {
+    return new Date().toISOString().split('T')[0];
+  };
+
   // const handleSkillKeyPress = (e) => {
   //   if (e.key === "Enter") {
   //     e.preventDefault();
@@ -71,7 +101,7 @@ const RoleListingForm = () => {
   //       setSkillList(prevList => [...prevList, skills]);
   //       setSkills("");
   //       console.log("hi");
-  //       console.log(user);  
+  //       console.log(user);
   //     }
   //   }
   // };
@@ -79,8 +109,20 @@ const RoleListingForm = () => {
   // 234511581
   // 123456786
 
-  const handleSubmit = async (e) => { 
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (roleId == null || roleId == "") {
+      alert("Please select a role");
+      return;
+    }
+    if (sourceManager == null || sourceManager == "") {
+      alert("Please select a manager");
+      return;
+    }
+    if (roleDescription.length < 10) {
+      alert("Role description must be at least 10 characters long");
+      return;
+    }
     const date = new Date(Date.parse(roleListingOpen));
     const formattedDate = date.toISOString().slice(0, 10);
     const data = {
@@ -90,83 +132,91 @@ const RoleListingForm = () => {
       // skills: skillList
       role_listing_creator: user.staff_id,
       role_listing_close: roleListingClose,
-      role_listing_desc: roleDescription
+      role_listing_desc: roleDescription,
     };
-    
+
     try {
-      const response = await fetch('http://127.0.0.1:5050/listing/add_role_listing', {
-        method: 'POST',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
+      const response = await fetch(
+        "http://127.0.0.1:5050/listing/add_role_listing",
+        {
+          method: "POST",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       console.log(response);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
-  
+
       // Handle successful response
-      console.log('Role listing created successfully');
+      window.location.href = "/hr";
+      alert("Listing Creation Successful");
+      console.log("Role listing created successfully");
     } catch (error) {
       // Handle error
-      console.error('Error creating role listing:', error);
+      console.error("Error creating role listing:", error);
     }
-  }
+  };
 
   return (
     <form className="mt-4 px-4 py-8 border bg-white">
-      
-       <div className="mb-4">
-       <label htmlFor="roleId" className="block mb-2 font-medium">
+      <div className="mb-4">
+        <label htmlFor="roleId" className="block mb-2 font-medium">
           Role:
         </label>
-       <input 
-        type="text" 
-        id="roleId"
-        placeholder="Search roles..." 
-        onChange={event => setSearchTerm(event.target.value)} 
-      />
-      <select onChange={handleRoleChange}>
-        <option value="">Select a role</option> {/* Initial empty option */}
-        {filteredRoles.map((role, index) => (
-          <option key={index} value={role.role_name}>
-            {role.role_name}
-          </option>
-        ))}
-      </select>
-      {selectedRole && (
-        <div>
-          <h2 className="block mb-2 font-medium">Role ID: {selectedRole.role_id}</h2>
-          <p>Description: {selectedRole.role_description}</p>
-        </div>
-      )}
-    </div>
+        <input
+          type="text"
+          id="roleId"
+          placeholder="Search roles..."
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+        <select onChange={handleRoleChange}>
+          <option value="">Select a role</option> {/* Initial empty option */}
+          {filteredRoles.map((role, index) => (
+            <option key={index} value={role.role_name}>
+              {role.role_name}
+            </option>
+          ))}
+        </select>
+        {selectedRole && (
+          <div>
+            <h2 className="block mb-2 font-medium">
+              Role ID: {selectedRole.role_id}
+            </h2>
+            <p>Description: {selectedRole.role_description}</p>
+          </div>
+        )}
+      </div>
       <div className="mb-4">
-      <label htmlFor="sourceManager" className="block mb-2 font-medium">
+        <label htmlFor="sourceManager" className="block mb-2 font-medium">
           Source Manager:
         </label>
-      <input 
-        type="text" 
-        id="sourceManager"
-        placeholder="Search managers..." 
-        onChange={event => setManagerSearchTerm(event.target.value)} 
-      />
-      <select onChange={handleManagerChange}>
-        <option value="">Select a manager</option>
-        {filteredManagers.map((manager, index) => (
-          <option key={index} value={manager.staff_id}>
-            {manager.fname} {manager.lname}
-          </option>
-        ))}
-      </select>
-      {selectedManager && (
-        <div>
-          <h2>Manager ID: {selectedManager.staff_id}</h2>
-          <p>Name: {selectedManager.fname} {selectedManager.lname}</p>
-        </div>
-      )}
+        <input
+          type="text"
+          id="sourceManager"
+          placeholder="Search managers..."
+          onChange={(event) => setManagerSearchTerm(event.target.value)}
+        />
+        <select onChange={handleManagerChange}>
+          <option value="">Select a manager</option>
+          {filteredManagers.map((manager, index) => (
+            <option key={index} value={manager.staff_id}>
+              {manager.fname} {manager.lname}
+            </option>
+          ))}
+        </select>
+        {selectedManager && (
+          <div>
+            <h2>Manager ID: {selectedManager.staff_id}</h2>
+            <p>
+              Name: {selectedManager.fname} {selectedManager.lname}
+            </p>
+          </div>
+        )}
       </div>
       <div className="mb-4">
         <label htmlFor="roleDescription" className="block mb-2 font-medium">
@@ -180,24 +230,31 @@ const RoleListingForm = () => {
         />
       </div>
       <div className="flex">
-        <label htmlFor="roleListingOpen" className="block mb-2 font-medium">Start Date: </label>
-          <input
-            type="date"
-            id="roleListingOpen"
-            value={roleListingOpen}
-            onChange={(e) => setRoleListingOpen(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
-          />
+        <label htmlFor="roleListingOpen" className="block mb-2 font-medium">
+          Start Date:{" "}
+        </label>
+        <input
+          type="date"
+          id="roleListingOpen"
+          value={roleListingOpen}
+          onChange={(e) => setRoleListingOpen(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
+          min={getTodayDate()}
+          max={roleListingClose}
+        />
 
-          <label htmlFor="roleListingClose" className="block mb-2 font-medium">End Date: </label>
-          <input
-            type="date"
-            id="roleListingClose"
-            value={roleListingClose}
-            onChange={(e) => setRoleListingClose(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
-          />
-        </div>
+        <label htmlFor="roleListingClose" className="block mb-2 font-medium">
+          End Date:{" "}
+        </label>
+        <input
+          type="date"
+          id="roleListingClose"
+          value={roleListingClose}
+          onChange={(e) => setRoleListingClose(e.target.value)}
+          min={roleListingOpen}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md mr-2"
+        />
+      </div>
       {/* <div className="mb-4">
         <label htmlFor="roleDescription" className="block mb-2 font-medium">
           Role Description:
@@ -209,7 +266,7 @@ const RoleListingForm = () => {
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
         />
       </div> */}
-              {/* <div className="mb-4">
+      {/* <div className="mb-4">
                 <label htmlFor="skills" className="block mb-2 font-medium">
                   Skills:
                 </label>
@@ -232,17 +289,17 @@ const RoleListingForm = () => {
                   ))}
                 </ul>
               </div> */}
-              <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2">
-                <button
-                type="button"
-                className="inline-block px-6 py-3 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-lg"
-                onClick={handleSubmit}
-                >
-                Create Role Listing
-                </button>
-              </div>
-            </form>
-          );
-        };
-        
-        export default RoleListingForm;
+      <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2">
+        <button
+          type="button"
+          className="inline-block px-6 py-3 bg-[#62b6cb] text-white hover:bg-[#1b4965] rounded-full shadow-lg"
+          onClick={handleSubmit}
+        >
+          Create Role Listing
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default RoleListingForm;
