@@ -24,10 +24,14 @@ const HrEditListingForm = ({id}) => {
   const handleRoleChange = (event) => {
   
     const selectedRoleName = event.target.value;
+    console.log(selectedRoleName);
     const selectedRole = roleDetails.find(role => role.role_name === selectedRoleName);
+    console.log(selectedRole)
     setSelectedRole(selectedRole);
+    setRoleName(selectedRole.role_name);
     setRoleId(selectedRole.role_id);
-
+    console.log(roleId);
+    
   };
 
   const handleManagerChange = (event) => {
@@ -92,6 +96,7 @@ const HrEditListingForm = ({id}) => {
 
   const handleSubmit = async (e) => { 
     e.preventDefault();
+    console.log(roleId);
     if (roleListingDesc.length < 10) {
       alert('Role description must be at least 10 characters long');
       return;
@@ -164,51 +169,14 @@ const HrEditListingForm = ({id}) => {
        <label htmlFor="roleId" className="block mb-2 font-medium">
           Role:
         </label>
-       <input 
-        type="text" 
-        id="roleId"
-        placeholder="Search roles..." 
-        onChange={event => setSearchTerm(event.target.value)} 
-      />
-      <select value={roleName} onChange={handleRoleChange}>
-        <option value="">Select a role</option> {/* Initial empty option */}
-        {filteredRoles.map((role, index) => (
-          <option key={index} value={role.role_name}>
-            {role.role_name}
-          </option>
-        ))}
-      </select>
-      {selectedRole && (
-        <div>
-          <h2 className="block mb-2 font-medium">Role ID: {selectedRole.role_id}</h2>
-          <p>Description: {selectedRole.role_description}</p>
-        </div>
-      )}
+       <h1>{roleName}</h1>
+    
     </div>
       <div className="mb-4">
       <label htmlFor="sourceManager" className="block mb-2 font-medium">
           Source Manager:
         </label>
-      <input 
-        type="text" 
-        id="sourceManager"
-        placeholder="Search managers..." 
-        onChange={event => setManagerSearchTerm(event.target.value)} 
-      />
-      <select value={selectedManager ? selectedManager.staff_id: ""} onChange={handleManagerChange}>
-        <option value="">Select a manager</option>
-        {filteredManagers.map((manager, index) => (
-          <option key={index} value={manager.staff_id}>
-            {manager.fname} {manager.lname}
-          </option>
-        ))}
-      </select>
-      {selectedManager && (
-        <div>
-          <h2>Manager ID: {selectedManager.staff_id}</h2>
-          <p>Name: {selectedManager.fname} {selectedManager.lname}</p>
-        </div>
-      )}
+      <h1>{selectedManager.fname} {selectedManager.lname}</h1>
       </div>
       {/* <label htmlFor="roleListingOpen">Role Listing Open:</label>
       <DatePicker

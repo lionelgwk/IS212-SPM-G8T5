@@ -111,6 +111,14 @@ const RoleListingForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (roleId == null || roleId == "") {
+      alert("Please select a role");
+      return;
+    }
+    if (sourceManager == null || sourceManager == "") {
+      alert("Please select a manager");
+      return;
+    }
     if (roleDescription.length < 10) {
       alert("Role description must be at least 10 characters long");
       return;
