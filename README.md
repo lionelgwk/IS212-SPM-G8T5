@@ -7,7 +7,7 @@ cd backend
 
 ### 2. Run sql script
 ```
-Run spm.sql
+Run spm_main.sql
 ```
 
 ### 3. Run Docker container 
